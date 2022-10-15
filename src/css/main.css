@@ -15,6 +15,7 @@ body {
   width: 100%;
 }
 
-#left, #right {
+#left,
+#right {
   flex: 1;
 }

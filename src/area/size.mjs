@@ -1,4 +1,4 @@
-import { getRoot, getCellTemplate } from '../utils/html.mjs';
+import { getRoot, getCellTemplate } from "../utils/html.mjs";
 
 /**
  * builds playing area
@@ -13,7 +13,7 @@ export function buildGrid({ rows, columns }) {
   const root = getRoot();
 
   if (!root) {
-    throw new Error('Root element not found.');
+    throw new Error("Root element not found.");
   }
 
   for (let ri = 0; ri < rows; ri++) {
@@ -34,11 +34,11 @@ function buildCell(id, parent) {
   const template = getCellTemplate();
 
   if (!template) {
-    throw new Error('Template element not found.');
+    throw new Error("Template element not found.");
   }
 
-  const cell = template.content.cloneNode(true).querySelector('.cell');
-  cell.setAttribute('id', id);
+  const cell = template.content.cloneNode(true).querySelector(".cell");
+  cell.setAttribute("id", id);
   parent.appendChild(cell);
 
   return cell;

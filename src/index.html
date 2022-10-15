@@ -3,19 +3,18 @@
   <head>
     <title>Tetris</title>
     <script>
-      const debugValue = new URLSearchParams(window.location.search).get('debug')
-      const isDevelopment = debugValue === '1';
-      window.__ENV = isDevelopment
-        ? 'development'
-        : 'production';
+      const debugValue = new URLSearchParams(window.location.search).get(
+        "debug"
+      );
+      const isDevelopment = debugValue === "1";
+      window.__ENV = isDevelopment ? "development" : "production";
     </script>
     <link rel="stylesheet" href="css/main.css" />
     <script src="index.mjs" type="module"></script>
   </head>
   <body>
     <aside id="left"></aside>
-    <div id="root">
-    </div>
+    <div id="root"></div>
     <aside id="right"></aside>
     <template id="empty-cell">
       <div class="cell"></div>

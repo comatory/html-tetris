@@ -16,5 +16,5 @@ export function debug(...parts) {
     return;
   }
 
-  console.debug(`%c${parts.join(' ')}`, DEBUG_STYLING)
+  console.debug(`%c${parts.join(" ")}`, DEBUG_STYLING);
 }

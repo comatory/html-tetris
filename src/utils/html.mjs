@@ -3,7 +3,7 @@
  * @returns {HTMLElement|null} optional element
  */
 export function getRoot() {
-  return document.getElementById('root') ?? null;
+  return document.getElementById("root") ?? null;
 }
 
 /**
@@ -11,7 +11,7 @@ export function getRoot() {
  * @returns {HTMLElement|null} optional element
  */
 export function getCellTemplate() {
-  return document.getElementById('empty-cell') ?? null;
+  return document.getElementById("empty-cell") ?? null;
 }
 
 export function getCellByCoordinates(x, y, grid) {
@@ -21,5 +21,5 @@ export function getCellByCoordinates(x, y, grid) {
 }
 
 export function getCellsByIds(ids, grid) {
-  return grid.querySelectorAll(ids.join(', '));
+  return grid.querySelectorAll(ids.join(", "));
 }
