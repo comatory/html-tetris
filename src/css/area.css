@@ -1,0 +1,11 @@
+#root {
+  flex: 1;
+  align-self: flex-start;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.cell {
+  border: 1px solid #eee;
+  aspect-ratio: 1;
+}

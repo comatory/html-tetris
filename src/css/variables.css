@@ -1,0 +1,6 @@
+:root {
+  --size: 20px;
+  --cell-width: var(--size);
+  --cell-height: var(--size);
+}
+
