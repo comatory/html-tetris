@@ -1,4 +1,4 @@
-import { getCellByCoordinates, getCellsByIds } from "../utils/html.mjs";
+import { getCellsByIds } from "../utils/html.mjs";
 
 export function draw({
   x,
@@ -16,8 +16,6 @@ export function draw({
 }
 
 function getShapeIds(x, y, shape) {
-  const start = `#c${x}-${y}`;
-
   const ids = [];
 
   for (let hi = 0; hi < shape.w; hi++) {

@@ -4,8 +4,10 @@
   "description": "tetris game rendered via HTML",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint --ext .mjs --ext .js src/",
     "dev": "NODE_ENV=development live-server --port=8000 --watch=src/ --open=src/index.html?debug=1",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "keywords": [
     "tetris",
@@ -16,6 +18,8 @@
   "author": "Ondřej Synáček <ondrej@synacek.org>",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^8.25.0",
+    "husky": "^8.0.1",
     "live-server": "^1.2.2"
   }
 }
