@@ -1,4 +1,5 @@
 import { draw } from "./utils.mjs";
+import { check } from "./collision.mjs";
 
 /** @typedef {import('../utils/context.mjs').Context} Context */
 
@@ -14,10 +15,16 @@ export function moveLeft(context) {
   }
 
   const x = current.x - 1;
+  const { y, shape } = current;
+
+  if (!check({ shape, x, y })) {
+    return;
+  }
+
   draw({
     x,
-    y: current.y,
-    shape: current.shape,
+    y,
+    shape,
     context,
   });
 
@@ -36,10 +43,16 @@ export function moveRight(context) {
   }
 
   const x = current.x + 1;
+  const { y, shape } = current;
+
+  if (!check({ shape, x, y })) {
+    return;
+  }
+
   draw({
     x,
-    y: current.y,
-    shape: current.shape,
+    y,
+    shape,
     context,
   });
 
@@ -57,7 +70,13 @@ export function moveDown(context) {
     return;
   }
 
+  const { x, shape } = current;
   const y = current.y + 1;
+
+  if (!check({ shape, x, y })) {
+    return;
+  }
+
   draw({
     x: current.x,
     y,
