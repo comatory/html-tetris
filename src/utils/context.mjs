@@ -1,5 +1,6 @@
 import { buildGrid } from "../area/size.mjs";
 import { ROWS, COLUMNS } from "./meta.mjs";
+import { getRootStyle } from "./html.mjs";
 
 /**
  * @typedef {import('../draw/shapes.mjs').Shape} Shape
@@ -25,6 +26,10 @@ import { ROWS, COLUMNS } from "./meta.mjs";
  * @returns {Context} game context
  */
 export function buildInitialContext() {
+  const style = getRootStyle();
+  style.setProperty("--rows", ROWS);
+  style.setProperty("--columns", COLUMNS);
+
   const grid = buildGrid({
     rows: ROWS,
     columns: COLUMNS,

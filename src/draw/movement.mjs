@@ -45,3 +45,25 @@ export function moveRight(context) {
 
   context.current.x = x;
 }
+
+/**
+ * move tetromino down
+ * @param {Context} context
+ */
+export function moveDown(context) {
+  const { current } = context;
+
+  if (!current) {
+    return;
+  }
+
+  const y = current.y + 1;
+  draw({
+    x: current.x,
+    y,
+    shape: current.shape,
+    context,
+  });
+
+  context.current.y = y;
+}

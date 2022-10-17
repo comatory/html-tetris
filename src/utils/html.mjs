@@ -25,3 +25,11 @@ export function getCellTemplate() {
 export function getCellsByIds(ids, grid) {
   return grid.querySelectorAll(ids.join(", "));
 }
+
+/**
+ * get root style with CSS variables
+ * @returns {CSS2Properties}
+ */
+export function getRootStyle() {
+  return document.querySelector(":root").style;
+}

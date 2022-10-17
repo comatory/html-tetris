@@ -13,4 +13,4 @@ export const isDevelopment = !isProduction;
 /** row count of grid area @type {number} */
 export const ROWS = 20;
 /** column count of grid area @type {number} */
-export const COLUMNS = 8;
+export const COLUMNS = 10;

@@ -1,5 +1,5 @@
 import { debug } from "../utils/log.mjs";
-import { moveLeft, moveRight } from "../draw/movement.mjs";
+import { moveLeft, moveRight, moveDown } from "../draw/movement.mjs";
 
 /** @typedef {import('../utils/context.mjs').Context} Context */
 
@@ -20,6 +20,7 @@ export function keyBindingsFactory(context) {
     switch (event.keyCode) {
       case ARROW_DOWN_KEY:
         debug("down key pressed");
+        moveDown(context);
         break;
       case ARROW_UP_KEY:
         debug("up key pressed");
