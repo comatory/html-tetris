@@ -14,12 +14,14 @@ export function getCellTemplate() {
   return document.getElementById("empty-cell") ?? null;
 }
 
-export function getCellByCoordinates(x, y, grid) {
-  const id = `#c${x}-${y}`;
-
-  return grid.querySelector(id) ?? null;
-}
-
+/**
+ * get array of HTML elements from the grid by
+ * their given IDs
+ *
+ * @param {Array<string>} ids - list of # ids
+ * @param {HTMLElement} grid - area HTML element
+ * @returns {NodeList} list of HTML elements
+ */
 export function getCellsByIds(ids, grid) {
   return grid.querySelectorAll(ids.join(", "));
 }

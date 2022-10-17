@@ -1,18 +1,17 @@
+import { buildInitialContext } from "./utils/context.mjs";
 import { debug } from "./utils/log.mjs";
-import { rows, columns } from "./utils/meta.mjs";
-import { buildGrid } from "./area/size.mjs";
-import { square } from "./draw/shapes.mjs";
+import { z, ROTATION } from "./draw/shapes.mjs";
+import { draw } from "./draw/utils.mjs";
 
 /** starts the game */
 function start() {
   debug("START");
 
-  debug("BUILD GRID");
-  const grid = buildGrid({
-    rows,
-    columns,
-  });
-  square({ x: 1, y: 2, context: { grid } });
+  debug("BUILD CONTEXT");
+  const initialContext = buildInitialContext();
+
+  const shape = z(ROTATION.D);
+  draw({ x: 2, y: 3, shape, context: initialContext });
 }
 
 document.addEventListener("DOMContentLoaded", start);
