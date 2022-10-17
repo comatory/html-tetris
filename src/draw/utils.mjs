@@ -1,12 +1,15 @@
 import { getCellsByIds } from "../utils/html.mjs";
 
 /** @typedef {import('./utils.mjs').Shape} Shape */
+/** @typedef {import('../utils/context.mjs').Context} Context */
+/** @typedef {import('../utils/context.mjs').CurrentDescriptor} CurrentDescriptor */
 
 /**
  * @typedef {Object} DrawOptions
  * @property {number} x - horizontal coordinate from top left
  * @property {number} y - vertical coordinate from top left
  * @property {Shape} shape - tetromino shape
+ * @property {Context} context - current game state
  */
 
 /**
@@ -16,12 +19,32 @@ import { getCellsByIds } from "../utils/html.mjs";
  * @returns {void}
  */
 export function draw({ x, y, shape, context }) {
-  const { grid } = context;
+  const { grid, current } = context;
+
+  if (current) {
+    clear(current, grid);
+  }
+
   const ids = getShapeIds(x, y, shape);
   const cells = getCellsByIds(ids, grid);
 
   for (const cell of cells) {
     cell.style.background = "red";
+  }
+}
+
+/**
+ * clears currently displayed tetromino
+ * @param {CurrentDescriptor} current
+ * @param {HTMLElement} grid
+ * @returns {void}
+ */
+function clear({ x, y, shape }, grid) {
+  const ids = getShapeIds(x, y, shape);
+  const cells = getCellsByIds(ids, grid);
+
+  for (const cell of cells) {
+    cell.style.background = "transparent";
   }
 }
 

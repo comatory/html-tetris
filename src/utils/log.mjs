@@ -1,5 +1,7 @@
 import { isDevelopment } from "./meta.mjs";
 
+/** @typedef {import('./context.mjs').Context} Context */
+
 const DEBUG_STYLING = `
   background-color: hotpink;
   color: #fff;
@@ -17,4 +19,25 @@ export function debug(...parts) {
   }
 
   console.debug(`%c${parts.join(" ")}`, DEBUG_STYLING);
+}
+
+/**
+ * create inspectable context
+ * @param {Context} ref - reference to context
+ */
+export function createDebuggableContext(ref) {
+  if (!isDevelopment) {
+    return;
+  }
+
+  debug("REGISTERED CONTEXT DEBUGGING");
+
+  document.addEventListener("keydown", (event) => {
+    // dot
+    if (event.keyCode !== 190) {
+      return;
+    }
+
+    debug(JSON.stringify(ref));
+  });
 }
