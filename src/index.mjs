@@ -24,6 +24,33 @@ function start() {
     y: 3,
     shape,
   };
+
+  let step = null;
+
+  function testLoop(time) {
+    if (!step) {
+      step = time;
+    }
+
+    const elapsed = time - step;
+
+    if (elapsed > 1000) {
+      const nextY = initialContext.current.y + 1;
+      draw({
+        x: initialContext.current.x,
+        y: nextY,
+        shape,
+        context: initialContext,
+      });
+
+      initialContext.current.y = nextY;
+      step = time;
+    }
+
+    window.requestAnimationFrame(testLoop);
+  }
+
+  window.requestAnimationFrame(testLoop);
 }
 
 document.addEventListener("DOMContentLoaded", start);

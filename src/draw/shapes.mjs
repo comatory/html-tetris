@@ -9,6 +9,13 @@
  * @typedef {("I"|"J"|"L"|"O"|"S"|"T"|"Z")} ShapeID
  */
 /**
+ * shape descriptor
+ * @typedef {Object} ShapeDescriptor
+ * @property {ShapeID} id - ID of shape
+ * @property {Shape} shape - actual shape
+ * @property {Rotation} rotation - rotation of the shape
+ */
+/**
  * maps shape ShapeID to RotationMap
  * @typedef {Record<ShapeID, ShapeMap>} ShapesMap
  */
@@ -21,7 +28,7 @@
  */
 /**
  * maps Rotation to Shape
- * @typedef {Record<keyof typeof Rotation, Shape>} ShapeMap
+ * @typedef {Record<keyof typeof Rotation, ShapeDescriptor>} ShapeMap
  */
 
 /** @type {ShapeID} */
@@ -57,10 +64,26 @@ const I_C = I_A;
 const I_D = I_B;
 /** @type {ShapeMap} */
 const I_MAP = Object.freeze({
-  [ROTATION.A]: I_A,
-  [ROTATION.B]: I_B,
-  [ROTATION.C]: I_C,
-  [ROTATION.D]: I_D,
+  [ROTATION.A]: Object.freeze({
+    id: I_ID,
+    shape: I_A,
+    rotation: ROTATION.A,
+  }),
+  [ROTATION.B]: Object.freeze({
+    id: I_ID,
+    shape: I_B,
+    rotation: ROTATION.B,
+  }),
+  [ROTATION.C]: Object.freeze({
+    id: I_ID,
+    shape: I_C,
+    rotation: ROTATION.C,
+  }),
+  [ROTATION.D]: Object.freeze({
+    id: I_ID,
+    shape: I_D,
+    rotation: ROTATION.D,
+  }),
 });
 
 /** @type {Shape} */
@@ -87,10 +110,26 @@ const J_D = Object.freeze([
 ]);
 /** @type {ShapeMap} */
 const J_MAP = Object.freeze({
-  [ROTATION.A]: J_A,
-  [ROTATION.B]: J_B,
-  [ROTATION.C]: J_C,
-  [ROTATION.D]: J_D,
+  [ROTATION.A]: Object.freeze({
+    id: J_ID,
+    shape: J_A,
+    rotation: ROTATION.A,
+  }),
+  [ROTATION.B]: Object.freeze({
+    id: J_ID,
+    shape: J_B,
+    rotation: ROTATION.B,
+  }),
+  [ROTATION.C]: Object.freeze({
+    id: J_ID,
+    shape: J_C,
+    rotation: ROTATION.C,
+  }),
+  [ROTATION.D]: Object.freeze({
+    id: J_ID,
+    shape: J_D,
+    rotation: ROTATION.D,
+  }),
 });
 
 /** @type {Shape} */
@@ -117,10 +156,26 @@ const L_D = Object.freeze([
 ]);
 /** @type {ShapeMap} */
 const L_MAP = Object.freeze({
-  [ROTATION.A]: L_A,
-  [ROTATION.B]: L_B,
-  [ROTATION.C]: L_C,
-  [ROTATION.D]: L_D,
+  [ROTATION.A]: Object.freeze({
+    id: L_ID,
+    shape: L_A,
+    rotation: ROTATION.A,
+  }),
+  [ROTATION.B]: Object.freeze({
+    id: L_ID,
+    shape: L_B,
+    rotation: ROTATION.B,
+  }),
+  [ROTATION.C]: Object.freeze({
+    id: L_ID,
+    shape: L_C,
+    rotation: ROTATION.C,
+  }),
+  [ROTATION.D]: Object.freeze({
+    id: L_ID,
+    shape: L_D,
+    rotation: ROTATION.D,
+  }),
 });
 
 /** @type {Shape} */
@@ -136,10 +191,26 @@ const O_C = O_A;
 const O_D = O_A;
 /** @type {ShapeMap} */
 const O_MAP = Object.freeze({
-  [ROTATION.A]: O_A,
-  [ROTATION.B]: O_B,
-  [ROTATION.C]: O_C,
-  [ROTATION.D]: O_D,
+  [ROTATION.A]: Object.freeze({
+    id: O_ID,
+    shape: O_A,
+    rotation: ROTATION.A,
+  }),
+  [ROTATION.B]: Object.freeze({
+    id: O_ID,
+    shape: O_B,
+    rotation: ROTATION.B,
+  }),
+  [ROTATION.C]: Object.freeze({
+    id: O_ID,
+    shape: O_C,
+    rotation: ROTATION.C,
+  }),
+  [ROTATION.D]: Object.freeze({
+    id: O_ID,
+    shape: O_D,
+    rotation: ROTATION.D,
+  }),
 });
 
 /** @type {Shape} */
@@ -159,10 +230,18 @@ const S_C = S_A;
 const S_D = S_A;
 /** @type {ShapeMap} */
 const S_MAP = Object.freeze({
-  [ROTATION.A]: S_A,
-  [ROTATION.B]: S_B,
-  [ROTATION.C]: S_C,
-  [ROTATION.D]: S_D,
+  [ROTATION.A]: Object.freeze({
+    id: S_ID,
+    shape: S_A,
+    rotation: ROTATION.A,
+  }),
+  [ROTATION.B]: Object.freeze({
+    id: S_ID,
+    shape: S_B,
+    rotation: ROTATION.A,
+  }),
+  [ROTATION.C]: Object.freeze({ id: S_ID, shape: S_C, rotation: ROTATION.C }),
+  [ROTATION.D]: Object.freeze({ id: S_ID, shape: S_D, rotation: ROTATION.D }),
 });
 
 /** @type {Shape} */
@@ -189,10 +268,10 @@ const T_D = Object.freeze([
 ]);
 /** @type {ShapeMap} */
 const T_MAP = Object.freeze({
-  [ROTATION.A]: T_A,
-  [ROTATION.B]: T_B,
-  [ROTATION.C]: T_C,
-  [ROTATION.D]: T_D,
+  [ROTATION.A]: Object.freeze({ id: T_ID, shape: T_A, rotation: ROTATION.A }),
+  [ROTATION.B]: Object.freeze({ id: T_ID, shape: T_B, rotation: ROTATION.B }),
+  [ROTATION.C]: Object.freeze({ id: T_ID, shape: T_C, rotation: ROTATION.C }),
+  [ROTATION.D]: Object.freeze({ id: T_ID, shape: T_D, rotation: ROTATION.D }),
 });
 
 /** @type {Shape} */
@@ -212,10 +291,10 @@ const Z_C = Z_A;
 const Z_D = Z_B;
 /** @type {ShapeMap} */
 const Z_MAP = Object.freeze({
-  [ROTATION.A]: Z_A,
-  [ROTATION.B]: Z_B,
-  [ROTATION.C]: Z_C,
-  [ROTATION.D]: Z_D,
+  [ROTATION.A]: Object.freeze({ id: Z_ID, shape: Z_A, rotation: ROTATION.A }),
+  [ROTATION.B]: Object.freeze({ id: Z_ID, shape: Z_B, rotation: ROTATION.B }),
+  [ROTATION.C]: Object.freeze({ id: Z_ID, shape: Z_C, rotation: ROTATION.C }),
+  [ROTATION.D]: Object.freeze({ id: Z_ID, shape: Z_D, rotation: ROTATION.D }),
 });
 
 /** @type {ShapesMap} */
@@ -229,72 +308,72 @@ const SHAPES = Object.freeze({
   [Z_ID]: Z_MAP,
 });
 
-const ROTATION_ORDER = [ROTATION.a, ROTATION.b, ROTATION.c, ROTATION.d];
+const ROTATION_ORDER = [ROTATION.A, ROTATION.B, ROTATION.C, ROTATION.D];
 
 /** j tetromino
  * @param {Rotation} rotation
- * @returns {Shape} shape
+ * @returns {ShapeDescriptor} shape descriptor
  */
-export function j(rotation) {
+function j(rotation) {
   return SHAPES[J_ID][rotation];
 }
 
 /** i tetromino
  * @param {Rotation} rotation
- * @returns {Shape} shape
+ * @returns {ShapeDescriptor} shape descriptor
  */
-export function i(rotation) {
+function i(rotation) {
   return SHAPES[I_ID][rotation];
 }
 
 /** l tetromino
  * @param {Rotation} rotation
- * @returns {Shape} shape
+ * @returns {ShapeDescriptor} shape descriptor
  */
-export function l(rotation) {
+function l(rotation) {
   return SHAPES[L_ID][rotation];
 }
 
 /** o tetromino
  * @param {Rotation} rotation
- * @returns {Shape} shape
+ * @returns {ShapeDescriptor} shape descriptor
  */
-export function o(rotation) {
+function o(rotation) {
   return SHAPES[O_ID][rotation];
 }
 
 /** s tetromino
  * @param {Rotation} rotation
- * @returns {Shape} shape
+ * @returns {ShapeDescriptor} shape descriptor
  */
-export function s(rotation) {
+function s(rotation) {
   return SHAPES[S_ID][rotation];
 }
 
 /** t tetromino
  * @param {Rotation} rotation
- * @returns {Shape} shape
+ * @returns {ShapeDescriptor} shape descriptor
  */
-export function t(rotation) {
+function t(rotation) {
   return SHAPES[T_ID][rotation];
 }
 
 /** z tetromino
  * @param {Rotation} rotation
- * @returns {Shape} shape
+ * @returns {ShapeDescriptor} shape descriptor
  */
-export function z(rotation) {
+function z(rotation) {
   return SHAPES[Z_ID][rotation];
 }
 
 /** get shape by id
  * @param {ShapeID} id - shape ID
  * @param {Rotation} rotation - rotation ID
- * @returns {Shape} shape
+ * @returns {ShapeDescriptor} shape descriptor
  */
 export function getShape(id, rotation) {
   switch (id) {
-    case I_D:
+    case I_ID:
       return i(rotation);
     case J_ID:
       return j(rotation);
@@ -321,11 +400,11 @@ export function getShape(id, rotation) {
 export function getNextRotation(rotation) {
   const i = ROTATION_ORDER.findIndex((r) => r === rotation);
 
-  if (i + 1 > ROTATION_ORDER.length) {
-    return ROTATION_ORDER.a;
+  if (i + 1 >= ROTATION_ORDER.length) {
+    return ROTATION.A;
   }
 
-  return ROTATION_ORDER[Math.max(i + 1, ROTATION_ORDER.length)];
+  return ROTATION_ORDER[Math.min(i + 1, ROTATION_ORDER.length)];
 }
 
 /**
@@ -335,6 +414,14 @@ export function getNextRotation(rotation) {
  * @returns {boolean} true = clockwise; false=anti-clockwise
  */
 export function getDirection(rotation, nextRotation) {
+  if (rotation === ROTATION.A && nextRotation === ROTATION.D) {
+    return false;
+  }
+
+  if (rotation === ROTATION.D && nextRotation === ROTATION.A) {
+    return true;
+  }
+
   const i1 = ROTATION_ORDER.findIndex((r) => r === rotation);
   const i2 = ROTATION_ORDER.findIndex((r) => r === nextRotation);
 
