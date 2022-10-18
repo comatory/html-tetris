@@ -1,6 +1,6 @@
 import { buildInitialContext } from "./utils/context.mjs";
 import { debug, createDebuggableContext } from "./utils/log.mjs";
-import { z, ROTATION } from "./draw/shapes.mjs";
+import { getShape, ROTATION, Z_ID } from "./draw/shapes.mjs";
 import { draw } from "./draw/utils.mjs";
 import { keyBindingsFactory } from "./controls/keyboard.mjs";
 
@@ -16,7 +16,7 @@ function start() {
   const { registerKeyBindings } = keyBindingsFactory(initialContext);
   registerKeyBindings();
 
-  const shape = z(ROTATION.D);
+  const shape = getShape(Z_ID, ROTATION.D);
   draw({ x: 2, y: 3, shape, context: initialContext });
 
   initialContext.current = {

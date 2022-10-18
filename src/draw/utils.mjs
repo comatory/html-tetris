@@ -1,6 +1,7 @@
 import { getCellsByIds } from "../utils/html.mjs";
 
-/** @typedef {import('./utils.mjs').Shape} Shape */
+/** @typedef {import('./shapes.mjs').Shape} Shape */
+/** @typedef {import('./shapes.mjs').ShapeDescriptor} ShapeDescriptor */
 /** @typedef {import('../utils/context.mjs').Context} Context */
 /** @typedef {import('../utils/context.mjs').CurrentDescriptor} CurrentDescriptor */
 
@@ -8,7 +9,7 @@ import { getCellsByIds } from "../utils/html.mjs";
  * @typedef {Object} DrawOptions
  * @property {number} x - horizontal coordinate from top left
  * @property {number} y - vertical coordinate from top left
- * @property {Shape} shape - tetromino shape
+ * @property {ShapeDescriptor} shape - tetromino shape descriptor
  * @property {Context} context - current game state
  */
 
@@ -20,12 +21,13 @@ import { getCellsByIds } from "../utils/html.mjs";
  */
 export function draw({ x, y, shape, context }) {
   const { grid, current } = context;
+  const { value } = shape;
 
   if (current) {
     clear(current, grid);
   }
 
-  const ids = getShapeIds(x, y, shape);
+  const ids = getShapeIds(x, y, value);
   const cells = getCellsByIds(ids, grid);
 
   for (const cell of cells) {
@@ -40,7 +42,8 @@ export function draw({ x, y, shape, context }) {
  * @returns {void}
  */
 function clear({ x, y, shape }, grid) {
-  const ids = getShapeIds(x, y, shape);
+  const { value } = shape;
+  const ids = getShapeIds(x, y, value);
   const cells = getCellsByIds(ids, grid);
 
   for (const cell of cells) {
@@ -48,6 +51,13 @@ function clear({ x, y, shape }, grid) {
   }
 }
 
+/**
+ * extract HTML IDs from given shape
+ * @param {number} x
+ * @param {number} y
+ * @param {Shape} shape
+ * @returns {Array<string>} ids
+ */
 function getShapeIds(x, y, shape) {
   const ids = [];
 
@@ -66,6 +76,11 @@ function getShapeIds(x, y, shape) {
   return ids;
 }
 
+/**
+ * is the cell on?
+ * @param {number} value
+ * @returns {boolean} true if yes, false if no
+ */
 function isCellEnabled(value) {
   return value === 1;
 }

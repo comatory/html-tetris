@@ -25,27 +25,36 @@ function willHitWalls(positioning) {
 }
 
 /**
+ * @typedef {Object} PositioningOptions
+ * @property {Shape} value
+ * @property {number} x
+ * @property {number} y
+ *
  * get absolute positioning of a shape
- * @param {number} x
- * @param {number} y
- * @param {Shape} shape
+ * @param {PositioningOptions} options
  * @returns {Positioning} positioning object
  */
-function getPositioning({ x, y, shape }) {
+function getPositioning({ x, y, value }) {
   return {
     left: x,
-    right: x + shape.length,
+    right: x + value.length,
     top: y,
-    bottom: y + shape[0].length,
+    bottom: y + value[0].length,
   };
 }
 
 /**
+ * @typedef {Object} CheckOptions
+ * @property {Shape} value
+ * @property {number} x
+ * @property {number} y
+ *
  * check whether the position will collide
  * with area walls or heap
+ * @param {CheckOptions} options
  * @returns {boolean} true if it will hit, false if not
  */
-export function check({ shape, x, y }) {
-  const positioning = getPositioning({ x, y, shape });
+export function check({ value, x, y }) {
+  const positioning = getPositioning({ x, y, value });
   return !willHitWalls(positioning);
 }

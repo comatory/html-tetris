@@ -3,13 +3,13 @@ import { ROWS, COLUMNS } from "./meta.mjs";
 import { getRootStyle } from "./html.mjs";
 
 /**
- * @typedef {import('../draw/shapes.mjs').Shape} Shape
+ * @typedef {import('../draw/shapes.mjs').ShapeDescriptor} ShapeDescriptor
  */
 
 /**
  * describes positioning and shape of current block
  * @typedef {Object} CurrentDescriptor
- * @property {Shape} shape
+ * @property {ShapeDescriptor} shape
  * @property {number} x
  * @property {number} y
  */
