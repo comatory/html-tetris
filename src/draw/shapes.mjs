@@ -12,7 +12,7 @@
  * shape descriptor
  * @typedef {Object} ShapeDescriptor
  * @property {ShapeID} id - ID of shape
- * @property {Shape} shape - actual shape
+ * @property {Shape} value - actual shape
  * @property {Rotation} rotation - rotation of the shape
  */
 /**
@@ -66,22 +66,22 @@ const I_D = I_B;
 const I_MAP = Object.freeze({
   [ROTATION.A]: Object.freeze({
     id: I_ID,
-    shape: I_A,
+    value: I_A,
     rotation: ROTATION.A,
   }),
   [ROTATION.B]: Object.freeze({
     id: I_ID,
-    shape: I_B,
+    value: I_B,
     rotation: ROTATION.B,
   }),
   [ROTATION.C]: Object.freeze({
     id: I_ID,
-    shape: I_C,
+    value: I_C,
     rotation: ROTATION.C,
   }),
   [ROTATION.D]: Object.freeze({
     id: I_ID,
-    shape: I_D,
+    value: I_D,
     rotation: ROTATION.D,
   }),
 });
@@ -112,22 +112,22 @@ const J_D = Object.freeze([
 const J_MAP = Object.freeze({
   [ROTATION.A]: Object.freeze({
     id: J_ID,
-    shape: J_A,
+    value: J_A,
     rotation: ROTATION.A,
   }),
   [ROTATION.B]: Object.freeze({
     id: J_ID,
-    shape: J_B,
+    value: J_B,
     rotation: ROTATION.B,
   }),
   [ROTATION.C]: Object.freeze({
     id: J_ID,
-    shape: J_C,
+    value: J_C,
     rotation: ROTATION.C,
   }),
   [ROTATION.D]: Object.freeze({
     id: J_ID,
-    shape: J_D,
+    value: J_D,
     rotation: ROTATION.D,
   }),
 });
@@ -158,22 +158,22 @@ const L_D = Object.freeze([
 const L_MAP = Object.freeze({
   [ROTATION.A]: Object.freeze({
     id: L_ID,
-    shape: L_A,
+    value: L_A,
     rotation: ROTATION.A,
   }),
   [ROTATION.B]: Object.freeze({
     id: L_ID,
-    shape: L_B,
+    value: L_B,
     rotation: ROTATION.B,
   }),
   [ROTATION.C]: Object.freeze({
     id: L_ID,
-    shape: L_C,
+    value: L_C,
     rotation: ROTATION.C,
   }),
   [ROTATION.D]: Object.freeze({
     id: L_ID,
-    shape: L_D,
+    value: L_D,
     rotation: ROTATION.D,
   }),
 });
@@ -193,22 +193,22 @@ const O_D = O_A;
 const O_MAP = Object.freeze({
   [ROTATION.A]: Object.freeze({
     id: O_ID,
-    shape: O_A,
+    value: O_A,
     rotation: ROTATION.A,
   }),
   [ROTATION.B]: Object.freeze({
     id: O_ID,
-    shape: O_B,
+    value: O_B,
     rotation: ROTATION.B,
   }),
   [ROTATION.C]: Object.freeze({
     id: O_ID,
-    shape: O_C,
+    value: O_C,
     rotation: ROTATION.C,
   }),
   [ROTATION.D]: Object.freeze({
     id: O_ID,
-    shape: O_D,
+    value: O_D,
     rotation: ROTATION.D,
   }),
 });
@@ -232,16 +232,24 @@ const S_D = S_A;
 const S_MAP = Object.freeze({
   [ROTATION.A]: Object.freeze({
     id: S_ID,
-    shape: S_A,
+    value: S_A,
     rotation: ROTATION.A,
   }),
   [ROTATION.B]: Object.freeze({
     id: S_ID,
-    shape: S_B,
+    value: S_B,
     rotation: ROTATION.A,
   }),
-  [ROTATION.C]: Object.freeze({ id: S_ID, shape: S_C, rotation: ROTATION.C }),
-  [ROTATION.D]: Object.freeze({ id: S_ID, shape: S_D, rotation: ROTATION.D }),
+  [ROTATION.C]: Object.freeze({
+    id: S_ID,
+    value: S_C,
+    rotation: ROTATION.C,
+  }),
+  [ROTATION.D]: Object.freeze({
+    id: S_ID,
+    value: S_D,
+    rotation: ROTATION.D,
+  }),
 });
 
 /** @type {Shape} */
@@ -268,10 +276,26 @@ const T_D = Object.freeze([
 ]);
 /** @type {ShapeMap} */
 const T_MAP = Object.freeze({
-  [ROTATION.A]: Object.freeze({ id: T_ID, shape: T_A, rotation: ROTATION.A }),
-  [ROTATION.B]: Object.freeze({ id: T_ID, shape: T_B, rotation: ROTATION.B }),
-  [ROTATION.C]: Object.freeze({ id: T_ID, shape: T_C, rotation: ROTATION.C }),
-  [ROTATION.D]: Object.freeze({ id: T_ID, shape: T_D, rotation: ROTATION.D }),
+  [ROTATION.A]: Object.freeze({
+    id: T_ID,
+    value: T_A,
+    rotation: ROTATION.A,
+  }),
+  [ROTATION.B]: Object.freeze({
+    id: T_ID,
+    value: T_B,
+    rotation: ROTATION.B,
+  }),
+  [ROTATION.C]: Object.freeze({
+    id: T_ID,
+    value: T_C,
+    rotation: ROTATION.C,
+  }),
+  [ROTATION.D]: Object.freeze({
+    id: T_ID,
+    value: T_D,
+    rotation: ROTATION.D,
+  }),
 });
 
 /** @type {Shape} */
@@ -291,10 +315,26 @@ const Z_C = Z_A;
 const Z_D = Z_B;
 /** @type {ShapeMap} */
 const Z_MAP = Object.freeze({
-  [ROTATION.A]: Object.freeze({ id: Z_ID, shape: Z_A, rotation: ROTATION.A }),
-  [ROTATION.B]: Object.freeze({ id: Z_ID, shape: Z_B, rotation: ROTATION.B }),
-  [ROTATION.C]: Object.freeze({ id: Z_ID, shape: Z_C, rotation: ROTATION.C }),
-  [ROTATION.D]: Object.freeze({ id: Z_ID, shape: Z_D, rotation: ROTATION.D }),
+  [ROTATION.A]: Object.freeze({
+    id: Z_ID,
+    value: Z_A,
+    rotation: ROTATION.A,
+  }),
+  [ROTATION.B]: Object.freeze({
+    id: Z_ID,
+    value: Z_B,
+    rotation: ROTATION.B,
+  }),
+  [ROTATION.C]: Object.freeze({
+    id: Z_ID,
+    value: Z_C,
+    rotation: ROTATION.C,
+  }),
+  [ROTATION.D]: Object.freeze({
+    id: Z_ID,
+    value: Z_D,
+    rotation: ROTATION.D,
+  }),
 });
 
 /** @type {ShapesMap} */

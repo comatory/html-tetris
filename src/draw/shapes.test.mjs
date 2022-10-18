@@ -48,7 +48,7 @@ describe("shapes", () => {
     describe("I", () => {
       it("should return I descriptor", () => {
         expect(getShape(I_ID, ROTATION.A)).to.have.property("id", I_ID);
-        expect(getShape(I_ID, ROTATION.A)).to.have.property("shape");
+        expect(getShape(I_ID, ROTATION.A)).to.have.property("value");
         expect(getShape(I_ID, ROTATION.A)).to.have.property(
           "rotation",
           ROTATION.A
@@ -59,7 +59,7 @@ describe("shapes", () => {
     describe("J", () => {
       it("should return J descriptor", () => {
         expect(getShape(J_ID, ROTATION.A)).to.have.property("id", J_ID);
-        expect(getShape(J_ID, ROTATION.A)).to.have.property("shape");
+        expect(getShape(J_ID, ROTATION.A)).to.have.property("value");
         expect(getShape(J_ID, ROTATION.A)).to.have.property(
           "rotation",
           ROTATION.A
@@ -70,7 +70,7 @@ describe("shapes", () => {
     describe("L", () => {
       it("should return L descriptor", () => {
         expect(getShape(L_ID, ROTATION.A)).to.have.property("id", L_ID);
-        expect(getShape(L_ID, ROTATION.A)).to.have.property("shape");
+        expect(getShape(L_ID, ROTATION.A)).to.have.property("value");
         expect(getShape(L_ID, ROTATION.A)).to.have.property(
           "rotation",
           ROTATION.A
@@ -81,7 +81,7 @@ describe("shapes", () => {
     describe("O", () => {
       it("should return O descriptor", () => {
         expect(getShape(O_ID, ROTATION.A)).to.have.property("id", O_ID);
-        expect(getShape(O_ID, ROTATION.A)).to.have.property("shape");
+        expect(getShape(O_ID, ROTATION.A)).to.have.property("value");
         expect(getShape(O_ID, ROTATION.A)).to.have.property(
           "rotation",
           ROTATION.A
@@ -92,7 +92,7 @@ describe("shapes", () => {
     describe("S", () => {
       it("should return S descriptor", () => {
         expect(getShape(S_ID, ROTATION.A)).to.have.property("id", S_ID);
-        expect(getShape(S_ID, ROTATION.A)).to.have.property("shape");
+        expect(getShape(S_ID, ROTATION.A)).to.have.property("value");
         expect(getShape(S_ID, ROTATION.A)).to.have.property(
           "rotation",
           ROTATION.A
@@ -103,7 +103,7 @@ describe("shapes", () => {
     describe("T", () => {
       it("should return T descriptor", () => {
         expect(getShape(T_ID, ROTATION.A)).to.have.property("id", T_ID);
-        expect(getShape(T_ID, ROTATION.A)).to.have.property("shape");
+        expect(getShape(T_ID, ROTATION.A)).to.have.property("value");
         expect(getShape(T_ID, ROTATION.A)).to.have.property(
           "rotation",
           ROTATION.A
@@ -114,7 +114,7 @@ describe("shapes", () => {
     describe("Z", () => {
       it("should return Z descriptor", () => {
         expect(getShape(Z_ID, ROTATION.A)).to.have.property("id", Z_ID);
-        expect(getShape(Z_ID, ROTATION.A)).to.have.property("shape");
+        expect(getShape(Z_ID, ROTATION.A)).to.have.property("value");
         expect(getShape(Z_ID, ROTATION.A)).to.have.property(
           "rotation",
           ROTATION.A
