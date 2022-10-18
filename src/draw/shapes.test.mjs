@@ -4,6 +4,7 @@ import { expect } from "chai";
 import {
   getShape,
   getNextRotation,
+  getPreviousRotation,
   ROTATION,
   I_ID,
   J_ID,
@@ -138,6 +139,24 @@ describe("shapes", () => {
 
     it("should get next rotation of A when pasing rotation D", () => {
       expect(getNextRotation(ROTATION.D)).to.equal(ROTATION.A);
+    });
+  });
+
+  describe("getPreviousRotation", () => {
+    it("should get previous rotation of A when pasing rotation B", () => {
+      expect(getPreviousRotation(ROTATION.B)).to.equal(ROTATION.A);
+    });
+
+    it("should get previous rotation of B when pasing rotation C", () => {
+      expect(getPreviousRotation(ROTATION.C)).to.equal(ROTATION.B);
+    });
+
+    it("should get previous rotation of C when pasing rotation D", () => {
+      expect(getPreviousRotation(ROTATION.D)).to.equal(ROTATION.C);
+    });
+
+    it("should get previous rotation of D when pasing rotation A", () => {
+      expect(getPreviousRotation(ROTATION.A)).to.equal(ROTATION.D);
     });
   });
 

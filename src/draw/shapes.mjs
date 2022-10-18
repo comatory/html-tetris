@@ -433,18 +433,42 @@ export function getShape(id, rotation) {
 }
 
 /**
+ * get index of current rotation from ordered list
+ * @param {Rotation} rotation
+ * @returns {number} index
+ */
+function getRotationIndex(rotation) {
+  return ROTATION_ORDER.findIndex((r) => r === rotation);
+}
+
+/**
  * get next rotation from the ordered rotation list
  * @param {Rotation} rotation
  * @returns {Rotation} next rotation
  */
 export function getNextRotation(rotation) {
-  const i = ROTATION_ORDER.findIndex((r) => r === rotation);
+  const i = getRotationIndex(rotation);
 
   if (i + 1 >= ROTATION_ORDER.length) {
     return ROTATION.A;
   }
 
   return ROTATION_ORDER[Math.min(i + 1, ROTATION_ORDER.length)];
+}
+
+/**
+ * get previous rotation from the ordered rotation list
+ * @param {Rotation} rotation
+ * @returns {Rotation} next rotation
+ */
+export function getPreviousRotation(rotation) {
+  const i = getRotationIndex(rotation);
+
+  if (i - 1 < 0) {
+    return ROTATION.D;
+  }
+
+  return ROTATION_ORDER[Math.min(i - 1, ROTATION_ORDER.length - 1)];
 }
 
 /**

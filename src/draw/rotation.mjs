@@ -10,6 +10,7 @@ import {
   L_ID,
   O_ID,
   T_ID,
+  getPreviousRotation,
 } from "./shapes.mjs";
 
 /** @typedef {import('./shapes.mjs').Rotation} Rotation */
@@ -79,10 +80,12 @@ const ROTATION_COORDINATE_ADJUSTMENT = Object.freeze({
 });
 
 /**
- * rotate tetromino clockwise
+ * rotate tetromino
  * @param {Context} context
+ * @param {Rotation} nextRotation
+ * @returns {void}
  */
-export function rotateClockWise(context) {
+function rotate(context, nextRotation) {
   const { current } = context;
 
   if (!current) {
@@ -90,9 +93,8 @@ export function rotateClockWise(context) {
   }
 
   const { x, y, shape } = current;
-  const { rotation, id } = shape;
+  const { id } = shape;
 
-  const nextRotation = getNextRotation(rotation);
   const adjustment = ROTATION_COORDINATE_ADJUSTMENT[id][nextRotation];
 
   const nextX = x + adjustment[0];
@@ -110,4 +112,41 @@ export function rotateClockWise(context) {
   context.current.y = nextY;
   context.current.shape = nextShape;
   context.current.rotation = nextRotation;
+}
+
+/**
+ * rotate tetromino clockwise
+ * @param {Context} context
+ */
+export function rotateClockWise(context) {
+  const { current } = context;
+
+  if (!current) {
+    return;
+  }
+
+  const { shape } = current;
+  const { rotation } = shape;
+
+  const nextRotation = getNextRotation(rotation);
+
+  return rotate(context, nextRotation);
+}
+
+/**
+ * rotate tetromino clockwise
+ * @param {Context} context
+ */
+export function rotateAntiClockWise(context) {
+  const { current } = context;
+
+  if (!current) {
+    return;
+  }
+
+  const { shape } = current;
+  const { rotation } = shape;
+
+  const nextRotation = getPreviousRotation(rotation);
+  return rotate(context, nextRotation);
 }

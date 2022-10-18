@@ -1,6 +1,6 @@
 import { debug } from "../utils/log.mjs";
 import { moveLeft, moveRight, moveDown } from "../draw/movement.mjs";
-import { rotateClockWise } from "../draw/rotation.mjs";
+import { rotateClockWise, rotateAntiClockWise } from "../draw/rotation.mjs";
 
 /** @typedef {import('../utils/context.mjs').Context} Context */
 
@@ -25,6 +25,7 @@ export function keyBindingsFactory(context) {
         break;
       case ARROW_UP_KEY:
         debug("up key pressed");
+        rotateClockWise(context);
         break;
       case ARROW_LEFT_KEY:
         debug("left key pressed");
@@ -36,6 +37,7 @@ export function keyBindingsFactory(context) {
         break;
       case Z_KEY:
         debug("z key pressed");
+        rotateAntiClockWise(context);
         break;
       case X_KEY:
         debug("x key pressed");
