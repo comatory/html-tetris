@@ -1,6 +1,6 @@
 import { buildInitialContext } from "./utils/context.mjs";
 import { debug, createDebuggableContext } from "./utils/log.mjs";
-import { getShape, ROTATION, Z_ID } from "./draw/shapes.mjs";
+import { getShape, ROTATION, T_ID } from "./draw/shapes.mjs";
 import { draw } from "./draw/utils.mjs";
 import { keyBindingsFactory } from "./controls/keyboard.mjs";
 
@@ -16,15 +16,16 @@ function start() {
   const { registerKeyBindings } = keyBindingsFactory(initialContext);
   registerKeyBindings();
 
-  const shape = getShape(Z_ID, ROTATION.D);
-  draw({ x: 2, y: 3, shape, context: initialContext });
+  const shape = getShape(T_ID, ROTATION.A);
+  draw({ x: 0, y: 0, shape, context: initialContext });
 
   initialContext.current = {
-    x: 2,
-    y: 3,
+    x: 0,
+    y: 0,
     shape,
   };
 
+  /*
   let step = null;
 
   function testLoop(time) {
@@ -51,6 +52,7 @@ function start() {
   }
 
   window.requestAnimationFrame(testLoop);
+  */
 }
 
 document.addEventListener("DOMContentLoaded", start);

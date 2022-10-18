@@ -1,5 +1,6 @@
 import { debug } from "../utils/log.mjs";
 import { moveLeft, moveRight, moveDown } from "../draw/movement.mjs";
+import { rotateClockWise } from "../draw/rotation.mjs";
 
 /** @typedef {import('../utils/context.mjs').Context} Context */
 
@@ -38,6 +39,7 @@ export function keyBindingsFactory(context) {
         break;
       case X_KEY:
         debug("x key pressed");
+        rotateClockWise(context);
         break;
     }
   }

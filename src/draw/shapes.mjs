@@ -55,9 +55,9 @@ export const ROTATION = {
 };
 
 /** @type {Shape} */
-const I_A = Object.freeze([[1, 1, 1, 1]]);
+const I_A = Object.freeze([[1], [1], [1], [1]]);
 /** @type {Shape} */
-const I_B = Object.freeze([[1], [1], [1], [1]]);
+const I_B = Object.freeze([[1, 1, 1, 1]]);
 /** @type {Shape} */
 const I_C = I_A;
 /** @type {Shape} */
@@ -88,25 +88,25 @@ const I_MAP = Object.freeze({
 
 /** @type {Shape} */
 const J_A = Object.freeze([
-  [1, 0, 0],
-  [1, 1, 1],
+  [1, 1],
+  [0, 1],
+  [0, 1],
 ]);
 /** @type {Shape} */
 const J_B = Object.freeze([
-  [1, 1],
-  [1, 0],
-  [1, 0],
+  [1, 1, 1],
+  [1, 0, 0],
 ]);
 /** @type {Shape} */
 const J_C = Object.freeze([
-  [0, 0, 1],
-  [1, 1, 1],
-]);
-/** @type {Shape} */
-const J_D = Object.freeze([
   [1, 0],
   [1, 0],
   [1, 1],
+]);
+/** @type {Shape} */
+const J_D = Object.freeze([
+  [0, 0, 1],
+  [1, 1, 1],
 ]);
 /** @type {ShapeMap} */
 const J_MAP = Object.freeze({
@@ -134,25 +134,25 @@ const J_MAP = Object.freeze({
 
 /** @type {Shape} */
 const L_A = Object.freeze([
-  [0, 0, 1],
-  [1, 1, 1],
+  [0, 1],
+  [0, 1],
+  [1, 1],
 ]);
 /** @type {Shape} */
 const L_B = Object.freeze([
-  [1, 0],
-  [1, 0],
-  [1, 1],
+  [1, 1, 1],
+  [0, 0, 1],
 ]);
 /** @type {Shape} */
 const L_C = Object.freeze([
-  [1, 1, 1],
-  [1, 0, 0],
+  [1, 1],
+  [1, 0],
+  [1, 0],
 ]);
 /** @type {Shape} */
 const L_D = Object.freeze([
-  [1, 1],
-  [0, 1],
-  [0, 1],
+  [1, 0, 0],
+  [1, 1, 1],
 ]);
 /** @type {ShapeMap} */
 const L_MAP = Object.freeze({
@@ -215,19 +215,19 @@ const O_MAP = Object.freeze({
 
 /** @type {Shape} */
 const S_A = Object.freeze([
-  [0, 1, 1],
-  [1, 1, 0],
+  [0, 1],
+  [1, 1],
+  [1, 0],
 ]);
 /** @type {Shape} */
 const S_B = Object.freeze([
-  [1, 0],
-  [1, 1],
-  [0, 1],
+  [1, 1, 0],
+  [0, 1, 1],
 ]);
 /** @type {Shape} */
 const S_C = S_A;
 /** @type {Shape} */
-const S_D = S_A;
+const S_D = S_B;
 /** @type {ShapeMap} */
 const S_MAP = Object.freeze({
   [ROTATION.A]: Object.freeze({
@@ -238,7 +238,7 @@ const S_MAP = Object.freeze({
   [ROTATION.B]: Object.freeze({
     id: S_ID,
     value: S_B,
-    rotation: ROTATION.A,
+    rotation: ROTATION.B,
   }),
   [ROTATION.C]: Object.freeze({
     id: S_ID,
@@ -254,25 +254,25 @@ const S_MAP = Object.freeze({
 
 /** @type {Shape} */
 const T_A = Object.freeze([
-  [0, 1, 0],
-  [1, 1, 1],
+  [0, 1],
+  [1, 1],
+  [0, 1],
 ]);
 /** @type {Shape} */
 const T_B = Object.freeze([
-  [1, 0],
-  [1, 1],
-  [1, 0],
-]);
-/** @type {Shape} */
-const T_C = Object.freeze([
   [1, 1, 1],
   [0, 1, 0],
 ]);
 /** @type {Shape} */
-const T_D = Object.freeze([
-  [0, 1],
+const T_C = Object.freeze([
+  [1, 0],
   [1, 1],
-  [0, 1],
+  [1, 0],
+]);
+/** @type {Shape} */
+const T_D = Object.freeze([
+  [0, 1, 0],
+  [1, 1, 1],
 ]);
 /** @type {ShapeMap} */
 const T_MAP = Object.freeze({
@@ -300,14 +300,14 @@ const T_MAP = Object.freeze({
 
 /** @type {Shape} */
 const Z_A = Object.freeze([
-  [1, 1, 0],
-  [0, 1, 1],
+  [1, 0],
+  [1, 1],
+  [0, 1],
 ]);
 /** @type {Shape} */
 const Z_B = Object.freeze([
-  [0, 1],
-  [1, 1],
-  [1, 0],
+  [0, 1, 1],
+  [1, 1, 0],
 ]);
 /** @type {Shape} */
 const Z_C = Z_A;
