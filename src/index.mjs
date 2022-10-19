@@ -1,7 +1,8 @@
 import { buildInitialContext } from "./utils/context.mjs";
 import { debug, createDebuggableContext } from "./utils/log.mjs";
-import { getShape, ROTATION, I_ID } from "./draw/shapes.mjs";
+import { getShape } from "./draw/shapes.mjs";
 import { draw } from "./draw/utils.mjs";
+import { spawn, getSpawnShapeData } from "./draw/spawn.mjs";
 import { keyBindingsFactory } from "./controls/keyboard.mjs";
 
 /** starts the game */
@@ -16,12 +17,19 @@ function start() {
   const { registerKeyBindings } = keyBindingsFactory(initialContext);
   registerKeyBindings();
 
-  const shape = getShape(I_ID, ROTATION.A);
-  draw({ x: 0, y: 0, shape, context: initialContext });
+  const { id, rotation } = getSpawnShapeData();
+  const shape = getShape(id, rotation);
+  const { x, y } = spawn({
+    id,
+    x: 3,
+    y: 0,
+    rotation: shape.rotation,
+  });
+  draw({ x, y, shape, context: initialContext });
 
   initialContext.current = {
-    x: 0,
-    y: 0,
+    x,
+    y,
     shape,
   };
 

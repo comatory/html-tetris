@@ -47,16 +47,16 @@ const DIRECTION_ACW = "ACW";
 /** @type {RotationCoordinateAdjustment} */
 const I_COORDINATE_ADJUSTMENT = deepFreeze({
   [DIRECTION_CW]: {
-    [ROTATION.A]: [-1, 0],
-    [ROTATION.B]: [2, 0],
+    [ROTATION.A]: [-1, 1],
+    [ROTATION.B]: [2, -1],
     [ROTATION.C]: [-2, 2],
     [ROTATION.D]: [1, -2],
   },
   [DIRECTION_ACW]: {
-    [ROTATION.A]: [-2, 0],
+    [ROTATION.A]: [-2, 1],
     [ROTATION.B]: [2, -2],
     [ROTATION.C]: [-1, 2],
-    [ROTATION.D]: [1, 0],
+    [ROTATION.D]: [1, -1],
   },
 });
 /** @type {RotationCoordinateAdjustment} */

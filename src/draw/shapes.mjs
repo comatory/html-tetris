@@ -11,6 +11,10 @@ import { deepFreeze } from "../utils/meta.mjs";
  * @typedef {("I"|"J"|"L"|"O"|"S"|"T"|"Z")} ShapeID
  */
 /**
+ * shapes
+ * @typedef {Array<ShapeID>} Shapes
+ */
+/**
  * shape descriptor
  * @typedef {Object} ShapeDescriptor
  * @property {ShapeID} id - ID of shape
@@ -47,6 +51,9 @@ export const S_ID = "S";
 export const T_ID = "T";
 /** @type {ShapeID} */
 export const Z_ID = "Z";
+
+/** @type {Shapes} */
+export const SHAPES = deepFreeze([I_ID, J_ID, L_ID, O_ID, S_ID, T_ID, Z_ID]);
 
 /** @type {Rotation} */
 export const ROTATION = {
@@ -340,7 +347,7 @@ const Z_MAP = deepFreeze({
 });
 
 /** @type {ShapesMap} */
-const SHAPES = deepFreeze({
+const SHAPES_MAP = deepFreeze({
   [I_ID]: I_MAP,
   [J_ID]: J_MAP,
   [L_ID]: L_MAP,
@@ -350,14 +357,20 @@ const SHAPES = deepFreeze({
   [Z_ID]: Z_MAP,
 });
 
-const ROTATION_ORDER = [ROTATION.A, ROTATION.B, ROTATION.C, ROTATION.D];
+/** @type {Array<Rotation>} */
+export const ROTATION_ORDER = deepFreeze([
+  ROTATION.A,
+  ROTATION.B,
+  ROTATION.C,
+  ROTATION.D,
+]);
 
 /** j tetromino
  * @param {Rotation} rotation
  * @returns {ShapeDescriptor} shape descriptor
  */
 function j(rotation) {
-  return SHAPES[J_ID][rotation];
+  return SHAPES_MAP[J_ID][rotation];
 }
 
 /** i tetromino
@@ -365,7 +378,7 @@ function j(rotation) {
  * @returns {ShapeDescriptor} shape descriptor
  */
 function i(rotation) {
-  return SHAPES[I_ID][rotation];
+  return SHAPES_MAP[I_ID][rotation];
 }
 
 /** l tetromino
@@ -373,7 +386,7 @@ function i(rotation) {
  * @returns {ShapeDescriptor} shape descriptor
  */
 function l(rotation) {
-  return SHAPES[L_ID][rotation];
+  return SHAPES_MAP[L_ID][rotation];
 }
 
 /** o tetromino
@@ -381,7 +394,7 @@ function l(rotation) {
  * @returns {ShapeDescriptor} shape descriptor
  */
 function o(rotation) {
-  return SHAPES[O_ID][rotation];
+  return SHAPES_MAP[O_ID][rotation];
 }
 
 /** s tetromino
@@ -389,7 +402,7 @@ function o(rotation) {
  * @returns {ShapeDescriptor} shape descriptor
  */
 function s(rotation) {
-  return SHAPES[S_ID][rotation];
+  return SHAPES_MAP[S_ID][rotation];
 }
 
 /** t tetromino
@@ -397,7 +410,7 @@ function s(rotation) {
  * @returns {ShapeDescriptor} shape descriptor
  */
 function t(rotation) {
-  return SHAPES[T_ID][rotation];
+  return SHAPES_MAP[T_ID][rotation];
 }
 
 /** z tetromino
@@ -405,7 +418,7 @@ function t(rotation) {
  * @returns {ShapeDescriptor} shape descriptor
  */
 function z(rotation) {
-  return SHAPES[Z_ID][rotation];
+  return SHAPES_MAP[Z_ID][rotation];
 }
 
 /** get shape by id
