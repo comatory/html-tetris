@@ -1,3 +1,5 @@
+import { deepFreeze } from "../utils/meta.mjs";
+
 /**
  * 2d array describing shapes:
  * I, J, L, O, S, T, Z
@@ -55,131 +57,131 @@ export const ROTATION = {
 };
 
 /** @type {Shape} */
-const I_A = Object.freeze([[1], [1], [1], [1]]);
+const I_A = deepFreeze([[1], [1], [1], [1]]);
 /** @type {Shape} */
-const I_B = Object.freeze([[1, 1, 1, 1]]);
+const I_B = deepFreeze([[1, 1, 1, 1]]);
 /** @type {Shape} */
 const I_C = I_A;
 /** @type {Shape} */
 const I_D = I_B;
 /** @type {ShapeMap} */
-const I_MAP = Object.freeze({
-  [ROTATION.A]: Object.freeze({
+const I_MAP = deepFreeze({
+  [ROTATION.A]: {
     id: I_ID,
     value: I_A,
     rotation: ROTATION.A,
-  }),
-  [ROTATION.B]: Object.freeze({
+  },
+  [ROTATION.B]: {
     id: I_ID,
     value: I_B,
     rotation: ROTATION.B,
-  }),
-  [ROTATION.C]: Object.freeze({
+  },
+  [ROTATION.C]: {
     id: I_ID,
     value: I_C,
     rotation: ROTATION.C,
-  }),
-  [ROTATION.D]: Object.freeze({
+  },
+  [ROTATION.D]: {
     id: I_ID,
     value: I_D,
     rotation: ROTATION.D,
-  }),
+  },
 });
 
 /** @type {Shape} */
-const J_A = Object.freeze([
+const J_A = deepFreeze([
   [1, 1],
   [0, 1],
   [0, 1],
 ]);
 /** @type {Shape} */
-const J_B = Object.freeze([
+const J_B = deepFreeze([
   [1, 1, 1],
   [1, 0, 0],
 ]);
 /** @type {Shape} */
-const J_C = Object.freeze([
+const J_C = deepFreeze([
   [1, 0],
   [1, 0],
   [1, 1],
 ]);
 /** @type {Shape} */
-const J_D = Object.freeze([
+const J_D = deepFreeze([
   [0, 0, 1],
   [1, 1, 1],
 ]);
 /** @type {ShapeMap} */
-const J_MAP = Object.freeze({
-  [ROTATION.A]: Object.freeze({
+const J_MAP = deepFreeze({
+  [ROTATION.A]: {
     id: J_ID,
     value: J_A,
     rotation: ROTATION.A,
-  }),
-  [ROTATION.B]: Object.freeze({
+  },
+  [ROTATION.B]: {
     id: J_ID,
     value: J_B,
     rotation: ROTATION.B,
-  }),
-  [ROTATION.C]: Object.freeze({
+  },
+  [ROTATION.C]: {
     id: J_ID,
     value: J_C,
     rotation: ROTATION.C,
-  }),
-  [ROTATION.D]: Object.freeze({
+  },
+  [ROTATION.D]: {
     id: J_ID,
     value: J_D,
     rotation: ROTATION.D,
-  }),
+  },
 });
 
 /** @type {Shape} */
-const L_A = Object.freeze([
+const L_A = deepFreeze([
   [0, 1],
   [0, 1],
   [1, 1],
 ]);
 /** @type {Shape} */
-const L_B = Object.freeze([
+const L_B = deepFreeze([
   [1, 1, 1],
   [0, 0, 1],
 ]);
 /** @type {Shape} */
-const L_C = Object.freeze([
+const L_C = deepFreeze([
   [1, 1],
   [1, 0],
   [1, 0],
 ]);
 /** @type {Shape} */
-const L_D = Object.freeze([
+const L_D = deepFreeze([
   [1, 0, 0],
   [1, 1, 1],
 ]);
 /** @type {ShapeMap} */
-const L_MAP = Object.freeze({
-  [ROTATION.A]: Object.freeze({
+const L_MAP = deepFreeze({
+  [ROTATION.A]: {
     id: L_ID,
     value: L_A,
     rotation: ROTATION.A,
-  }),
-  [ROTATION.B]: Object.freeze({
+  },
+  [ROTATION.B]: {
     id: L_ID,
     value: L_B,
     rotation: ROTATION.B,
-  }),
-  [ROTATION.C]: Object.freeze({
+  },
+  [ROTATION.C]: {
     id: L_ID,
     value: L_C,
     rotation: ROTATION.C,
-  }),
-  [ROTATION.D]: Object.freeze({
+  },
+  [ROTATION.D]: {
     id: L_ID,
     value: L_D,
     rotation: ROTATION.D,
-  }),
+  },
 });
 
 /** @type {Shape} */
-const O_A = Object.freeze([
+const O_A = deepFreeze([
   [1, 1],
   [1, 1],
 ]);
@@ -190,37 +192,37 @@ const O_C = O_A;
 /** @type {Shape} */
 const O_D = O_A;
 /** @type {ShapeMap} */
-const O_MAP = Object.freeze({
-  [ROTATION.A]: Object.freeze({
+const O_MAP = deepFreeze({
+  [ROTATION.A]: {
     id: O_ID,
     value: O_A,
     rotation: ROTATION.A,
-  }),
-  [ROTATION.B]: Object.freeze({
+  },
+  [ROTATION.B]: {
     id: O_ID,
     value: O_B,
     rotation: ROTATION.B,
-  }),
-  [ROTATION.C]: Object.freeze({
+  },
+  [ROTATION.C]: {
     id: O_ID,
     value: O_C,
     rotation: ROTATION.C,
-  }),
-  [ROTATION.D]: Object.freeze({
+  },
+  [ROTATION.D]: {
     id: O_ID,
     value: O_D,
     rotation: ROTATION.D,
-  }),
+  },
 });
 
 /** @type {Shape} */
-const S_A = Object.freeze([
+const S_A = deepFreeze([
   [0, 1],
   [1, 1],
   [1, 0],
 ]);
 /** @type {Shape} */
-const S_B = Object.freeze([
+const S_B = deepFreeze([
   [1, 1, 0],
   [0, 1, 1],
 ]);
@@ -229,83 +231,83 @@ const S_C = S_A;
 /** @type {Shape} */
 const S_D = S_B;
 /** @type {ShapeMap} */
-const S_MAP = Object.freeze({
-  [ROTATION.A]: Object.freeze({
+const S_MAP = deepFreeze({
+  [ROTATION.A]: {
     id: S_ID,
     value: S_A,
     rotation: ROTATION.A,
-  }),
-  [ROTATION.B]: Object.freeze({
+  },
+  [ROTATION.B]: {
     id: S_ID,
     value: S_B,
     rotation: ROTATION.B,
-  }),
-  [ROTATION.C]: Object.freeze({
+  },
+  [ROTATION.C]: {
     id: S_ID,
     value: S_C,
     rotation: ROTATION.C,
-  }),
-  [ROTATION.D]: Object.freeze({
+  },
+  [ROTATION.D]: {
     id: S_ID,
     value: S_D,
     rotation: ROTATION.D,
-  }),
+  },
 });
 
 /** @type {Shape} */
-const T_A = Object.freeze([
+const T_A = deepFreeze([
   [0, 1],
   [1, 1],
   [0, 1],
 ]);
 /** @type {Shape} */
-const T_B = Object.freeze([
+const T_B = deepFreeze([
   [1, 1, 1],
   [0, 1, 0],
 ]);
 /** @type {Shape} */
-const T_C = Object.freeze([
+const T_C = deepFreeze([
   [1, 0],
   [1, 1],
   [1, 0],
 ]);
 /** @type {Shape} */
-const T_D = Object.freeze([
+const T_D = deepFreeze([
   [0, 1, 0],
   [1, 1, 1],
 ]);
 /** @type {ShapeMap} */
-const T_MAP = Object.freeze({
-  [ROTATION.A]: Object.freeze({
+const T_MAP = deepFreeze({
+  [ROTATION.A]: {
     id: T_ID,
     value: T_A,
     rotation: ROTATION.A,
-  }),
-  [ROTATION.B]: Object.freeze({
+  },
+  [ROTATION.B]: {
     id: T_ID,
     value: T_B,
     rotation: ROTATION.B,
-  }),
-  [ROTATION.C]: Object.freeze({
+  },
+  [ROTATION.C]: {
     id: T_ID,
     value: T_C,
     rotation: ROTATION.C,
-  }),
-  [ROTATION.D]: Object.freeze({
+  },
+  [ROTATION.D]: {
     id: T_ID,
     value: T_D,
     rotation: ROTATION.D,
-  }),
+  },
 });
 
 /** @type {Shape} */
-const Z_A = Object.freeze([
+const Z_A = deepFreeze([
   [1, 0],
   [1, 1],
   [0, 1],
 ]);
 /** @type {Shape} */
-const Z_B = Object.freeze([
+const Z_B = deepFreeze([
   [0, 1, 1],
   [1, 1, 0],
 ]);
@@ -314,31 +316,31 @@ const Z_C = Z_A;
 /** @type {Shape} */
 const Z_D = Z_B;
 /** @type {ShapeMap} */
-const Z_MAP = Object.freeze({
-  [ROTATION.A]: Object.freeze({
+const Z_MAP = deepFreeze({
+  [ROTATION.A]: {
     id: Z_ID,
     value: Z_A,
     rotation: ROTATION.A,
-  }),
-  [ROTATION.B]: Object.freeze({
+  },
+  [ROTATION.B]: {
     id: Z_ID,
     value: Z_B,
     rotation: ROTATION.B,
-  }),
-  [ROTATION.C]: Object.freeze({
+  },
+  [ROTATION.C]: {
     id: Z_ID,
     value: Z_C,
     rotation: ROTATION.C,
-  }),
-  [ROTATION.D]: Object.freeze({
+  },
+  [ROTATION.D]: {
     id: Z_ID,
     value: Z_D,
     rotation: ROTATION.D,
-  }),
+  },
 });
 
 /** @type {ShapesMap} */
-const SHAPES = Object.freeze({
+const SHAPES = deepFreeze({
   [I_ID]: I_MAP,
   [J_ID]: J_MAP,
   [L_ID]: L_MAP,

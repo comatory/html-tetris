@@ -1,4 +1,5 @@
 import { draw } from "./utils.mjs";
+import { deepFreeze } from "../utils/meta.mjs";
 import {
   getNextRotation,
   getShape,
@@ -24,8 +25,13 @@ import {
  */
 
 /**
+ * direction enum
+ * @typedef {('CW'|'ACW')} Direction
+ */
+
+/**
  * coordinate adjustment mapping for each rotation
- * @typedef {Record<keyof typeof Rotation, CoordinateAdjustment>} RotationCoordinateAdjustment
+ * @typedef {Record<Direcion, Record<keyof typeof Rotation, CoordinateAdjustment>>} RotationCoordinateAdjustment
  */
 
 /**
@@ -33,35 +39,72 @@ import {
  * @typedef {Record<ShapeID, RotationCoordinateAdjustment>} RotationCoordinateAdjustmentMap
  */
 
+/** @type {Direction} */
+const DIRECTION_CW = "CW";
+/** @type {Direction} */
+const DIRECTION_ACW = "ACW";
+
 /** @type {RotationCoordinateAdjustment} */
-const I_COORDINATE_ADJUSTMENT = Object.freeze({
-  [ROTATION.A]: [-1, 1],
-  [ROTATION.B]: [2, -1],
-  [ROTATION.C]: [-2, 2],
-  [ROTATION.D]: [1, -2],
+const I_COORDINATE_ADJUSTMENT = deepFreeze({
+  [DIRECTION_CW]: {
+    [ROTATION.A]: [-1, 0],
+    [ROTATION.B]: [2, 0],
+    [ROTATION.C]: [-2, 2],
+    [ROTATION.D]: [1, -2],
+  },
+  [DIRECTION_ACW]: {
+    [ROTATION.A]: [-2, 0],
+    [ROTATION.B]: [2, -2],
+    [ROTATION.C]: [-1, 2],
+    [ROTATION.D]: [1, 0],
+  },
 });
 /** @type {RotationCoordinateAdjustment} */
-const J_COORDINATE_ADJUSTMENT = Object.freeze({
-  [ROTATION.A]: [0, 0],
-  [ROTATION.B]: [1, 0],
-  [ROTATION.C]: [-1, 1],
-  [ROTATION.D]: [0, -1],
+const J_COORDINATE_ADJUSTMENT = deepFreeze({
+  [DIRECTION_CW]: {
+    [ROTATION.A]: [0, 0],
+    [ROTATION.B]: [1, 0],
+    [ROTATION.C]: [-1, 1],
+    [ROTATION.D]: [0, -1],
+  },
+  [DIRECTION_ACW]: {
+    [ROTATION.A]: [-1, 0],
+    [ROTATION.B]: [1, -1],
+    [ROTATION.C]: [0, 1],
+    [ROTATION.D]: [0, 0],
+  },
 });
 /** @type {RotationCoordinateAdjustment} */
 const L_COORDINATE_ADJUSTMENT = J_COORDINATE_ADJUSTMENT;
 /** @type {RotationCoordinateAdjustment} */
-const O_COORDINATE_ADJUSTMENT = Object.freeze({
-  [ROTATION.A]: [0, 0],
-  [ROTATION.B]: [0, 0],
-  [ROTATION.C]: [0, 0],
-  [ROTATION.D]: [0, 0],
+const O_COORDINATE_ADJUSTMENT = deepFreeze({
+  [DIRECTION_CW]: {
+    [ROTATION.A]: [0, 0],
+    [ROTATION.B]: [0, 0],
+    [ROTATION.C]: [0, 0],
+    [ROTATION.D]: [0, 0],
+  },
+  [DIRECTION_ACW]: {
+    [ROTATION.A]: [0, 0],
+    [ROTATION.B]: [0, 0],
+    [ROTATION.C]: [0, 0],
+    [ROTATION.D]: [0, 0],
+  },
 });
 /** @type {RotationCoordinateAdjustment} */
-const Z_COORDINATE_ADJUSTMENT = Object.freeze({
-  [ROTATION.A]: [0, 0],
-  [ROTATION.B]: [1, 0],
-  [ROTATION.C]: [-1, 1],
-  [ROTATION.D]: [0, -1],
+const Z_COORDINATE_ADJUSTMENT = deepFreeze({
+  [DIRECTION_CW]: {
+    [ROTATION.A]: [0, 0],
+    [ROTATION.B]: [1, 0],
+    [ROTATION.C]: [-1, 1],
+    [ROTATION.D]: [0, -1],
+  },
+  [DIRECTION_ACW]: {
+    [ROTATION.A]: [-1, 0],
+    [ROTATION.B]: [1, -1],
+    [ROTATION.C]: [0, 1],
+    [ROTATION.D]: [0, 0],
+  },
 });
 /** @type {RotationCoordinateAdjustment} */
 const S_COORDINATE_ADJUSTMENT = Z_COORDINATE_ADJUSTMENT;
@@ -69,7 +112,7 @@ const S_COORDINATE_ADJUSTMENT = Z_COORDINATE_ADJUSTMENT;
 const T_COORDINATE_ADJUSTMENT = Z_COORDINATE_ADJUSTMENT;
 
 /** @type {RotationCoordinateAdjustmentMap} */
-const ROTATION_COORDINATE_ADJUSTMENT = Object.freeze({
+const ROTATION_COORDINATE_ADJUSTMENT = deepFreeze({
   [I_ID]: I_COORDINATE_ADJUSTMENT,
   [J_ID]: J_COORDINATE_ADJUSTMENT,
   [L_ID]: L_COORDINATE_ADJUSTMENT,
@@ -83,9 +126,10 @@ const ROTATION_COORDINATE_ADJUSTMENT = Object.freeze({
  * rotate tetromino
  * @param {Context} context
  * @param {Rotation} nextRotation
+ * @param {Direction} direction
  * @returns {void}
  */
-function rotate(context, nextRotation) {
+function rotate(context, nextRotation, direction) {
   const { current } = context;
 
   if (!current) {
@@ -95,7 +139,8 @@ function rotate(context, nextRotation) {
   const { x, y, shape } = current;
   const { id } = shape;
 
-  const adjustment = ROTATION_COORDINATE_ADJUSTMENT[id][nextRotation];
+  const adjustment =
+    ROTATION_COORDINATE_ADJUSTMENT[id][direction][nextRotation];
 
   const nextX = x + adjustment[0];
   const nextY = y + adjustment[1];
@@ -111,7 +156,6 @@ function rotate(context, nextRotation) {
   context.current.x = nextX;
   context.current.y = nextY;
   context.current.shape = nextShape;
-  context.current.rotation = nextRotation;
 }
 
 /**
@@ -130,7 +174,7 @@ export function rotateClockWise(context) {
 
   const nextRotation = getNextRotation(rotation);
 
-  return rotate(context, nextRotation);
+  return rotate(context, nextRotation, DIRECTION_CW);
 }
 
 /**
@@ -148,5 +192,5 @@ export function rotateAntiClockWise(context) {
   const { rotation } = shape;
 
   const nextRotation = getPreviousRotation(rotation);
-  return rotate(context, nextRotation);
+  return rotate(context, nextRotation, DIRECTION_ACW);
 }
