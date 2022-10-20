@@ -1,6 +1,9 @@
 import { TURN_DURATION_IN_MS } from "../utils/meta.mjs";
 import { draw } from "../draw/utils.mjs";
 import { check } from "../draw/collision.mjs";
+import { getSpawnShapeData, spawn } from "../draw/spawn.mjs";
+import { getShape } from "../draw/shapes.mjs";
+import { debug } from "../utils/log.mjs";
 
 /** @typedef {import('../utils/context.mjs').Context} Context } */
 
@@ -28,6 +31,7 @@ export function startGame(context) {
     const elapsed = time - step;
 
     if (elapsed > TURN_DURATION_IN_MS) {
+      debug("TURN");
       const nextY = context.current.y + 1;
 
       if (
@@ -37,7 +41,30 @@ export function startGame(context) {
           y: nextY,
         })
       ) {
+        debug("HIT BOTTOM OF AREA");
         // TODO also add code for checking against heap
+        const spawnData = getSpawnShapeData();
+        const spawnShape = getShape(spawnData.id, spawnData.rotation);
+        const spawnCoordinates = spawn({
+          id: spawnShape.id,
+          x: 3,
+          y: 0,
+          rotation: spawnShape.rotation,
+        });
+
+        context.current.x = spawnCoordinates.x;
+        context.current.y = spawnCoordinates.y;
+        context.current.shape = spawnShape;
+
+        draw({
+          x: context.current.x,
+          y: context.current.y,
+          shape: context.current.shape,
+          context,
+        });
+        step = time;
+
+        window.requestAnimationFrame(loop);
         return;
       }
 
