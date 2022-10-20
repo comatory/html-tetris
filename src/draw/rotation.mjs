@@ -1,5 +1,6 @@
 import { draw } from "./utils.mjs";
 import { deepFreeze } from "../utils/meta.mjs";
+import { check } from "./collision.mjs";
 import {
   getNextRotation,
   getShape,
@@ -145,6 +146,10 @@ function rotate(context, nextRotation, direction) {
   const nextX = x + adjustment[0];
   const nextY = y + adjustment[1];
   const nextShape = getShape(id, nextRotation);
+
+  if (!check({ value: nextShape.value, x: nextX, y: nextY })) {
+    return;
+  }
 
   draw({
     x: nextX,
