@@ -1,5 +1,6 @@
 import { TURN_DURATION_IN_MS } from "../utils/meta.mjs";
 import { draw } from "../draw/utils.mjs";
+import { check } from "../draw/collision.mjs";
 
 /** @typedef {import('../utils/context.mjs').Context} Context } */
 
@@ -28,6 +29,18 @@ export function startGame(context) {
 
     if (elapsed > TURN_DURATION_IN_MS) {
       const nextY = context.current.y + 1;
+
+      if (
+        !check({
+          value: context.current.shape.value,
+          x: context.current.x,
+          y: nextY,
+        })
+      ) {
+        // TODO also add code for checking against heap
+        return;
+      }
+
       draw({
         x: context.current.x,
         y: nextY,
