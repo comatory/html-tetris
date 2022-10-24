@@ -40,6 +40,7 @@ export function startGame(context) {
           value: context.current.shape.value,
           x: context.current.x,
           y: nextY,
+          heap: context.heap,
         })
       ) {
         debug("HIT BOTTOM OF AREA");

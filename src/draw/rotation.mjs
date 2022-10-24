@@ -131,7 +131,7 @@ const ROTATION_COORDINATE_ADJUSTMENT = deepFreeze({
  * @returns {void}
  */
 function rotate(context, nextRotation, direction) {
-  const { current } = context;
+  const { current, heap } = context;
 
   if (!current) {
     return;
@@ -147,7 +147,7 @@ function rotate(context, nextRotation, direction) {
   const nextY = y + adjustment[1];
   const nextShape = getShape(id, nextRotation);
 
-  if (!check({ value: nextShape.value, x: nextX, y: nextY })) {
+  if (!check({ value: nextShape.value, x: nextX, y: nextY, heap })) {
     return;
   }
 

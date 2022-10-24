@@ -8,7 +8,7 @@ import { check } from "./collision.mjs";
  * @param {Context} context
  */
 export function moveLeft(context) {
-  const { current } = context;
+  const { current, heap } = context;
 
   if (!current) {
     return;
@@ -18,7 +18,7 @@ export function moveLeft(context) {
   const { y, shape } = current;
   const { value } = shape;
 
-  if (!check({ value, x, y })) {
+  if (!check({ value, x, y, heap })) {
     return;
   }
 
@@ -37,7 +37,7 @@ export function moveLeft(context) {
  * @param {Context} context
  */
 export function moveRight(context) {
-  const { current } = context;
+  const { current, heap } = context;
 
   if (!current) {
     return;
@@ -47,7 +47,7 @@ export function moveRight(context) {
   const { y, shape } = current;
   const { value } = shape;
 
-  if (!check({ value, x, y })) {
+  if (!check({ value, x, y, heap })) {
     return;
   }
 
@@ -66,7 +66,7 @@ export function moveRight(context) {
  * @param {Context} context
  */
 export function moveDown(context) {
-  const { current } = context;
+  const { current, heap } = context;
 
   if (!current) {
     return;
@@ -76,7 +76,7 @@ export function moveDown(context) {
   const { value } = shape;
   const y = current.y + 1;
 
-  if (!check({ value, x, y })) {
+  if (!check({ value, x, y, heap })) {
     return;
   }
 
