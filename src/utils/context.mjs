@@ -1,9 +1,11 @@
 import { buildGrid } from "../area/size.mjs";
+import { buildHeap } from "../draw/heap.mjs";
 import { ROWS, COLUMNS } from "./meta.mjs";
 import { getRootStyle } from "./html.mjs";
 
 /**
  * @typedef {import('../draw/shapes.mjs').ShapeDescriptor} ShapeDescriptor
+ * @typedef {import('../draw/heap.mjs').Heap} Heap
  */
 
 /**
@@ -18,6 +20,7 @@ import { getRootStyle } from "./html.mjs";
  * describes current state of game
  * @typedef {Object} Context
  * @property {HTMLElement} grid
+ * @property {Heap} heap
  * @property {(CurrentDescriptor|null)} current
  */
 
@@ -35,8 +38,11 @@ export function buildInitialContext() {
     columns: COLUMNS,
   });
 
+  const heap = buildHeap();
+
   return {
     grid,
     current: null,
+    heap,
   };
 }

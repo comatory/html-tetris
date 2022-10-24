@@ -1,5 +1,6 @@
-import { getCellsByIds } from "../utils/html.mjs";
+import { getCellsByIds, getGridCells } from "../utils/html.mjs";
 
+/** @typedef {import('./heap.mjs').Heap} Heap */
 /** @typedef {import('./shapes.mjs').Shape} Shape */
 /** @typedef {import('./shapes.mjs').ShapeDescriptor} ShapeDescriptor */
 /** @typedef {import('../utils/context.mjs').Context} Context */
@@ -32,6 +33,7 @@ export function draw({ x, y, shape, context }) {
 
   for (const cell of cells) {
     cell.style.background = "red";
+    cell.classList.add("shape");
   }
 }
 
@@ -48,6 +50,28 @@ function clear({ x, y, shape }, grid) {
 
   for (const cell of cells) {
     cell.style.background = "transparent";
+    cell.classList.remove("shape");
+  }
+}
+
+/**
+ * redraws the grid excluding the shape
+ * @param {Heap} heap
+ * @param {Context} context
+ * @returns {void}
+ */
+export function redrawGrid(heap, context) {
+  const { grid } = context;
+
+  const ids = getHeapIds(heap);
+  const cells = getGridCells(grid);
+
+  for (const cell of cells) {
+    if (ids.includes(cell.id)) {
+      cell.style.background = "red";
+    } else {
+      cell.style.background = "transparent";
+    }
   }
 }
 
@@ -69,6 +93,25 @@ function getShapeIds(x, y, shape) {
     ) {
       if (isCellEnabled(shape[rowIndex][columnIndex])) {
         ids.push(`#c${x + rowIndex}-${y + columnIndex}`);
+      }
+    }
+  }
+
+  return ids;
+}
+
+/**
+ * get ids of heap for enabled cells
+ * @param {Heap} heap
+ * @param {Shape} shape
+ * @returns {Array<string>} ids
+ */
+function getHeapIds(heap) {
+  const ids = [];
+  for (let rowIndex = 0; rowIndex < heap.length; rowIndex++) {
+    for (let valueIndex = 0; valueIndex < heap[rowIndex].length; valueIndex++) {
+      if (isCellEnabled(heap[rowIndex][valueIndex])) {
+        ids.push(`#c${rowIndex}-${valueIndex}`);
       }
     }
   }

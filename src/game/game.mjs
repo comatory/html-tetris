@@ -1,7 +1,8 @@
 import { TURN_DURATION_IN_MS } from "../utils/meta.mjs";
-import { draw } from "../draw/utils.mjs";
+import { draw, redrawGrid } from "../draw/utils.mjs";
 import { check } from "../draw/collision.mjs";
 import { getSpawnShapeData, spawn } from "../draw/spawn.mjs";
+import { rebuildHeap } from "../draw/heap.mjs";
 import { getShape } from "../draw/shapes.mjs";
 import { debug } from "../utils/log.mjs";
 
@@ -51,10 +52,23 @@ export function startGame(context) {
           y: 0,
           rotation: spawnShape.rotation,
         });
+        const currentShape = context.current.shape;
+        const currentX = context.current.x;
+        const currentY = context.current.y;
+
+        const nextHeap = rebuildHeap({
+          heap: context.heap,
+          shape: currentShape,
+          x: currentX,
+          y: currentY,
+        });
 
         context.current.x = spawnCoordinates.x;
         context.current.y = spawnCoordinates.y;
         context.current.shape = spawnShape;
+        context.heap = nextHeap;
+
+        redrawGrid(nextHeap, context);
 
         draw({
           x: context.current.x,
@@ -62,6 +76,7 @@ export function startGame(context) {
           shape: context.current.shape,
           context,
         });
+
         step = time;
 
         window.requestAnimationFrame(loop);
