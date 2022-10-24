@@ -18,9 +18,9 @@ import { ROWS, COLUMNS } from "../utils/meta.mjs";
  */
 function willHitWalls(positioning) {
   return (
-    positioning.bottom > ROWS ||
+    positioning.bottom > ROWS - 1 ||
     positioning.left < 0 ||
-    positioning.right > COLUMNS
+    positioning.right > COLUMNS - 1
   );
 }
 
@@ -34,12 +34,12 @@ function willHitWalls(positioning) {
  * @param {PositioningOptions} options
  * @returns {Positioning} positioning object
  */
-function getPositioning({ x, y, value }) {
+export function getPositioning({ x, y, value }) {
   return {
     left: x,
-    right: x + value.length,
+    right: x + value.length - 1,
     top: y,
-    bottom: y + value[0].length,
+    bottom: y + value[0].length - 1,
   };
 }
 

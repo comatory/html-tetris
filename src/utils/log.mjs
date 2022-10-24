@@ -1,4 +1,4 @@
-import { isDevelopment } from "./meta.mjs";
+import { isDevelopment } from "./browser.mjs";
 
 /** @typedef {import('./context.mjs').Context} Context */
 
