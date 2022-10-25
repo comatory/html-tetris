@@ -27,13 +27,12 @@ export function getCellsByIds(ids, grid) {
 }
 
 /**
- * get all cells in the grid except the ones
- * occupied by shape
+ * get all cells in the grid
  * @param {HTMLElement} grid - area HTML element
  * @returns {NodeList} list of HTML elements
  */
 export function getGridCells(grid) {
-  return grid.querySelectorAll(".cell:not(.shape)");
+  return grid.querySelectorAll(".cell");
 }
 
 /**

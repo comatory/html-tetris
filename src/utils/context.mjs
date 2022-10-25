@@ -8,6 +8,12 @@ import { getRootStyle } from "./html.mjs";
  * @typedef {import('../draw/heap.mjs').Heap} Heap
  */
 
+export const GAME_STATE_RUNNING = "RUNNING";
+export const GAME_STATE_PAUSED = "PAUSED";
+
+/**
+ * @typedef {(GAME_STATE_RUNNING|GAME_STATE_PAUSED)} GameState */
+
 /**
  * describes positioning and shape of current block
  * @typedef {Object} CurrentDescriptor
@@ -22,6 +28,7 @@ import { getRootStyle } from "./html.mjs";
  * @property {HTMLElement} grid
  * @property {Heap} heap
  * @property {(CurrentDescriptor|null)} current
+ * @property {GameState} state;
  */
 
 /**
@@ -44,5 +51,24 @@ export function buildInitialContext() {
     grid,
     current: null,
     heap,
+    state: GAME_STATE_RUNNING,
   };
+}
+
+/**
+ * set game to be running
+ * @param {Context} context
+ * @returns {void}
+ */
+export function setGameStateRunning(context) {
+  context.state = GAME_STATE_RUNNING;
+}
+
+/**
+ * set game to be paused
+ * @param {Context} context
+ * @returns {void}
+ */
+export function setGameStatePaused(context) {
+  context.state = GAME_STATE_PAUSED;
 }

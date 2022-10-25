@@ -1,4 +1,5 @@
 import { isDevelopment } from "./browser.mjs";
+import { COLUMNS, ROWS } from "./meta.mjs";
 
 /** @typedef {import('./context.mjs').Context} Context */
 
@@ -33,11 +34,39 @@ export function createDebuggableContext(ref) {
   debug("REGISTERED CONTEXT DEBUGGING");
 
   document.addEventListener("keydown", (event) => {
-    // dot
-    if (event.keyCode !== 190) {
-      return;
-    }
+    switch (event.keyCode) {
+      // dot
+      case 190:
+        debug(JSON.stringify(ref));
+        break;
+      // comma
+      case 188: {
+        const { heap } = ref;
 
-    debug(JSON.stringify(ref));
+        console.log(
+          [
+            "%c".padEnd(6),
+            Array(COLUMNS)
+              .fill(true)
+              .map((_, i) => `${i}`.padEnd(2)),
+          ].join(" "),
+          "background-color: gray; color: white; font-weight: 600"
+        );
+        heap.forEach((row, i) => {
+          const values = [`${ROWS - 1 - i}`.padEnd(2), ...row].join(" %c ");
+          const colors = row.map((value) =>
+            value === 1 ? "background-color: green" : "background-color: red"
+          );
+          console.log(
+            ` %c${values}\n`,
+            "background-color: gray; color: white; font-weight: 600",
+            ...colors
+          );
+        });
+        break;
+      }
+      default:
+        break;
+    }
   });
 }

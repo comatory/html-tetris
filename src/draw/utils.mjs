@@ -33,7 +33,6 @@ export function draw({ x, y, shape, context }) {
 
   for (const cell of cells) {
     cell.style.background = "red";
-    cell.classList.add("shape");
   }
 }
 
@@ -50,7 +49,6 @@ function clear({ x, y, shape }, grid) {
 
   for (const cell of cells) {
     cell.style.background = "transparent";
-    cell.classList.remove("shape");
   }
 }
 
@@ -67,7 +65,7 @@ export function redrawGrid(heap, context) {
   const cells = getGridCells(grid);
 
   for (const cell of cells) {
-    if (ids.includes(cell.id)) {
+    if (ids.includes(`#${cell.id}`)) {
       cell.style.background = "red";
     } else {
       cell.style.background = "transparent";
@@ -111,7 +109,7 @@ function getHeapIds(heap) {
   for (let rowIndex = 0; rowIndex < heap.length; rowIndex++) {
     for (let valueIndex = 0; valueIndex < heap[rowIndex].length; valueIndex++) {
       if (isCellEnabled(heap[rowIndex][valueIndex])) {
-        ids.push(`#c${rowIndex}-${valueIndex}`);
+        ids.push(`#c${valueIndex}-${rowIndex}`);
       }
     }
   }

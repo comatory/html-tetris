@@ -20,7 +20,15 @@ import { getPositioning } from "../draw/collision.mjs";
 export function buildHeap() {
   return Array(ROWS)
     .fill([])
-    .map(() => Array(COLUMNS).fill(0));
+    .map(() => buildColumn());
+}
+
+/**
+ * build empty column
+ * @returns {Array<number>}
+ */
+function buildColumn() {
+  return Array(COLUMNS).fill(0);
 }
 
 /**
@@ -61,6 +69,31 @@ export function rebuildHeap({ heap, shape, x, y }) {
   }
 
   return updatedHeap;
+}
+
+/**
+ * when rows are supposed to be removed, produce
+ * new heap
+ * @param {Heap} heap
+ * @param {Array<number>} indices
+ * @returns {Heap} new heap
+ */
+export function rebuildHeapWithRemovedRows(heap, indices) {
+  const amount = indices.length;
+  const clearedHeap = heap.reduce((updatedHeap, row, index) => {
+    if (indices.includes(index)) {
+      return updatedHeap;
+    }
+
+    return [...updatedHeap, Array.from(row)];
+  }, []);
+  const pad = Array(amount)
+    .fill([])
+    .map(() => buildColumn());
+
+  const paddedHeap = [...pad, ...clearedHeap];
+
+  return paddedHeap;
 }
 
 /**

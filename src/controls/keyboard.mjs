@@ -1,6 +1,8 @@
 import { debug } from "../utils/log.mjs";
 import { moveLeft, moveRight, moveDown } from "../draw/movement.mjs";
 import { rotateClockWise, rotateAntiClockWise } from "../draw/rotation.mjs";
+import { pauseGame, unpauseGame } from "../game/game.mjs";
+import { GAME_STATE_RUNNING } from "../utils/context.mjs";
 
 /** @typedef {import('../utils/context.mjs').Context} Context */
 
@@ -10,6 +12,7 @@ const ARROW_LEFT_KEY = 37;
 const ARROW_RIGHT_KEY = 39;
 const Z_KEY = 90;
 const X_KEY = 88;
+const ESC_KEY = 27;
 
 /**
  * create object for subscribing and unsubscribing
@@ -42,6 +45,14 @@ export function keyBindingsFactory(context) {
       case X_KEY:
         debug("x key pressed");
         rotateClockWise(context);
+        break;
+      case ESC_KEY:
+        debug("esc key pressed");
+        if (context.state === GAME_STATE_RUNNING) {
+          pauseGame(context);
+        } else {
+          unpauseGame(context);
+        }
         break;
     }
   }

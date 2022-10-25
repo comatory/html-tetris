@@ -2,9 +2,18 @@ import { TURN_DURATION_IN_MS } from "../utils/meta.mjs";
 import { draw, redrawGrid } from "../draw/utils.mjs";
 import { check } from "../draw/collision.mjs";
 import { getSpawnShapeData, spawn } from "../draw/spawn.mjs";
-import { rebuildHeap } from "../draw/heap.mjs";
+import {
+  rebuildHeap,
+  rebuildHeapWithRemovedRows,
+  getRowIndicesToRemove,
+} from "../draw/heap.mjs";
 import { getShape } from "../draw/shapes.mjs";
 import { debug } from "../utils/log.mjs";
+import {
+  GAME_STATE_PAUSED,
+  setGameStatePaused,
+  setGameStateRunning,
+} from "../utils/context.mjs";
 
 /** @typedef {import('../utils/context.mjs').Context} Context } */
 
@@ -25,6 +34,10 @@ export function startGame(context) {
   */
 
   function loop(time) {
+    if (context.state === GAME_STATE_PAUSED) {
+      return window.requestAnimationFrame(loop);
+    }
+
     if (!step) {
       step = time;
     }
@@ -43,16 +56,7 @@ export function startGame(context) {
           heap: context.heap,
         })
       ) {
-        debug("HIT BOTTOM OF AREA");
-        // TODO also add code for checking against heap
-        const spawnData = getSpawnShapeData();
-        const spawnShape = getShape(spawnData.id, spawnData.rotation);
-        const spawnCoordinates = spawn({
-          id: spawnShape.id,
-          x: 3,
-          y: 0,
-          rotation: spawnShape.rotation,
-        });
+        debug("COLLISION DETECTED");
         const currentShape = context.current.shape;
         const currentX = context.current.x;
         const currentY = context.current.y;
@@ -63,13 +67,38 @@ export function startGame(context) {
           x: currentX,
           y: currentY,
         });
+        context.heap = nextHeap;
+
+        const rowIndicesToRemove = getRowIndicesToRemove(nextHeap);
+        console.log(`indices ${rowIndicesToRemove}`);
+
+        if (rowIndicesToRemove.length > 0) {
+          debug("CLEARED ROW");
+          const clearedHeap = rebuildHeapWithRemovedRows(
+            nextHeap,
+            rowIndicesToRemove
+          );
+          redrawGrid(clearedHeap, context);
+          context.heap = clearedHeap;
+
+          step = time;
+          window.requestAnimationFrame(loop);
+          return;
+        }
+
+        const spawnData = getSpawnShapeData();
+        const spawnShape = getShape(spawnData.id, spawnData.rotation);
+        const spawnCoordinates = spawn({
+          id: spawnShape.id,
+          x: 3,
+          y: 0,
+          rotation: spawnShape.rotation,
+        });
 
         context.current.x = spawnCoordinates.x;
         context.current.y = spawnCoordinates.y;
         context.current.shape = spawnShape;
         context.heap = nextHeap;
-
-        redrawGrid(nextHeap, context);
 
         draw({
           x: context.current.x,
@@ -77,6 +106,8 @@ export function startGame(context) {
           shape: context.current.shape,
           context,
         });
+
+        // redrawGrid(context.heap, context);
 
         step = time;
 
@@ -99,4 +130,14 @@ export function startGame(context) {
   }
 
   window.requestAnimationFrame(loop);
+}
+
+export function pauseGame(context) {
+  debug("GAME PAUSED");
+  setGameStatePaused(context);
+}
+
+export function unpauseGame(context) {
+  debug("GAME UNPAUSED");
+  setGameStateRunning(context);
 }
