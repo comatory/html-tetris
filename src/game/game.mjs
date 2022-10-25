@@ -1,6 +1,6 @@
 import { TURN_DURATION_IN_MS } from "../utils/meta.mjs";
 import { draw, redrawGrid } from "../draw/utils.mjs";
-import { check } from "../draw/collision.mjs";
+import { check, willHitThreshold } from "../draw/collision.mjs";
 import { getSpawnShapeData, spawn } from "../draw/spawn.mjs";
 import {
   rebuildHeap,
@@ -23,15 +23,6 @@ import {
  */
 export function startGame(context) {
   let step = null;
-
-  /* DEBUG
-  draw({
-    x: context.current.x,
-    y: context.current.y,
-    shape: context.current.shape,
-    context,
-  });
-  */
 
   function loop(time) {
     if (context.state === GAME_STATE_PAUSED) {
@@ -89,6 +80,18 @@ export function startGame(context) {
           y: 0,
           rotation: spawnShape.rotation,
         });
+
+        if (
+          willHitThreshold({
+            value: spawnShape.value,
+            x: spawnCoordinates.x,
+            y: currentY,
+          })
+        ) {
+          pauseGame(context);
+          debug("GAME LOST");
+          return;
+        }
 
         context.current.x = spawnCoordinates.x;
         context.current.y = spawnCoordinates.y;

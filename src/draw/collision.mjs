@@ -1,4 +1,4 @@
-import { ROWS, COLUMNS } from "../utils/meta.mjs";
+import { ROWS, COLUMNS, ROW_THRESHOLD } from "../utils/meta.mjs";
 
 /** @typedef {import('./heap.mjs').Heap} Heap */
 /** @typedef {import('./shapes.mjs').Shape} Shape */
@@ -90,4 +90,21 @@ export function check({ value, x, y, heap }) {
   return (
     !willHitWalls(positioning) && !willHitHeap({ x, y, shape: value, heap })
   );
+}
+
+/**
+ * @typedef {Object} CheckThresholdOptions
+ * @property {Shape} value
+ * @property {number} x
+ * @property {number} y
+ *
+ * specifies whether the top of the shape intersects with
+ * threshold row, if yes that means end of the game
+ * @param {CheckThresholdOptions} options
+ * @returns {boolean} if true, game over
+ */
+export function willHitThreshold({ value, x, y }) {
+  const positioning = getPositioning({ x, y, value });
+
+  return positioning.top <= ROW_THRESHOLD;
 }

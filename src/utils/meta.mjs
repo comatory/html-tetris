@@ -1,7 +1,9 @@
 /** row count of grid area @type {number} */
-export const ROWS = 20;
+export const ROWS = 24;
 /** column count of grid area @type {number} */
 export const COLUMNS = 10;
+/** top threshold row @type {number} */
+export const ROW_THRESHOLD = 3;
 
 /** define speed, it's a multiplier for game loop */
 const SPEED = 5;

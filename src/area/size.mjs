@@ -1,4 +1,6 @@
 import { getRoot, getCellTemplate } from "../utils/html.mjs";
+import { ROW_THRESHOLD } from "../utils/meta.mjs";
+import { isDevelopment } from "../utils/browser.mjs";
 
 /**
  * builds playing area
@@ -18,7 +20,7 @@ export function buildGrid({ rows, columns }) {
 
   for (let ri = 0; ri < rows; ri++) {
     for (let ci = 0; ci < columns; ci++) {
-      buildCell(`c${ci}-${ri}`, root);
+      buildCell(`c${ci}-${ri}`, root, ri);
     }
   }
 
@@ -28,9 +30,10 @@ export function buildGrid({ rows, columns }) {
 /**
  * @param {string} id
  * @param {HTMLElement} parent
+ * @param {number} index
  * @returns {HTMLElement}
  */
-function buildCell(id, parent) {
+function buildCell(id, parent, index) {
   const template = getCellTemplate();
 
   if (!template) {
@@ -39,6 +42,11 @@ function buildCell(id, parent) {
 
   const cell = template.content.cloneNode(true).querySelector(".cell");
   cell.setAttribute("id", id);
+
+  if (isDevelopment && index === ROW_THRESHOLD) {
+    cell.style.borderTop = "2px solid darkgray";
+  }
+
   parent.appendChild(cell);
 
   return cell;

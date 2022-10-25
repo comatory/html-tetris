@@ -1,6 +1,7 @@
 import { deepFreeze } from "../utils/meta.mjs";
 import {
   ROTATION,
+  ROTATION_ORDER,
   SHAPES,
   I_ID,
   J_ID,
@@ -86,6 +87,7 @@ export function getSpawnShapeData() {
   const id = SHAPES[Math.round(Math.random() * (SHAPES.length - 1))];
   return {
     id,
-    rotation: ROTATION.A,
+    rotation:
+      ROTATION_ORDER[Math.round(Math.random() * (ROTATION_ORDER.length - 1))],
   };
 }

@@ -102,7 +102,7 @@ describe("collision", () => {
       expect(
         check({
           x: 5,
-          y: 17,
+          y: 21,
           value: getShape(I_ID, ROTATION.B).value,
           heap: buildHeap(),
         })
