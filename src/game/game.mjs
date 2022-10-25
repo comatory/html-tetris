@@ -70,7 +70,6 @@ export function startGame(context) {
         context.heap = nextHeap;
 
         const rowIndicesToRemove = getRowIndicesToRemove(nextHeap);
-        console.log(`indices ${rowIndicesToRemove}`);
 
         if (rowIndicesToRemove.length > 0) {
           debug("CLEARED ROW");
@@ -78,12 +77,8 @@ export function startGame(context) {
             nextHeap,
             rowIndicesToRemove
           );
-          redrawGrid(clearedHeap, context);
           context.heap = clearedHeap;
-
-          step = time;
-          window.requestAnimationFrame(loop);
-          return;
+          redrawGrid(clearedHeap, context);
         }
 
         const spawnData = getSpawnShapeData();
@@ -98,7 +93,6 @@ export function startGame(context) {
         context.current.x = spawnCoordinates.x;
         context.current.y = spawnCoordinates.y;
         context.current.shape = spawnShape;
-        context.heap = nextHeap;
 
         draw({
           x: context.current.x,
@@ -107,7 +101,7 @@ export function startGame(context) {
           context,
         });
 
-        // redrawGrid(context.heap, context);
+        redrawGrid(context.heap, context);
 
         step = time;
 
