@@ -57,8 +57,11 @@ export function rebuildHeap({ heap, shape, x, y }) {
       const matchesRow =
         rowIndex >= positioning.left && rowIndex <= positioning.right;
       if (matchesColumn && matchesRow) {
+        // only add "filled" cells to heap, otherwise fall back to whatever is
+        // there
         updatedHeap[columnIndex][rowIndex] =
-          shape.value[shapeRowIndex][shapeColumnIndex];
+          shape.value[shapeRowIndex][shapeColumnIndex] ||
+          heap[columnIndex][rowIndex];
         shapeRowIndex++;
       } else {
         updatedHeap[columnIndex][rowIndex] = heap[columnIndex][rowIndex];
