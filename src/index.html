@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Tetris</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script>
       const debugValue = new URLSearchParams(window.location.search).get(
         "debug"
@@ -14,7 +15,9 @@
   </head>
   <body>
     <aside id="left"></aside>
-    <div id="root"></div>
+    <div id="center">
+      <div id="root"></div>
+    </div>
     <aside id="right"></aside>
     <template id="empty-cell">
       <div class="cell"></div>

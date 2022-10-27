@@ -1,5 +1,6 @@
 import { isDevelopment } from "./browser.mjs";
 import { COLUMNS, ROWS } from "./meta.mjs";
+import { isCellEnabled } from "./shapes.mjs";
 
 /** @typedef {import('./context.mjs').Context} Context */
 
@@ -53,9 +54,14 @@ export function createDebuggableContext(ref) {
           "background-color: gray; color: white; font-weight: 600"
         );
         heap.forEach((row, i) => {
-          const values = [`${ROWS - 1 - i}`.padEnd(2), ...row].join(" %c ");
+          const values = [
+            `${ROWS - 1 - i}`.padEnd(2),
+            ...row.map((value) => (isCellEnabled(value) ? 1 : 0)),
+          ].join(" %c ");
           const colors = row.map((value) =>
-            value === 1 ? "background-color: green" : "background-color: red"
+            isCellEnabled(value)
+              ? "background-color: green"
+              : "background-color: red"
           );
           console.log(
             ` %c${values}\n`,

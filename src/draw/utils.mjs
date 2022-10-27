@@ -1,7 +1,11 @@
 import { getCellsByIds, getGridCells } from "../utils/html.mjs";
+import { isCellEnabled, isShapeCellEnabled } from "../utils/shapes.mjs";
+import { getSpriteClassName } from "./styles.mjs";
 
 /** @typedef {import('./heap.mjs').Heap} Heap */
 /** @typedef {import('./shapes.mjs').Shape} Shape */
+/** @typedef {import('./shapes.mjs').ShapeID} ShapeID */
+/** @typedef {import('./shapes.mjs').Rotation} Rotation */
 /** @typedef {import('./shapes.mjs').ShapeDescriptor} ShapeDescriptor */
 /** @typedef {import('../utils/context.mjs').Context} Context */
 /** @typedef {import('../utils/context.mjs').CurrentDescriptor} CurrentDescriptor */
@@ -15,6 +19,34 @@ import { getCellsByIds, getGridCells } from "../utils/html.mjs";
  */
 
 /**
+ * lights up the cell
+ * @param {HTMLElement} cell
+ * @param {ShapeID} id
+ * @param {Rotation} rotation
+ * @returns {void}
+ */
+function enableCell(cell, id, rotation) {
+  const className = getSpriteClassName(id, rotation);
+  cell.classList.add("sprite");
+  cell.classList.add("o");
+
+  if (!className) {
+    throw new Error("Unable to specify sprite class name.");
+  }
+
+  cell.classList.add(className);
+}
+
+/**
+ * turns off the cell
+ * @param {HTMLElement} cell
+ * @returns {void}
+ */
+function disableCell(cell) {
+  cell.className = "cell";
+}
+
+/**
  * draws shapes onto grid/area
  *
  * @param {DrawOptions} options
@@ -22,7 +54,7 @@ import { getCellsByIds, getGridCells } from "../utils/html.mjs";
  */
 export function draw({ x, y, shape, context }) {
   const { grid, current } = context;
-  const { value } = shape;
+  const { value, id, rotation } = shape;
 
   if (current) {
     clear(current, grid);
@@ -32,7 +64,7 @@ export function draw({ x, y, shape, context }) {
   const cells = getCellsByIds(ids, grid);
 
   for (const cell of cells) {
-    cell.style.background = "red";
+    enableCell(cell, id, rotation);
   }
 }
 
@@ -48,7 +80,7 @@ function clear({ x, y, shape }, grid) {
   const cells = getCellsByIds(ids, grid);
 
   for (const cell of cells) {
-    cell.style.background = "transparent";
+    disableCell(cell);
   }
 }
 
@@ -66,9 +98,9 @@ export function redrawGrid(heap, context) {
 
   for (const cell of cells) {
     if (ids.includes(`#${cell.id}`)) {
-      cell.style.background = "red";
+      continue;
     } else {
-      cell.style.background = "transparent";
+      disableCell(cell);
     }
   }
 }
@@ -89,7 +121,7 @@ function getShapeIds(x, y, shape) {
       columnIndex < shape[rowIndex].length;
       columnIndex++
     ) {
-      if (isCellEnabled(shape[rowIndex][columnIndex])) {
+      if (isShapeCellEnabled(shape[rowIndex][columnIndex])) {
         ids.push(`#c${x + rowIndex}-${y + columnIndex}`);
       }
     }
@@ -115,13 +147,4 @@ function getHeapIds(heap) {
   }
 
   return ids;
-}
-
-/**
- * is the cell on?
- * @param {number} value
- * @returns {boolean} true if yes, false if no
- */
-function isCellEnabled(value) {
-  return value === 1;
 }

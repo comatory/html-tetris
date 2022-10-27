@@ -1,0 +1,276 @@
+:root {
+  --line-width: calc(var(--size) / 8);
+}
+
+.i {
+  --speckle-size: calc(var(--line-width) / 2);
+
+  position: relative;
+  border: var(--line-width) solid var(--color-black);
+  background: var(--color-grey-100);
+}
+
+.i:after,
+.i-head:after,
+.i-tail:after {
+  --x1: calc(var(--speckle-size) * 1);
+  --y1: var(--speckle-size);
+  --x2: calc(var(--speckle-size) * 3);
+  --y2: calc(var(--speckle-size) * 6);
+  --x3: calc(var(--speckle-size) * 8);
+  --y3: calc(var(--speckle-size) * 10);
+  --x4: calc(var(--speckle-size) * 10);
+  --y4: calc(var(--speckle-size) * 11);
+  --x5: calc(var(--speckle-size) * 12);
+
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0px;
+  height: 0px;
+  box-shadow: var(--x2) var(--y1) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x4) var(--y1) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x1) var(--y2) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x3) var(--y2) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x5) var(--y2) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x2) var(--y3) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x5) var(--y3) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x3) var(--y4) 0px var(--speckle-size) var(--color-grey-200);
+}
+
+.i-head {
+  border-right-width: 0px;
+}
+
+.i-head-vertical {
+  border-bottom-width: 0px;
+}
+
+.i-head-vertical:after {
+  --x5: calc(var(--speckle-size) * 11);
+  transform: rotate(90deg) translate(-var(--cell-width));
+}
+
+.i-tail {
+  border-left-width: 0px;
+}
+
+.i-tail:after {
+  transform: translate(calc(var(--cell-width) - var(--line-width))) scalex(-1);
+}
+
+.i-tail-vertical {
+  border-top-width: 0px;
+}
+
+.i-tail-vertical:after {
+  --x1: var(--line-width);
+
+  transform: rotate(180deg)
+    translatex(calc(0px + (var(--line-width) * 1.5) - var(--cell-width)))
+    translatey(calc(0px + var(--line-width) - var(--cell-width)));
+}
+
+.i-middle {
+  border-right-width: 0px;
+  border-left-width: 0px;
+}
+
+.i-middle:after,
+.i-middle-vertical:after {
+  --x1: calc(var(--speckle-size) * 1);
+  --y1: var(--speckle-size);
+  --y2: calc(var(--speckle-size) * 3);
+  --x3: calc(var(--speckle-size) * 5);
+  --y3: calc(var(--speckle-size) * 5);
+  --x4: calc(var(--speckle-size) * 9);
+  --y4: calc(var(--speckle-size) * 7);
+  --x5: calc(var(--speckle-size) * 12);
+  --y5: calc(var(--speckle-size) * 9);
+  --y6: calc(var(--speckle-size) * 11);
+
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0px;
+  height: 0px;
+
+  box-shadow: var(--x1) var(--y1) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x3) var(--y1) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x4) var(--y1) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x5) var(--y2) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x3) var(--y3) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x1) var(--y4) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x4) var(--y4) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x3) var(--y5) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x5) var(--y5) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x2) var(--y6) 0px var(--speckle-size) var(--color-grey-200),
+    var(--x4) var(--y6) 0px var(--speckle-size) var(--color-grey-200);
+}
+
+.i-middle-vertical {
+  border-top-width: 0px;
+  border-bottom-width: 0px;
+}
+
+.i-middle-vertical:after {
+  --x5: calc(var(--speckle-size) * 11);
+  transform: rotate(90deg) translate(-var(--cell-width));
+}
+
+.j {
+  position: relative;
+  background: var(--color-grey-100);
+  border: var(--line-width) solid var(--color-black);
+}
+
+.j::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - var(--line-width) * 4);
+  height: calc(100% - var(--line-width) * 4);
+  background: var(--color-white);
+  border: var(--line-width) solid var(--color-black);
+}
+
+.l {
+  position: relative;
+  background: var(--color-grey-200);
+  border: var(--line-width) solid var(--color-black);
+}
+
+.o {
+  position: relative;
+  background: var(--color-white);
+  border: var(--line-width) solid var(--color-black);
+}
+
+.o:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - var(--line-width) * 4);
+  height: calc(100% - var(--line-width) * 4);
+  background: var(--color-black);
+  border: var(--line-width) solid var(--color-black);
+}
+
+.s {
+  position: relative;
+  background: var(--color-grey-200);
+  border: var(--line-width) solid var(--color-black);
+}
+
+.s::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - var(--line-width) * 4);
+  height: calc(100% - var(--line-width) * 4);
+  background: var(--color-white);
+  border: var(--line-width) solid var(--color-black);
+}
+
+.t {
+  position: relative;
+  background: var(--color-grey-100);
+  border: var(--line-width) solid var(--color-black);
+}
+
+.t::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - var(--line-width) * 4);
+  height: calc(100% - var(--line-width) * 4);
+  background: var(--color-grey-100);
+  border: var(--line-width) solid var(--color-black);
+  border-top-color: var(--color-white);
+  border-left-color: var(--color-white);
+}
+
+.z {
+  position: relative;
+  background: var(--color-grey-100);
+  border: var(--line-width) solid var(--color-black);
+}
+
+.z:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - var(--line-width) * 8);
+  height: calc(100% - var(--line-width) * 8);
+  background: var(--color-black);
+  border: var(--line-width) solid var(--color-black);
+}
+
+.wall {
+  --height: calc(var(--cell-height) * 0.75);
+
+  width: var(--cell-width);
+  height: var(--height);
+  position: relative;
+  background: var(--color-black);
+}
+
+.wall:after {
+  --multiplier: 0.5;
+  --size: calc(var(--line-width) * var(--multiplier));
+  --x1: calc(var(--line-width) * calc(var(--multiplier) * 1));
+  --y1: calc(var(--line-width) * calc(var(--multiplier) * 2.25));
+  --x2: calc(var(--line-width) * calc(var(--multiplier) * 3));
+  --y2: calc(var(--line-width) * calc(var(--multiplier) * 4.4));
+  --x3: calc(var(--line-width) * calc(var(--multiplier) * 5));
+  --x4: calc(var(--line-width) * calc(var(--multiplier) * 7));
+  --y3: calc(var(--line-width) * calc(var(--multiplier) * 7.75));
+  --x5: calc(var(--line-width) * calc(var(--multiplier) * 9));
+  --y4: calc(var(--line-width) * calc(var(--multiplier) * 9.75));
+  --x6: calc(var(--line-width) * calc(var(--multiplier) * 11));
+  --x7: calc(var(--line-width) * calc(var(--multiplier) * 13));
+  --x8: calc(var(--line-width) * calc(var(--multiplier) * 15));
+
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  box-shadow: var(--x1) var(--y1) 0 var(--size) var(--color-grey-100),
+    var(--x1) var(--y2) 0 var(--size) var(--color-grey-100),
+    var(--x3) var(--y1) 0 var(--size) var(--color-white),
+    var(--x3) var(--y2) 0 var(--size) var(--color-grey-100),
+    var(--x4) var(--y1) 0 var(--size) var(--color-grey-100),
+    var(--x4) var(--y2) 0 var(--size) var(--color-grey-100),
+    var(--x5) var(--y1) 0 var(--size) var(--color-grey-100),
+    var(--x5) var(--y2) 0 var(--size) var(--color-grey-100),
+    var(--x7) var(--y1) 0 var(--size) var(--color-white),
+    var(--x7) var(--y2) 0 var(--size) var(--color-grey-100),
+    var(--x8) var(--y1) 0 var(--size) var(--color-grey-100),
+    var(--x8) var(--y2) 0 var(--size) var(--color-grey-100),
+    var(--x1) var(--y3) 0 var(--size) var(--color-white),
+    var(--x1) var(--y4) 0 var(--size) var(--color-grey-100),
+    var(--x2) var(--y3) 0 var(--size) var(--color-grey-100),
+    var(--x2) var(--y4) 0 var(--size) var(--color-grey-100),
+    var(--x3) var(--y3) 0 var(--size) var(--color-grey-100),
+    var(--x3) var(--y4) 0 var(--size) var(--color-grey-100),
+    var(--x5) var(--y3) 0 var(--size) var(--color-white),
+    var(--x5) var(--y4) 0 var(--size) var(--color-grey-100),
+    var(--x6) var(--y3) 0 var(--size) var(--color-grey-100),
+    var(--x6) var(--y4) 0 var(--size) var(--color-grey-100),
+    var(--x7) var(--y3) 0 var(--size) var(--color-grey-100),
+    var(--x7) var(--y4) 0 var(--size) var(--color-grey-100);
+}

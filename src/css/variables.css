@@ -2,4 +2,9 @@
   --size: 20px;
   --cell-width: var(--size);
   --cell-height: var(--size);
+
+  --color-black: #000;
+  --color-white: #fff;
+  --color-grey-100: #a8a8a8;
+  --color-grey-200: #606060;
 }

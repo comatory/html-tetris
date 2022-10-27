@@ -1,11 +1,11 @@
 #root {
-  flex: 1;
   align-self: flex-start;
   display: grid;
   grid-template-columns: repeat(var(--columns), 1fr);
 }
 
 .cell {
+  width: var(--cell-width);
+  height: var(--cell-height);
   border: 1px solid #eee;
-  aspect-ratio: 1;
 }

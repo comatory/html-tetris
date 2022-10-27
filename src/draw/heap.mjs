@@ -1,7 +1,9 @@
 import { COLUMNS, ROWS } from "../utils/meta.mjs";
 import { getPositioning } from "../draw/collision.mjs";
+import { getSpriteClassName } from "./styles.mjs";
+import { isCellDisabled } from "../utils/shapes.mjs";
 
-/** @typedef {import('./shapes.mjs').Shape} Shape */
+/** @typedef {import('./shapes.mjs').ShapeDescriptor} ShapeDescriptor */
 
 /**
  * heap represents pieces that have already
@@ -34,7 +36,7 @@ function buildColumn() {
 /**
  * @typedef {Object} RebuildHeapOptions
  * @property {Heap} heap
- * @property {Shape} shape
+ * @property {ShapeDescriptor} shape
  * @property {x} number
  * @property {y} number
  *
@@ -59,9 +61,13 @@ export function rebuildHeap({ heap, shape, x, y }) {
       if (matchesColumn && matchesRow) {
         // only add "filled" cells to heap, otherwise fall back to whatever is
         // there
-        updatedHeap[columnIndex][rowIndex] =
-          shape.value[shapeRowIndex][shapeColumnIndex] ||
-          heap[columnIndex][rowIndex];
+        const isEmpty = isCellDisabled(
+          shape.value[shapeRowIndex][shapeColumnIndex]
+        );
+
+        updatedHeap[columnIndex][rowIndex] = isEmpty
+          ? heap[columnIndex][rowIndex]
+          : getSpriteClassName(shape.id, shape.rotation);
         shapeRowIndex++;
       } else {
         updatedHeap[columnIndex][rowIndex] = heap[columnIndex][rowIndex];
@@ -119,5 +125,5 @@ export function getRowIndicesToRemove(heap) {
  * @returns {boolean} true for clear
  */
 function shouldClearLine(row) {
-  return !row.some((value) => value === 0);
+  return !row.some((value) => isCellDisabled(value));
 }

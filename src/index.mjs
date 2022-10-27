@@ -4,10 +4,16 @@ import { getShape } from "./draw/shapes.mjs";
 import { spawn, getSpawnShapeData } from "./draw/spawn.mjs";
 import { keyBindingsFactory } from "./controls/keyboard.mjs";
 import { startGame } from "./game/game.mjs";
+import { setupAreaSize, windowResizeEventFactory } from "./area/viewport.mjs";
 
 /** starts the game */
 function start() {
   debug("START");
+
+  debug("SETUP VIEWPORT");
+  setupAreaSize();
+  const { registerResizeListener } = windowResizeEventFactory();
+  registerResizeListener();
 
   debug("BUILD CONTEXT");
   const initialContext = buildInitialContext();

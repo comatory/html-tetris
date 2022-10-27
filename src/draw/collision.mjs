@@ -1,4 +1,5 @@
 import { ROWS, COLUMNS, ROW_THRESHOLD } from "../utils/meta.mjs";
+import { isCellDisabled, isCellEnabled } from "../utils/shapes.mjs";
 
 /** @typedef {import('./heap.mjs').Heap} Heap */
 /** @typedef {import('./shapes.mjs').Shape} Shape */
@@ -41,7 +42,7 @@ function willHitHeap({ x, y, shape, heap }) {
   const shapeCoordinates = shape
     .map((column, columnIndex) => {
       return column.map((value, rowIndex) => {
-        if (value === 0) {
+        if (isCellDisabled(value)) {
           return null;
         }
 
@@ -51,7 +52,7 @@ function willHitHeap({ x, y, shape, heap }) {
     .flat()
     .filter((value) => value !== null);
 
-  return shapeCoordinates.some(([x, y]) => heap[y][x] === 1);
+  return shapeCoordinates.some(([x, y]) => isCellEnabled(heap[y][x]));
 }
 
 /**
