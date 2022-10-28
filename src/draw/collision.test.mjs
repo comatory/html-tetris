@@ -2,7 +2,7 @@ import { describe, it } from "mocha";
 import { expect } from "chai";
 
 import { buildHeap } from "./heap.mjs";
-import { check, getPositioning } from "./collision.mjs";
+import { check, getPositioning, willHitThreshold } from "./collision.mjs";
 import { getShape, I_ID, T_ID, O_ID, S_ID, ROTATION } from "./shapes.mjs";
 
 describe("collision", () => {
@@ -396,6 +396,28 @@ describe("collision", () => {
           ],
         })
       ).to.be.true;
+    });
+  });
+
+  describe("willHitThreshold", () => {
+    it("will hit threshold when shape intersects it", () => {
+      expect(
+        willHitThreshold({
+          value: getShape(I_ID, ROTATION.B).value,
+          x: 0,
+          y: 3,
+        })
+      ).to.be.true;
+    });
+
+    it("will NOT hit threshold when shape does not intersect it", () => {
+      expect(
+        willHitThreshold({
+          value: getShape(I_ID, ROTATION.B).value,
+          x: 0,
+          y: 4,
+        })
+      ).to.be.false;
     });
   });
 });

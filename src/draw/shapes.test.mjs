@@ -122,6 +122,10 @@ describe("shapes", () => {
         );
       });
     });
+
+    it("will throw on unknown shape ID", () => {
+      expect(() => getShape("random", ROTATION.A)).to.throw;
+    });
   });
 
   describe("getNextRotation", () => {
