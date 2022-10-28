@@ -106,7 +106,7 @@ export function startGame(context) {
 
         redrawGrid(context.heap, context);
 
-        step = time;
+        step = time - TURN_DURATION_IN_MS;
 
         window.requestAnimationFrame(loop);
         return;
