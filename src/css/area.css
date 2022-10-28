@@ -9,3 +9,42 @@
   height: var(--cell-height);
   border: 1px solid #eee;
 }
+
+.sprite.removing,
+.sprite.removing:after,
+.sprite.removing:before {
+  animation-name: blink;
+  animation-timing-function: linear;
+  animation-duration: var(--remove-animation-duration);
+  animation-iteration-count: 1;
+}
+
+@keyframes blink {
+  0% {
+    filter: invert(0%);
+  }
+  1% {
+    filter: invert(100%);
+  }
+  31% {
+    filter: invert(100%);
+  }
+  32% {
+    filter: invert(0%);
+  }
+  62% {
+    filter: invert(0%);
+  }
+  63% {
+    filter: invert(100%);
+  }
+  93% {
+    filter: invert(100%);
+  }
+  94% {
+    filter: invert(0%);
+  }
+  100% {
+    filter: invert(0%);
+  }
+}

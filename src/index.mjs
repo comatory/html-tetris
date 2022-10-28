@@ -5,10 +5,22 @@ import { spawn, getSpawnShapeData } from "./draw/spawn.mjs";
 import { keyBindingsFactory } from "./controls/keyboard.mjs";
 import { startGame } from "./game/game.mjs";
 import { setupAreaSize, windowResizeEventFactory } from "./area/viewport.mjs";
+import { ANIMATION_DURATION_IN_MS } from "./utils/meta.mjs";
+
+/** setup variables */
+function setupGlobals() {
+  document.documentElement.style.setProperty(
+    "--remove-animation-duration",
+    `${ANIMATION_DURATION_IN_MS}ms`
+  );
+}
 
 /** starts the game */
 function start() {
   debug("START");
+
+  debug("SETUP GLOBALS");
+  setupGlobals();
 
   debug("SETUP VIEWPORT");
   setupAreaSize();

@@ -1,4 +1,9 @@
-import { getCellsByIds, getCellById, getGridCells } from "../utils/html.mjs";
+import {
+  getCellsByIds,
+  getCellById,
+  getGridCells,
+  createCellElementId,
+} from "../utils/html.mjs";
 import { isCellEnabled, isShapeCellEnabled } from "../utils/shapes.mjs";
 import { getSpriteClassName } from "./styles.mjs";
 
@@ -140,7 +145,7 @@ function getCellShapeIds(x, y, shape) {
     ) {
       if (isShapeCellEnabled(shape[rowIndex][columnIndex])) {
         ids.push({
-          id: `#c${x + rowIndex}-${y + columnIndex}`,
+          id: createCellElementId(x + rowIndex, y + columnIndex),
           columnIndex,
           rowIndex,
         });
@@ -162,7 +167,7 @@ function getHeapIds(heap) {
   for (let rowIndex = 0; rowIndex < heap.length; rowIndex++) {
     for (let valueIndex = 0; valueIndex < heap[rowIndex].length; valueIndex++) {
       if (isCellEnabled(heap[rowIndex][valueIndex])) {
-        ids.push(`#c${valueIndex}-${rowIndex}`);
+        ids.push(createCellElementId(valueIndex, rowIndex));
       }
     }
   }

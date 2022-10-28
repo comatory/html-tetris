@@ -15,6 +15,16 @@ export function getCellTemplate() {
 }
 
 /**
+ * constructs HTML element ID based in play area
+ * @param {number} rowIndex - index of the row
+ * @param {number} columnIndex - index of the column
+ * @returns {string} element ID
+ */
+export function createCellElementId(rowIndex, columnIndex) {
+  return `#c${rowIndex}-${columnIndex}`;
+}
+
+/**
  * get array of HTML elements from the grid by
  * their given IDs
  *

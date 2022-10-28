@@ -10,6 +10,8 @@ const SPEED = 5;
 
 /** define duration of each turn in milliseconds */
 export const TURN_DURATION_IN_MS = SPEED * 200;
+/** animation duration */
+export const ANIMATION_DURATION_IN_MS = 500;
 
 /** deep-freeze of objects, use only for
  * statically created objects

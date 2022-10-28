@@ -1,4 +1,7 @@
-import { TURN_DURATION_IN_MS } from "../utils/meta.mjs";
+import {
+  TURN_DURATION_IN_MS,
+  ANIMATION_DURATION_IN_MS,
+} from "../utils/meta.mjs";
 import { draw, redrawGrid } from "../draw/utils.mjs";
 import { check, willHitThreshold } from "../draw/collision.mjs";
 import { getSpawnShapeData, spawn } from "../draw/spawn.mjs";
@@ -14,6 +17,7 @@ import {
   setGameStatePaused,
   setGameStateRunning,
 } from "../utils/context.mjs";
+import { playRemoveAnimation } from "../draw/styles.mjs";
 
 /** @typedef {import('../utils/context.mjs').Context} Context } */
 
@@ -24,7 +28,7 @@ import {
 export function startGame(context) {
   let step = null;
 
-  function loop(time) {
+  async function loop(time) {
     if (context.state === GAME_STATE_PAUSED) {
       return window.requestAnimationFrame(loop);
     }
@@ -51,6 +55,7 @@ export function startGame(context) {
         const currentShape = context.current.shape;
         const currentX = context.current.x;
         const currentY = context.current.y;
+        const { grid } = context;
 
         const nextHeap = rebuildHeap({
           heap: context.heap,
@@ -64,6 +69,7 @@ export function startGame(context) {
 
         if (rowIndicesToRemove.length > 0) {
           debug("CLEARED ROW");
+          await playRemoveAnimation(rowIndicesToRemove, nextHeap, grid);
           const clearedHeap = rebuildHeapWithRemovedRows(
             nextHeap,
             rowIndicesToRemove
@@ -106,7 +112,10 @@ export function startGame(context) {
 
         redrawGrid(context.heap, context);
 
-        step = time - TURN_DURATION_IN_MS;
+        step =
+          time - TURN_DURATION_IN_MS + rowIndicesToRemove.length > 0
+            ? ANIMATION_DURATION_IN_MS
+            : 0;
 
         window.requestAnimationFrame(loop);
         return;

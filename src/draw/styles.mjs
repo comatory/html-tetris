@@ -8,7 +8,8 @@ import {
   Z_ID,
   ROTATION,
 } from "./shapes.mjs";
-import { deepFreeze } from "../utils/meta.mjs";
+import { deepFreeze, ANIMATION_DURATION_IN_MS } from "../utils/meta.mjs";
+import { createCellElementId, getCellsByIds } from "../utils/html.mjs";
 
 /** @typedef {import("./shapes.mjs").ShapeID} ShapeID */
 /** @typedef {import("./shapes.mjs").Rotation} Rotation */
@@ -75,4 +76,36 @@ export function getSpriteClassName(
   }
 
   return item;
+}
+
+/**
+ * plays animation before removing rows
+ * @param {Array<string> rowIndices - rows to remove
+ * @param {Heap} heap
+ * @param {HTMLElement} grid
+ * @returns {void}
+ */
+export function playRemoveAnimation(rowIndices, heap, grid) {
+  const ids = collectRowIds(rowIndices, heap);
+  const cells = getCellsByIds(ids, grid);
+
+  return new Promise((resolve) => {
+    for (const cell of cells) {
+      cell.classList.add("removing");
+    }
+    setTimeout(() => {
+      for (const cell of cells) {
+        cell.classList.remove("removing");
+      }
+      resolve();
+    }, ANIMATION_DURATION_IN_MS);
+  });
+}
+
+function collectRowIds(rowIndices, heap) {
+  return rowIndices.map((index) => {
+    return heap[index].map((_, columnIndex) =>
+      createCellElementId(columnIndex, index)
+    );
+  });
 }
