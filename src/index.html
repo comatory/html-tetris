@@ -3,13 +3,6 @@
   <head>
     <title>Tetris</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script>
-      const debugValue = new URLSearchParams(window.location.search).get(
-        "debug"
-      );
-      const isDevelopment = debugValue === "1";
-      window.__ENV = isDevelopment ? "development" : "production";
-    </script>
     <link rel="stylesheet" href="css/main.css" />
     <script src="index.mjs" type="module"></script>
   </head>

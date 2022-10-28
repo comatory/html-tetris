@@ -13,6 +13,9 @@ function setupGlobals() {
     "--remove-animation-duration",
     `${ANIMATION_DURATION_IN_MS}ms`
   );
+  const debugValue = new URLSearchParams(window.location.search).get("debug");
+  const isDevelopment = debugValue === "1";
+  window.__ENV = isDevelopment ? "development" : "production";
 }
 
 /** starts the game */
