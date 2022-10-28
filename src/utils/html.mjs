@@ -27,6 +27,17 @@ export function getCellsByIds(ids, grid) {
 }
 
 /**
+ * get HTML element from the grid by given ID
+ *
+ * @param string id - list of # ids
+ * @param {HTMLElement} grid - area HTML element
+ * @returns {HTMLElement} element
+ */
+export function getCellById(id, grid) {
+  return grid.querySelector(id);
+}
+
+/**
  * get all cells in the grid
  * @param {HTMLElement} grid - area HTML element
  * @returns {NodeList} list of HTML elements

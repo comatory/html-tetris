@@ -1,4 +1,4 @@
-import { getCellsByIds, getGridCells } from "../utils/html.mjs";
+import { getCellsByIds, getCellById, getGridCells } from "../utils/html.mjs";
 import { isCellEnabled, isShapeCellEnabled } from "../utils/shapes.mjs";
 import { getSpriteClassName } from "./styles.mjs";
 
@@ -19,22 +19,30 @@ import { getSpriteClassName } from "./styles.mjs";
  */
 
 /**
+ * @typedef {Object} CellShapeIndices
+ * @property {number} columnIndex
+ * @property {number} rowIndex
+ *
  * lights up the cell
  * @param {HTMLElement} cell
  * @param {ShapeID} id
  * @param {Rotation} rotation
+ * @param {CellShapeIndices} indices
  * @returns {void}
  */
-function enableCell(cell, id, rotation) {
-  const className = getSpriteClassName(id, rotation);
-  cell.classList.add("sprite");
-  cell.classList.add("o");
+function enableCell(cell, id, rotation, { columnIndex, rowIndex }) {
+  const className = getSpriteClassName(id, rotation, {
+    columnIndex,
+    rowIndex,
+  });
 
   if (!className) {
     throw new Error("Unable to specify sprite class name.");
   }
 
-  cell.classList.add(className);
+  cell.classList.add("sprite");
+  const classList = Array.from(cell.classList);
+  cell.className = `${classList.join(" ")} ${className}`;
 }
 
 /**
@@ -60,11 +68,14 @@ export function draw({ x, y, shape, context }) {
     clear(current, grid);
   }
 
-  const ids = getShapeIds(x, y, value);
-  const cells = getCellsByIds(ids, grid);
+  const cellShapeIds = getCellShapeIds(x, y, value);
 
-  for (const cell of cells) {
-    enableCell(cell, id, rotation);
+  for (const cellShapeId of cellShapeIds) {
+    const cell = getCellById(cellShapeId.id, grid);
+    enableCell(cell, id, rotation, {
+      rowIndex: cellShapeId.rowIndex,
+      columnIndex: cellShapeId.columnIndex,
+    });
   }
 }
 
@@ -76,8 +87,8 @@ export function draw({ x, y, shape, context }) {
  */
 function clear({ x, y, shape }, grid) {
   const { value } = shape;
-  const ids = getShapeIds(x, y, value);
-  const cells = getCellsByIds(ids, grid);
+  const cellIds = getCellShapeIds(x, y, value).map(({ id }) => id);
+  const cells = getCellsByIds(cellIds, grid);
 
   for (const cell of cells) {
     disableCell(cell);
@@ -106,13 +117,19 @@ export function redrawGrid(heap, context) {
 }
 
 /**
+ * @typedef {Object} CellShapeId
+ * @property {string} id
+ * @property {number} rowIndex
+ * @property {number} columnIndex
+ *
+ *
  * extract HTML IDs from given shape
  * @param {number} x
  * @param {number} y
  * @param {Shape} shape
- * @returns {Array<string>} ids
+ * @returns {Array<CellShapeId>} ids
  */
-function getShapeIds(x, y, shape) {
+function getCellShapeIds(x, y, shape) {
   const ids = [];
 
   for (let rowIndex = 0; rowIndex < shape.length; rowIndex++) {
@@ -122,7 +139,11 @@ function getShapeIds(x, y, shape) {
       columnIndex++
     ) {
       if (isShapeCellEnabled(shape[rowIndex][columnIndex])) {
-        ids.push(`#c${x + rowIndex}-${y + columnIndex}`);
+        ids.push({
+          id: `#c${x + rowIndex}-${y + columnIndex}`,
+          columnIndex,
+          rowIndex,
+        });
       }
     }
   }

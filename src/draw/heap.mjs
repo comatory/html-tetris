@@ -67,7 +67,10 @@ export function rebuildHeap({ heap, shape, x, y }) {
 
         updatedHeap[columnIndex][rowIndex] = isEmpty
           ? heap[columnIndex][rowIndex]
-          : getSpriteClassName(shape.id, shape.rotation);
+          : getSpriteClassName(shape.id, shape.rotation, {
+              columnIndex: shapeColumnIndex,
+              rowIndex: shapeRowIndex,
+            });
         shapeRowIndex++;
       } else {
         updatedHeap[columnIndex][rowIndex] = heap[columnIndex][rowIndex];
