@@ -29,6 +29,12 @@
   align-self: center;
 }
 
+#score,
+#level,
+#lines {
+  pointer-events: none;
+}
+
 #score {
   align-self: flex-end;
   margin-top: calc(var(--font-size) / 8);

@@ -12,6 +12,13 @@
   box-sizing: border-box;
 }
 
+html {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 html,
 input {
   font-family: "GameGirl", monospace;
@@ -38,6 +45,11 @@ input {
   border: none;
   padding-top: calc(var(--font-size) / 8);
   font-size: calc(var(--font-size) / 2);
+}
+
+input[type="number"] {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
 }
 
 #left,
