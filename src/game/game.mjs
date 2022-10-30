@@ -18,6 +18,7 @@ import {
   setGameStateRunning,
 } from "../utils/context.mjs";
 import { playRemoveAnimation } from "../draw/styles.mjs";
+import { getScore } from "../utils/score.mjs";
 
 /** @typedef {import('../utils/context.mjs').Context} Context } */
 
@@ -75,6 +76,7 @@ export function startGame(context) {
             rowIndicesToRemove
           );
           context.heap = clearedHeap;
+          context.score += getScore(rowIndicesToRemove.length, context.level);
           redrawGrid(clearedHeap, context);
         }
 

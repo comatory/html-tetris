@@ -2,6 +2,7 @@ import { buildGrid } from "../area/size.mjs";
 import { buildHeap } from "../draw/heap.mjs";
 import { ROWS, COLUMNS } from "./meta.mjs";
 import { getRootStyle } from "./html.mjs";
+import { START_LEVEL } from "./level.mjs";
 
 /**
  * @typedef {import('../draw/shapes.mjs').ShapeDescriptor} ShapeDescriptor
@@ -29,6 +30,8 @@ export const GAME_STATE_PAUSED = "PAUSED";
  * @property {Heap} heap
  * @property {(CurrentDescriptor|null)} current
  * @property {GameState} state;
+ * @property {number} level;
+ * @property {number} score
  */
 
 /**
@@ -52,6 +55,8 @@ export function buildInitialContext() {
     current: null,
     heap,
     state: GAME_STATE_RUNNING,
+    level: START_LEVEL,
+    score: 0,
   };
 }
 
