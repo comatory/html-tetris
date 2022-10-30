@@ -1,3 +1,6 @@
+/** @type {HTMLInputElement} */
+const score = document.getElementById("score");
+
 /**
  * get root HTML element of playing area
  * @returns {HTMLElement|null} optional element
@@ -62,4 +65,12 @@ export function getGridCells(grid) {
  */
 export function getRootStyle() {
   return document.querySelector(":root").style;
+}
+
+/**
+ * updates score box
+ * @param {number} value
+ */
+export function updateScore(value) {
+  score.value = value;
 }
