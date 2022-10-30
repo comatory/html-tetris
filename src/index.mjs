@@ -5,14 +5,20 @@ import { spawn, getSpawnShapeData } from "./draw/spawn.mjs";
 import { keyBindingsFactory } from "./controls/keyboard.mjs";
 import { startGame } from "./game/game.mjs";
 import { setupAreaSize, windowResizeEventFactory } from "./area/viewport.mjs";
-import { ANIMATION_DURATION_IN_MS } from "./utils/meta.mjs";
+import { buildGrid, buildWalls } from "./area/size.mjs";
+import { ANIMATION_DURATION_IN_MS, ROWS, COLUMNS } from "./utils/meta.mjs";
+import { getRootStyle } from "./utils/html.mjs";
 
 /** setup variables */
 function setupGlobals() {
-  document.documentElement.style.setProperty(
+  const rootStyle = getRootStyle();
+  rootStyle.setProperty(
     "--remove-animation-duration",
     `${ANIMATION_DURATION_IN_MS}ms`
   );
+  rootStyle.setProperty("--rows", ROWS);
+  rootStyle.setProperty("--columns", COLUMNS);
+
   const debugValue = new URLSearchParams(window.location.search).get("debug");
   const isDevelopment = debugValue === "1";
   window.__ENV = isDevelopment ? "development" : "production";
@@ -30,8 +36,16 @@ function start() {
   const { registerResizeListener } = windowResizeEventFactory();
   registerResizeListener();
 
+  debug("BUILD AREA");
+  const grid = buildGrid({
+    rows: ROWS,
+    columns: COLUMNS,
+  });
+
+  buildWalls(grid);
+
   debug("BUILD CONTEXT");
-  const initialContext = buildInitialContext();
+  const initialContext = buildInitialContext(grid);
   createDebuggableContext(initialContext);
 
   debug("REGISTER KEY BINDINGS");

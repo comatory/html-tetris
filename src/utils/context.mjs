@@ -1,7 +1,4 @@
-import { buildGrid, buildWalls } from "../area/size.mjs";
 import { buildHeap } from "../draw/heap.mjs";
-import { ROWS, COLUMNS } from "./meta.mjs";
-import { getRootStyle } from "./html.mjs";
 import { START_LEVEL } from "./level.mjs";
 
 /**
@@ -37,20 +34,10 @@ export const GAME_STATE_PAUSED = "PAUSED";
 
 /**
  * create context when game starts
+ * @param {HTMLElement} grid
  * @returns {Context} game context
  */
-export function buildInitialContext() {
-  const style = getRootStyle();
-  style.setProperty("--rows", ROWS);
-  style.setProperty("--columns", COLUMNS);
-
-  const grid = buildGrid({
-    rows: ROWS,
-    columns: COLUMNS,
-  });
-
-  buildWalls(grid);
-
+export function buildInitialContext(grid) {
   const heap = buildHeap();
 
   return {
