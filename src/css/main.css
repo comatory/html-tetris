@@ -67,4 +67,5 @@ input[type="number"] {
 #center {
   height: 100%;
   background-color: var(--color-white);
+  display: flex;
 }

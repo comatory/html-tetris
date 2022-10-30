@@ -1,4 +1,9 @@
-import { getRoot, getCellTemplate } from "../utils/html.mjs";
+import {
+  getRoot,
+  getCellTemplate,
+  getWalls,
+  getRootStyle,
+} from "../utils/html.mjs";
 import { ROW_THRESHOLD } from "../utils/meta.mjs";
 import { isDevelopment } from "../utils/browser.mjs";
 
@@ -50,4 +55,33 @@ function buildCell(id, parent, index) {
   parent.appendChild(cell);
 
   return cell;
+}
+
+/**
+ * builds walls around area
+ * @param {HTMLElement} grid
+ * @returns {HTMLElement}
+ */
+export function buildWalls(grid) {
+  const [leftWall, rightWall] = getWalls();
+
+  if (!leftWall || !rightWall) {
+    throw new Error("Wall element not found.");
+  }
+
+  const height = grid.getBoundingClientRect().height;
+  const rootStyle = getRootStyle();
+  const size = rootStyle.getPropertyValue("--size");
+  const wallSpriteHeight = Number.parseFloat(size) * 0.75;
+  const count = Math.ceil(height / wallSpriteHeight);
+
+  const div = document.createElement("div");
+  div.classList.add("wall");
+
+  Array(count)
+    .fill(true)
+    .forEach(() => {
+      leftWall.appendChild(div.cloneNode());
+      rightWall.appendChild(div.cloneNode());
+    });
 }

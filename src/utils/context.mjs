@@ -1,4 +1,4 @@
-import { buildGrid } from "../area/size.mjs";
+import { buildGrid, buildWalls } from "../area/size.mjs";
 import { buildHeap } from "../draw/heap.mjs";
 import { ROWS, COLUMNS } from "./meta.mjs";
 import { getRootStyle } from "./html.mjs";
@@ -48,6 +48,8 @@ export function buildInitialContext() {
     rows: ROWS,
     columns: COLUMNS,
   });
+
+  buildWalls(grid);
 
   const heap = buildHeap();
 

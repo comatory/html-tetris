@@ -219,7 +219,7 @@
 }
 
 .wall {
-  --height: calc(var(--cell-height) * 0.75);
+  --height: var(--wall-sprite-height);
 
   width: var(--cell-width);
   height: var(--height);

@@ -2,6 +2,34 @@
   align-self: flex-start;
   display: grid;
   grid-template-columns: repeat(var(--columns), 1fr);
+  z-index: 2;
+}
+
+#root,
+#left-wall,
+#right-wall {
+  z-index: 1;
+}
+
+#left-wall,
+#right-wall {
+  align-self: flex-start;
+  display: grid;
+  grid-template-columns: 1fr;
+  border-style: solid;
+  border-color: var(--color-white);
+  border-top: none;
+  border-bottom: none;
+}
+
+#left-wall {
+  border-right: none;
+  border-left-width: var(--line-width);
+}
+
+#right-wall {
+  border-left: none;
+  border-right-width: var(--line-width);
 }
 
 .cell {

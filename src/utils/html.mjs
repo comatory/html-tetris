@@ -7,6 +7,14 @@ export function getRoot() {
 }
 
 /**
+ * get wall elements
+ * @returns {NodeList} elemens
+ */
+export function getWalls() {
+  return document.querySelectorAll("#left-wall, #right-wall");
+}
+
+/**
  * get cell template HTML element of playing area
  * @returns {HTMLElement|null} optional element
  */
