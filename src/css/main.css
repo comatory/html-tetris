@@ -69,3 +69,9 @@ input[type="number"] {
   background-color: var(--color-white);
   display: flex;
 }
+
+@media screen and (max-width: 900px) {
+  #left {
+    display: none;
+  }
+}
