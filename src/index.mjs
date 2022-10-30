@@ -5,7 +5,7 @@ import { spawn, getSpawnShapeData } from "./draw/spawn.mjs";
 import { keyBindingsFactory } from "./controls/keyboard.mjs";
 import { startGame } from "./game/game.mjs";
 import { setupAreaSize, windowResizeEventFactory } from "./area/viewport.mjs";
-import { buildGrid, buildWalls } from "./area/size.mjs";
+import { buildArea } from "./area/area.mjs";
 import { ANIMATION_DURATION_IN_MS, ROWS, COLUMNS } from "./utils/meta.mjs";
 import { getRootStyle } from "./utils/html.mjs";
 
@@ -37,12 +37,7 @@ function start() {
   registerResizeListener();
 
   debug("BUILD AREA");
-  const grid = buildGrid({
-    rows: ROWS,
-    columns: COLUMNS,
-  });
-
-  buildWalls(grid);
+  const grid = buildArea(ROWS, COLUMNS);
 
   debug("BUILD CONTEXT");
   const initialContext = buildInitialContext(grid);

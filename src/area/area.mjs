@@ -9,14 +9,27 @@ import { isDevelopment } from "../utils/browser.mjs";
 
 /**
  * builds playing area
- * @typedef {Object} BuildGridParams
- * @property {number} rows
- * @property {number} columns
  *
- * @param {BuildGridParams} options
+ * @param {number} rows
+ * @param {number} columns
  * @returns {HTMLElement}
  */
-export function buildGrid({ rows, columns }) {
+export function buildArea(rows, columns) {
+  const grid = buildGrid(rows, columns);
+
+  buildWalls(grid);
+
+  return grid;
+}
+
+/**
+ * build grid element
+ *
+ * @param {number} rows
+ * @param {number} columns
+ * @returns {HTMLElement}
+ */
+function buildGrid(rows, columns) {
   const root = getRoot();
 
   if (!root) {
@@ -62,7 +75,7 @@ function buildCell(id, parent, index) {
  * @param {HTMLElement} grid
  * @returns {HTMLElement}
  */
-export function buildWalls(grid) {
+function buildWalls(grid) {
   const [leftWall, rightWall] = getWalls();
 
   if (!leftWall || !rightWall) {
