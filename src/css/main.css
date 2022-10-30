@@ -33,6 +33,7 @@ body {
   justify-content: space-evenly;
   height: 100vh;
   max-height: 100vh;
+  min-width: 420px;
   width: 100%;
   overflow: hidden;
   background-color: var(--color-black);
@@ -72,6 +73,12 @@ input[type="number"] {
 
 @media screen and (max-width: 900px) {
   #left {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 675px) {
+  #right {
     display: none;
   }
 }

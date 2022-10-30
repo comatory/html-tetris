@@ -11,6 +11,31 @@
   background: var(--color-black);
 }
 
+#info-sm {
+  display: none;
+  height: var(--info-sm-panel-height);
+  overflow: hidden;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--color-black);
+  color: var(--color-white);
+  align-items: flex-start;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 1px;
+  padding-top: 2px;
+}
+
+.info-sm-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
 .box {
   background: var(--color-white);
   padding: calc(var(--font-size) / 16);
@@ -113,4 +138,14 @@
   flex: 1;
   width: calc(100% - var(--font-size));
   margin: calc(var(--font-size) / 2);
+}
+
+@media screen and (max-width: 675px) {
+  #info-sm {
+    display: flex;
+  }
+
+  #info {
+    display: none;
+  }
 }
