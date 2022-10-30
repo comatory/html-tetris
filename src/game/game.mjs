@@ -4,13 +4,12 @@ import {
 } from "../utils/meta.mjs";
 import { draw, redrawGrid } from "../draw/utils.mjs";
 import { check, willHitThreshold } from "../draw/collision.mjs";
-import { getSpawnShapeData, spawn } from "../draw/spawn.mjs";
+import { spawn } from "../draw/spawn.mjs";
 import {
   rebuildHeap,
   rebuildHeapWithRemovedRows,
   getRowIndicesToRemove,
 } from "../draw/heap.mjs";
-import { getShape } from "../draw/shapes.mjs";
 import { debug } from "../utils/log.mjs";
 import {
   GAME_STATE_PAUSED,
@@ -85,19 +84,15 @@ export function startGame(context) {
           redrawGrid(clearedHeap, context);
         }
 
-        const spawnData = getSpawnShapeData();
-        const spawnShape = getShape(spawnData.id, spawnData.rotation);
-        const spawnCoordinates = spawn({
-          id: spawnShape.id,
+        const spawnDescriptor = spawn({
           x: 3,
           y: 0,
-          rotation: spawnShape.rotation,
         });
 
         if (
           willHitThreshold({
-            value: spawnShape.value,
-            x: spawnCoordinates.x,
+            value: spawnDescriptor.shape.value,
+            x: spawnDescriptor.x,
             y: currentY,
           })
         ) {
@@ -106,9 +101,9 @@ export function startGame(context) {
           return;
         }
 
-        context.current.x = spawnCoordinates.x;
-        context.current.y = spawnCoordinates.y;
-        context.current.shape = spawnShape;
+        context.current.x = spawnDescriptor.x;
+        context.current.y = spawnDescriptor.y;
+        context.current.shape = spawnDescriptor.shape;
 
         draw({
           x: context.current.x,

@@ -10,6 +10,7 @@ import {
   S_ID,
   T_ID,
   Z_ID,
+  getShape,
 } from "./shapes.mjs";
 
 /** @typedef {import('./shapes.mjs').ShapeID} ShapeID */
@@ -54,25 +55,31 @@ const SPAWN_COORDINATE_ADJUSTMENT_MAP = deepFreeze({
 
 /**
  * @typedef {Object} SpawnOptions
- * @property {ShapeID} id - ID of the shape
  * @property {number} x - initial x coord
  * @property {number} y - initial y coord
- * @property {Rotation} rotation - initial rotation
  *
- * @typedef {Object} SpawnAdjustedCoordinates
- * @property {number} x - adjusted x coord
- * @property {number} y - adjusted y coord
+ * @typedef {Object} SpawnDescriptor
+ * @property {number} x - adjusted x coord of spawn
+ * @property {number} y - adjusted y coord of spawn
+ * @property {ShapeDescriptor} shape - spawned shape
  *
  * spawn initial location
  * @param {SpawnOptions} options
- * @returns {SpawnAdjustedCoordinates} adjusted coordinates
+ * @returns {SpawnDescriptor} adjusted coordinates
  */
-export function spawn({ id, x, y, rotation }) {
+export function spawn({ x, y }) {
+  const { id, rotation } = getSpawnShapeData();
+  const shape = getShape(id, rotation);
+
   const adjustments = SPAWN_COORDINATE_ADJUSTMENT_MAP[id][rotation];
   const adjustedX = x + adjustments[0];
   const adjustedY = y + adjustments[1];
 
-  return { x: adjustedX, y: adjustedY };
+  return {
+    x: adjustedX,
+    y: adjustedY,
+    shape,
+  };
 }
 
 /**
@@ -83,7 +90,7 @@ export function spawn({ id, x, y, rotation }) {
  * get random shape ID and rotation for each spawn
  * @returns {SpawnShapeData} shape ID and rotation
  */
-export function getSpawnShapeData() {
+function getSpawnShapeData() {
   const id = SHAPES[Math.round(Math.random() * (SHAPES.length - 1))];
   return {
     id,
