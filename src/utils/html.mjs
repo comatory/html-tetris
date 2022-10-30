@@ -1,6 +1,9 @@
 /** @type {HTMLInputElement} */
 const score = document.getElementById("score");
 
+/** @type {HTMLInputElement} */
+const lines = document.getElementById("lines");
+
 /**
  * get root HTML element of playing area
  * @returns {HTMLElement|null} optional element
@@ -73,4 +76,12 @@ export function getRootStyle() {
  */
 export function updateScore(value) {
   score.value = value;
+}
+
+/**
+ * updates lines box
+ * @param {number} value
+ */
+export function updateLines(value) {
+  lines.value = value;
 }

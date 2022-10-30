@@ -19,7 +19,7 @@ import {
 } from "../utils/context.mjs";
 import { playRemoveAnimation } from "../draw/styles.mjs";
 import { getScore } from "../utils/score.mjs";
-import { updateScore } from "../utils/html.mjs";
+import { updateScore, updateLines } from "../utils/html.mjs";
 
 /** @typedef {import('../utils/context.mjs').Context} Context } */
 
@@ -79,7 +79,9 @@ export function startGame(context) {
           context.heap = clearedHeap;
           const nextScore = getScore(rowIndicesToRemove.length, context.level);
           context.score += nextScore;
+          context.lines += rowIndicesToRemove.length;
           updateScore(context.score);
+          updateLines(context.lines);
           redrawGrid(clearedHeap, context);
         }
 

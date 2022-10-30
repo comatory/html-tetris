@@ -32,6 +32,7 @@ export const GAME_STATE_PAUSED = "PAUSED";
  * @property {GameState} state;
  * @property {number} level;
  * @property {number} score
+ * @property {number} lines;
  */
 
 /**
@@ -57,6 +58,7 @@ export function buildInitialContext() {
     state: GAME_STATE_RUNNING,
     level: START_LEVEL,
     score: 0,
+    lines: 0,
   };
 }
 
