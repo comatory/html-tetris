@@ -89,8 +89,11 @@ export function setVariable(property, value) {
  * @param {number} value
  */
 export function updateScore(value) {
-  const score = document.getElementById("score");
-  score.value = value;
+  const scoreInputs = document.querySelectorAll("[data-id='score']");
+
+  scoreInputs.forEach((score) => {
+    score.value = value;
+  });
 }
 
 /**
@@ -98,6 +101,9 @@ export function updateScore(value) {
  * @param {number} value
  */
 export function updateLines(value) {
-  const lines = document.getElementById("lines");
-  lines.value = value;
+  const linesInputs = document.querySelectorAll("[data-id='lines']");
+
+  linesInputs.forEach((lines) => {
+    lines.value = value;
+  });
 }
