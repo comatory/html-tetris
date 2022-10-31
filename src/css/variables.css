@@ -4,6 +4,7 @@
   --cell-height: var(--size);
   --wall-sprite-height: calc(var(--cell-height) * 0.75);
   --info-sm-panel-height: 30px;
+  --touch-controls-panel-height: 60px;
 
   --color-black: #000;
   --color-white: #fff;

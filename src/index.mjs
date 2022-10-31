@@ -2,6 +2,7 @@ import { buildInitialContext } from "./utils/context.mjs";
 import { debug, createDebuggableContext } from "./utils/log.mjs";
 import { spawn } from "./draw/spawn.mjs";
 import { keyBindingsFactory } from "./controls/keyboard.mjs";
+import { touchBindingsFactory } from "./controls/touch.mjs";
 import { startGame } from "./game/game.mjs";
 import { setupAreaSize, windowResizeEventFactory } from "./area/viewport.mjs";
 import { buildArea } from "./area/area.mjs";
@@ -41,6 +42,10 @@ function start() {
   debug("REGISTER KEY BINDINGS");
   const { registerKeyBindings } = keyBindingsFactory(initialContext);
   registerKeyBindings();
+
+  debug("REGISTER TOUCH BINDINGS");
+  const { registerTouchBindings } = touchBindingsFactory(initialContext);
+  registerTouchBindings();
 
   const { x, y, shape } = spawn({
     x: 3,

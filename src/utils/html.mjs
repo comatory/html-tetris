@@ -107,3 +107,51 @@ export function updateLines(value) {
     lines.value = value;
   });
 }
+
+/**
+ * get touch arrow left button
+ * @returns {HTMLElement} element
+ */
+export function getArrowLeftButton() {
+  return document.getElementById("arrow-left");
+}
+
+/**
+ * get touch arrow right button
+ * @returns {HTMLElement} element
+ */
+export function getArrowRightButton() {
+  return document.getElementById("arrow-right");
+}
+
+/**
+ * get touch arrow down button
+ * @returns {HTMLElement} element
+ */
+export function getArrowDownButton() {
+  return document.getElementById("arrow-down");
+}
+
+/**
+ * get touch rotate counter-clockwise button
+ * @returns {HTMLElement} element
+ */
+export function getCounterClockwiseButton() {
+  return document.getElementById("rotate-ccw");
+}
+
+/**
+ * get touch rotate clockwise button
+ * @returns {HTMLElement} element
+ */
+export function getClockwiseButton() {
+  return document.getElementById("rotate-cw");
+}
+
+/**
+ * get touch pause button
+ * @returns {HTMLElement} element
+ */
+export function getPauseButton() {
+  return document.getElementById("pause");
+}

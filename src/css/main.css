@@ -2,6 +2,7 @@
 @import url("area.css");
 @import url("shapes.css");
 @import url("info.css");
+@import url("controls.css");
 
 @font-face {
   font-family: "GameGirl";
@@ -20,7 +21,8 @@ html {
 }
 
 html,
-input {
+input,
+button {
   font-family: "GameGirl", monospace;
   font-size: var(--font-size);
 }
