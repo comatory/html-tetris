@@ -2,7 +2,7 @@ import {
   getRoot,
   getCellTemplate,
   getWalls,
-  getRootStyle,
+  getVariable,
 } from "../utils/html.mjs";
 import { ROW_THRESHOLD } from "../utils/meta.mjs";
 import { isDevelopment } from "../utils/browser.mjs";
@@ -83,8 +83,7 @@ function buildWalls(grid) {
   }
 
   const height = grid.getBoundingClientRect().height;
-  const rootStyle = getRootStyle();
-  const size = rootStyle.getPropertyValue("--size");
+  const size = getVariable("--size");
   const wallSpriteHeight = Number.parseFloat(size) * 0.75;
   const count = Math.ceil(height / wallSpriteHeight);
 

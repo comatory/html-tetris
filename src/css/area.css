@@ -47,6 +47,14 @@
   animation-iteration-count: 1;
 }
 
+@media screen and (max-width: 675px) {
+  #root,
+  #left-wall,
+  #right-wall {
+    margin-top: var(--info-sm-panel-height);
+  }
+}
+
 @keyframes blink {
   0% {
     filter: invert(0%);

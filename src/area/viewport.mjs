@@ -1,5 +1,6 @@
 import { ROWS } from "../utils/meta.mjs";
 import { debug } from "../utils/log.mjs";
+import { getVariable, setVariable } from "../utils/html.mjs";
 
 /**
  * looks at size of the parent element of the
@@ -8,10 +9,15 @@ import { debug } from "../utils/log.mjs";
  */
 export function setupAreaSize() {
   const center = document.getElementById("center");
-  const { height } = center.getBoundingClientRect();
-  const cellHeight = height / ROWS;
+  const infoSm = document.getElementById("info-sm");
+  const infoSmIsVisible = getComputedStyle(infoSm).display !== "none";
 
-  document.documentElement.style.setProperty("--size", `${cellHeight}px`);
+  const { height } = center.getBoundingClientRect();
+  const cellHeight = infoSmIsVisible
+    ? (height - Number.parseFloat(getVariable("--info-sm-panel-height"))) / ROWS
+    : height / ROWS;
+
+  setVariable("--size", `${cellHeight}px`);
 
   debug(`CELL SIZE SET TO ${cellHeight}PX`);
 }

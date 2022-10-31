@@ -6,17 +6,13 @@ import { startGame } from "./game/game.mjs";
 import { setupAreaSize, windowResizeEventFactory } from "./area/viewport.mjs";
 import { buildArea } from "./area/area.mjs";
 import { ANIMATION_DURATION_IN_MS, ROWS, COLUMNS } from "./utils/meta.mjs";
-import { getRootStyle } from "./utils/html.mjs";
+import { setVariable } from "./utils/html.mjs";
 
 /** setup variables */
 function setupGlobals() {
-  const rootStyle = getRootStyle();
-  rootStyle.setProperty(
-    "--remove-animation-duration",
-    `${ANIMATION_DURATION_IN_MS}ms`
-  );
-  rootStyle.setProperty("--rows", ROWS);
-  rootStyle.setProperty("--columns", COLUMNS);
+  setVariable("--remove-animation-duration", `${ANIMATION_DURATION_IN_MS}ms`);
+  setVariable("--rows", ROWS);
+  setVariable("--columns", COLUMNS);
 
   const debugValue = new URLSearchParams(window.location.search).get("debug");
   const isDevelopment = debugValue === "1";

@@ -65,11 +65,23 @@ export function getGridCells(grid) {
 }
 
 /**
- * get root style with CSS variables
- * @returns {CSS2Properties}
+ * get CSS variable
+ * @param {string} property
+ * @returns {string} value
  */
-export function getRootStyle() {
-  return document.querySelector(":root").style;
+export function getVariable(property) {
+  return getComputedStyle(document.documentElement).getPropertyValue(property);
+}
+
+/**
+ * set CSS variable
+ * @param {string} property
+ * @param {string|number} value
+ * @returns {string} value
+ */
+export function setVariable(property, value) {
+  document.documentElement.style.setProperty(property, value);
+  return getVariable(property);
 }
 
 /**
