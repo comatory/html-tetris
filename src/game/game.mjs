@@ -1,7 +1,4 @@
-import {
-  TURN_DURATION_IN_MS,
-  ANIMATION_DURATION_IN_MS,
-} from "../utils/meta.mjs";
+import { ANIMATION_DURATION_IN_MS } from "../utils/meta.mjs";
 import { draw, redrawGrid } from "../draw/utils.mjs";
 import { check, willHitThreshold } from "../draw/collision.mjs";
 import { spawn } from "../draw/spawn.mjs";
@@ -19,6 +16,7 @@ import {
 import { playRemoveAnimation } from "../draw/styles.mjs";
 import { getScore } from "../utils/score.mjs";
 import { updateScore, updateLines } from "../utils/html.mjs";
+import { TURN_DURATIONS_PER_LEVEL } from "../utils/level.mjs";
 
 /** @typedef {import('../utils/context.mjs').Context} Context } */
 
@@ -39,8 +37,9 @@ export function startGame(context) {
     }
 
     const elapsed = time - step;
+    const duration = TURN_DURATIONS_PER_LEVEL[context.level];
 
-    if (elapsed > TURN_DURATION_IN_MS) {
+    if (elapsed > duration) {
       debug("TURN");
       const nextY = context.current.y + 1;
 
@@ -115,7 +114,7 @@ export function startGame(context) {
         redrawGrid(context.heap, context);
 
         step =
-          time - TURN_DURATION_IN_MS + rowIndicesToRemove.length > 0
+          time - duration + rowIndicesToRemove.length > 0
             ? ANIMATION_DURATION_IN_MS
             : 0;
 

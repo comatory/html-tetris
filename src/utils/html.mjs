@@ -109,6 +109,18 @@ export function updateLines(value) {
 }
 
 /**
+ * updates level box
+ * @param {number} value
+ */
+export function updateLevel(value) {
+  const levelInputs = document.querySelectorAll("[data-id='level']");
+
+  levelInputs.forEach((level) => {
+    level.value = value;
+  });
+}
+
+/**
  * get touch arrow left button
  * @returns {HTMLElement} element
  */

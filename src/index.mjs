@@ -7,7 +7,7 @@ import { startGame } from "./game/game.mjs";
 import { setupAreaSize, windowResizeEventFactory } from "./area/viewport.mjs";
 import { buildArea } from "./area/area.mjs";
 import { ANIMATION_DURATION_IN_MS, ROWS, COLUMNS } from "./utils/meta.mjs";
-import { setVariable } from "./utils/html.mjs";
+import { setVariable, updateLevel } from "./utils/html.mjs";
 
 /** setup variables */
 function setupGlobals() {
@@ -15,9 +15,13 @@ function setupGlobals() {
   setVariable("--rows", ROWS);
   setVariable("--columns", COLUMNS);
 
-  const debugValue = new URLSearchParams(window.location.search).get("debug");
+  const params = new URLSearchParams(window.location.search);
+  const debugValue = params.get("debug");
   const isDevelopment = debugValue === "1";
   window.__ENV = isDevelopment ? "development" : "production";
+
+  const levelValue = Number.parseInt(params.get("level"));
+  window.__DEBUG_LEVEL = Number.isNaN(levelValue) ? undefined : levelValue;
 }
 
 /** starts the game */
@@ -57,6 +61,12 @@ function start() {
     y,
     shape,
   };
+
+  if (Number.isFinite(window.__DEBUG_LEVEL)) {
+    initialContext.level = window.__DEBUG_LEVEL;
+  }
+
+  updateLevel(initialContext.level);
 
   debug("START GAME INITIATED");
   startGame(initialContext);

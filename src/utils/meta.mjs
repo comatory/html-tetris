@@ -4,12 +4,6 @@ export const ROWS = 24;
 export const COLUMNS = 10;
 /** top threshold row @type {number} */
 export const ROW_THRESHOLD = 3;
-
-/** define speed, it's a multiplier for game loop */
-const SPEED = 5;
-
-/** define duration of each turn in milliseconds */
-export const TURN_DURATION_IN_MS = SPEED * 200;
 /** animation duration */
 export const ANIMATION_DURATION_IN_MS = 500;
 
