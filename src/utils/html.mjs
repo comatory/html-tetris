@@ -33,6 +33,16 @@ export function createCellElementId(rowIndex, columnIndex) {
 }
 
 /**
+ * constructs HTML element ID based in preview area
+ * @param {number} rowIndex - index of the row
+ * @param {number} columnIndex - index of the column
+ * @returns {string} element ID
+ */
+export function createPreviewCellElementId(rowIndex, columnIndex) {
+  return `#p${rowIndex}-${columnIndex}`;
+}
+
+/**
  * get array of HTML elements from the grid by
  * their given IDs
  *
@@ -166,4 +176,12 @@ export function getClockwiseButton() {
  */
 export function getPauseButton() {
   return document.getElementById("pause");
+}
+
+/**
+ * get shape preview window
+ * @returns {HTMLElement} element
+ */
+export function getPreviewWindow() {
+  return document.getElementById("piece");
 }

@@ -3,6 +3,7 @@ import {
   getCellById,
   getGridCells,
   createCellElementId,
+  createPreviewCellElementId,
 } from "../utils/html.mjs";
 import { isCellEnabled, isShapeCellEnabled } from "../utils/shapes.mjs";
 import { getSpriteClassName } from "./styles.mjs";
@@ -73,10 +74,45 @@ export function draw({ x, y, shape, context }) {
     clear(current, grid);
   }
 
-  const cellShapeIds = getCellShapeIds(x, y, value);
+  const cellShapeIds = getCellShapeIds({
+    x,
+    y,
+    shape: value,
+    callback: createCellElementId,
+  });
 
   for (const cellShapeId of cellShapeIds) {
     const cell = getCellById(cellShapeId.id, grid);
+    enableCell(cell, id, rotation, {
+      rowIndex: cellShapeId.rowIndex,
+      columnIndex: cellShapeId.columnIndex,
+    });
+  }
+}
+
+/**
+ * draw preview of next shape into preview window
+ * @param {ShapeDescriptor} shape
+ * @param {HTMLElement} preview node
+ * @returns {void}
+ */
+export function drawNextShapePreview(shape, node) {
+  const cellShapeIds = getCellShapeIds({
+    x: 0,
+    y: 0,
+    shape: shape.value,
+    callback: createPreviewCellElementId,
+  });
+  const { id, rotation } = shape;
+
+  const cells = getGridCells(node);
+
+  for (const cell of cells) {
+    disableCell(cell);
+  }
+
+  for (const cellShapeId of cellShapeIds) {
+    const cell = getCellById(cellShapeId.id, node);
     enableCell(cell, id, rotation, {
       rowIndex: cellShapeId.rowIndex,
       columnIndex: cellShapeId.columnIndex,
@@ -92,7 +128,12 @@ export function draw({ x, y, shape, context }) {
  */
 function clear({ x, y, shape }, grid) {
   const { value } = shape;
-  const cellIds = getCellShapeIds(x, y, value).map(({ id }) => id);
+  const cellIds = getCellShapeIds({
+    x,
+    y,
+    shape: value,
+    callback: createCellElementId,
+  }).map(({ id }) => id);
   const cells = getCellsByIds(cellIds, grid);
 
   for (const cell of cells) {
@@ -127,14 +168,17 @@ export function redrawGrid(heap, context) {
  * @property {number} rowIndex
  * @property {number} columnIndex
  *
+ * @typedef {Object} GetCellShapeIdOptions
+ * @property {number} x
+ * @property {number} y
+ * @property {Shape} shape
+ * @property {(x: number, y: number) => string} callback - function for generating element IDs
  *
  * extract HTML IDs from given shape
- * @param {number} x
- * @param {number} y
- * @param {Shape} shape
+ * @param {GetCellShapeIdOptions} options
  * @returns {Array<CellShapeId>} ids
  */
-function getCellShapeIds(x, y, shape) {
+function getCellShapeIds({ x, y, shape, callback }) {
   const ids = [];
 
   for (let rowIndex = 0; rowIndex < shape.length; rowIndex++) {
@@ -145,7 +189,7 @@ function getCellShapeIds(x, y, shape) {
     ) {
       if (isShapeCellEnabled(shape[rowIndex][columnIndex])) {
         ids.push({
-          id: createCellElementId(x + rowIndex, y + columnIndex),
+          id: callback(x + rowIndex, y + columnIndex),
           columnIndex,
           rowIndex,
         });

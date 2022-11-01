@@ -1,5 +1,5 @@
 import { ANIMATION_DURATION_IN_MS } from "../utils/meta.mjs";
-import { draw, redrawGrid } from "../draw/utils.mjs";
+import { draw, redrawGrid, drawNextShapePreview } from "../draw/utils.mjs";
 import { check, willHitThreshold } from "../draw/collision.mjs";
 import { spawn } from "../draw/spawn.mjs";
 import {
@@ -15,7 +15,12 @@ import {
 } from "../utils/context.mjs";
 import { playRemoveAnimation } from "../draw/styles.mjs";
 import { getScore } from "../utils/score.mjs";
-import { updateScore, updateLines, updateLevel } from "../utils/html.mjs";
+import {
+  updateScore,
+  updateLines,
+  updateLevel,
+  getPreviewWindow,
+} from "../utils/html.mjs";
 import {
   TURN_DURATIONS_PER_LEVEL,
   MAX_LEVEL,
@@ -30,6 +35,8 @@ import {
  */
 export function startGame(context) {
   let step = null;
+
+  drawNextShapePreview(context.nextShape.shape, getPreviewWindow());
 
   async function loop(time) {
     if (context.state === GAME_STATE_PAUSED) {
@@ -118,6 +125,8 @@ export function startGame(context) {
         context.current.y = spawnDescriptor.y;
         context.current.shape = spawnDescriptor.shape;
         context.nextShape = spawn();
+
+        drawNextShapePreview(context.nextShape.shape, getPreviewWindow());
 
         draw({
           x: context.current.x,
