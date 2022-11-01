@@ -81,13 +81,12 @@ export function draw({ x, y, shape, context }) {
     callback: createCellElementId,
   });
 
-  for (const cellShapeId of cellShapeIds) {
-    const cell = getCellById(cellShapeId.id, grid);
-    enableCell(cell, id, rotation, {
-      rowIndex: cellShapeId.rowIndex,
-      columnIndex: cellShapeId.columnIndex,
-    });
-  }
+  enableCells({
+    id,
+    ids: cellShapeIds,
+    rotation,
+    container: grid,
+  });
 }
 
 /**
@@ -111,8 +110,28 @@ export function drawNextShapePreview(shape, node) {
     disableCell(cell);
   }
 
-  for (const cellShapeId of cellShapeIds) {
-    const cell = getCellById(cellShapeId.id, node);
+  enableCells({
+    id,
+    ids: cellShapeIds,
+    rotation,
+    container: node,
+  });
+}
+
+/**
+ * @typedef {Object} EnableCellsOptions
+ * @property {Array<CellShapeId>} ids
+ * @property {HTMLElement} container
+ * @property {ShapeID} id
+ * @property {Rotation} rotation
+ *
+ * turns on specific cells
+ * @param {EnableCellsOptions} options
+ * @returns {void}
+ */
+function enableCells({ id, ids, rotation, container }) {
+  for (const cellShapeId of ids) {
+    const cell = getCellById(cellShapeId.id, container);
     enableCell(cell, id, rotation, {
       rowIndex: cellShapeId.rowIndex,
       columnIndex: cellShapeId.columnIndex,
