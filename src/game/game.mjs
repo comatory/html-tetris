@@ -16,7 +16,11 @@ import {
 import { playRemoveAnimation } from "../draw/styles.mjs";
 import { getScore } from "../utils/score.mjs";
 import { updateScore, updateLines, updateLevel } from "../utils/html.mjs";
-import { TURN_DURATIONS_PER_LEVEL, getLevel } from "../utils/level.mjs";
+import {
+  TURN_DURATIONS_PER_LEVEL,
+  MAX_LEVEL,
+  getLevel,
+} from "../utils/level.mjs";
 
 /** @typedef {import('../utils/context.mjs').Context} Context } */
 
@@ -82,6 +86,12 @@ export function startGame(context) {
           updateLines(context.lines);
           const previousLevel = context.level;
           context.level = getLevel(context.lines);
+
+          if (previousLevel !== context.level && context.level > MAX_LEVEL) {
+            pauseGame(context);
+            debug("GAME WON");
+            return;
+          }
 
           if (previousLevel !== context.level) {
             updateLevel(context.level);
