@@ -26,6 +26,7 @@ export const GAME_STATE_PAUSED = "PAUSED";
  * @property {HTMLElement} grid
  * @property {Heap} heap
  * @property {(CurrentDescriptor|null)} current
+ * @property {ShapeDescriptor} nextShape
  * @property {GameState} state;
  * @property {number} level;
  * @property {number} score

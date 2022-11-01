@@ -51,16 +51,15 @@ function start() {
   const { registerTouchBindings } = touchBindingsFactory(initialContext);
   registerTouchBindings();
 
-  const { x, y, shape } = spawn({
-    x: 3,
-    y: 0,
-  });
+  const { x, y, shape } = spawn();
 
   initialContext.current = {
     x,
     y,
     shape,
   };
+
+  initialContext.nextShape = spawn();
 
   if (Number.isFinite(window.__DEBUG_LEVEL)) {
     initialContext.level = window.__DEBUG_LEVEL;

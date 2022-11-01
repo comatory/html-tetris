@@ -100,10 +100,7 @@ export function startGame(context) {
           redrawGrid(clearedHeap, context);
         }
 
-        const spawnDescriptor = spawn({
-          x: 3,
-          y: 0,
-        });
+        const spawnDescriptor = context.nextShape;
 
         if (
           willHitThreshold({
@@ -120,6 +117,7 @@ export function startGame(context) {
         context.current.x = spawnDescriptor.x;
         context.current.y = spawnDescriptor.y;
         context.current.shape = spawnDescriptor.shape;
+        context.nextShape = spawn();
 
         draw({
           x: context.current.x,

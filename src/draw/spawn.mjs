@@ -64,10 +64,10 @@ const SPAWN_COORDINATE_ADJUSTMENT_MAP = deepFreeze({
  * @property {ShapeDescriptor} shape - spawned shape
  *
  * spawn initial location
- * @param {SpawnOptions} options
+ * @param {SpawnOptions | undefined} options
  * @returns {SpawnDescriptor} adjusted coordinates
  */
-export function spawn({ x, y }) {
+export function spawn({ x, y } = { x: 3, y: 0 }) {
   const { id, rotation } = getSpawnShapeData();
   const shape = getShape(id, rotation);
 
