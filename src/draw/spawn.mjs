@@ -14,6 +14,7 @@ import {
 } from "./shapes.mjs";
 
 /** @typedef {import('./shapes.mjs').ShapeID} ShapeID */
+/** @typedef {import('./shapes.mjs').Shapes} Shapes */
 /** @typedef {import('./shapes.mjs').Rotation} Rotation */
 /** @typedef {import('./shapes.mjs').ShapeDescriptor} ShapeDescriptor */
 
@@ -57,23 +58,24 @@ const SPAWN_COORDINATE_ADJUSTMENT_MAP = deepFreeze({
  * @typedef {Object} SpawnOptions
  * @property {number} x - initial x coord
  * @property {number} y - initial y coord
+ * @property {() => ShapeID} randomizerFn - randomizer function that fetches shape ID
  *
  * @typedef {Object} SpawnDescriptor
- * @property {number} x - adjusted x coord of spawn
- * @property {number} y - adjusted y coord of spawn
+ * @property {number | undefined} x - adjusted x coord of spawn
+ * @property {number | undefined} y - adjusted y coord of spawn
  * @property {ShapeDescriptor} shape - spawned shape
  *
  * spawn initial location
- * @param {SpawnOptions | undefined} options
+ * @param {SpawnOptions} options
  * @returns {SpawnDescriptor} adjusted coordinates
  */
-export function spawn({ x, y } = { x: 3, y: 0 }) {
-  const { id, rotation } = getSpawnShapeData();
+export function spawn({ x, y, randomizerFn }) {
+  const { id, rotation } = getSpawnShapeData(randomizerFn);
   const shape = getShape(id, rotation);
 
   const adjustments = SPAWN_COORDINATE_ADJUSTMENT_MAP[id][rotation];
-  const adjustedX = x + adjustments[0];
-  const adjustedY = y + adjustments[1];
+  const adjustedX = x ?? 3 + adjustments[0];
+  const adjustedY = y ?? 0 + adjustments[1];
 
   return {
     x: adjustedX,
@@ -88,13 +90,62 @@ export function spawn({ x, y } = { x: 3, y: 0 }) {
  * @property {Rotation} rotation
  *
  * get random shape ID and rotation for each spawn
+ * @param {() => ShapeID} randomizerFn - randomizer function that fetches shape ID
  * @returns {SpawnShapeData} shape ID and rotation
  */
-function getSpawnShapeData() {
-  const id = SHAPES[Math.round(Math.random() * (SHAPES.length - 1))];
+function getSpawnShapeData(randomizerFn) {
+  const id = randomizerFn();
   return {
     id,
     rotation:
       ROTATION_ORDER[Math.round(Math.random() * (ROTATION_ORDER.length - 1))],
   };
+}
+
+/**
+ * creates randomization function aligned with 7-bag algorhitm
+ *
+ * @returns {() => ShapeID} function that returns randomized shape ID
+ */
+export function createRandomizer() {
+  let bag = getBag();
+
+  /**
+   * @returns {() => ShapeID}
+   */
+  return function get() {
+    if (bag.length === 0) {
+      bag = getBag();
+    }
+
+    return bag.pop();
+  };
+}
+
+/**
+ * gets shuffled bag of shape IDs
+ *
+ * @returns {Shapes} array of shape IDs
+ */
+function getBag() {
+  const bag = [...SHAPES];
+  return shuffle(bag);
+}
+
+/**
+ * shuffle array
+ * @param {Shapes} array
+ * @returns {Shapes} shuffled array
+ */
+function shuffle(array) {
+  let currentIndex = array.length;
+
+  while (currentIndex !== 0) {
+    const index = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    [array[currentIndex], array[index]] = [array[index], array[currentIndex]];
+  }
+
+  return array;
 }

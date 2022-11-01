@@ -1,6 +1,6 @@
 import { buildInitialContext } from "./utils/context.mjs";
 import { debug, createDebuggableContext } from "./utils/log.mjs";
-import { spawn } from "./draw/spawn.mjs";
+import { spawn, createRandomizer } from "./draw/spawn.mjs";
 import { keyBindingsFactory } from "./controls/keyboard.mjs";
 import { touchBindingsFactory } from "./controls/touch.mjs";
 import { startGame } from "./game/game.mjs";
@@ -51,7 +51,8 @@ function start() {
   const { registerTouchBindings } = touchBindingsFactory(initialContext);
   registerTouchBindings();
 
-  const { x, y, shape } = spawn();
+  const randomizer = createRandomizer();
+  const { x, y, shape } = spawn({ randomizerFn: randomizer });
 
   initialContext.current = {
     x,
@@ -59,7 +60,7 @@ function start() {
     shape,
   };
 
-  initialContext.nextShape = spawn();
+  initialContext.nextShape = spawn({ randomizerFn: randomizer });
 
   if (Number.isFinite(window.__DEBUG_LEVEL)) {
     initialContext.level = window.__DEBUG_LEVEL;
@@ -68,7 +69,7 @@ function start() {
   updateLevel(initialContext.level);
 
   debug("START GAME INITIATED");
-  startGame(initialContext);
+  startGame(initialContext, randomizer);
 }
 
 document.addEventListener("DOMContentLoaded", start);

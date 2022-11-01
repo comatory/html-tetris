@@ -27,13 +27,15 @@ import {
   getLevel,
 } from "../utils/level.mjs";
 
+/** @typedef {import('../draw/shapes.mjs').ShapeID} ShapeID */
 /** @typedef {import('../utils/context.mjs').Context} Context } */
 
 /**
  * initiates game
  * @param {Context} context
+ * @param {() => ShapeID} randomizer - randomizer function
  */
-export function startGame(context) {
+export function startGame(context, randomizer) {
   let step = null;
 
   drawNextShapePreview(context.nextShape.shape, getPreviewWindow());
@@ -124,7 +126,7 @@ export function startGame(context) {
         context.current.x = spawnDescriptor.x;
         context.current.y = spawnDescriptor.y;
         context.current.shape = spawnDescriptor.shape;
-        context.nextShape = spawn();
+        context.nextShape = spawn({ randomizerFn: randomizer });
 
         drawNextShapePreview(context.nextShape.shape, getPreviewWindow());
 
