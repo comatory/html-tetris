@@ -30,10 +30,9 @@ function setupGlobals() {
 
 /** starts the game */
 function start() {
-  debug("START");
-
-  debug("SETUP GLOBALS");
   setupGlobals();
+
+  debug("START");
 
   debug("SETUP VIEWPORT");
   setupAreaSize();
