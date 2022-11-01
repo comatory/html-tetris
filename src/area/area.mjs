@@ -5,7 +5,7 @@ import {
   getVariable,
 } from "../utils/html.mjs";
 import { ROW_THRESHOLD } from "../utils/meta.mjs";
-import { isDevelopment } from "../utils/browser.mjs";
+import { isDevelopment, isProduction } from "../utils/browser.mjs";
 
 /**
  * builds playing area
@@ -61,8 +61,12 @@ function buildCell(id, parent, index) {
   const cell = template.content.cloneNode(true).querySelector(".cell");
   cell.setAttribute("id", id);
 
-  if (isDevelopment && index === ROW_THRESHOLD) {
+  if (isDevelopment() && index === ROW_THRESHOLD) {
     cell.style.borderTop = "2px solid darkgray";
+  }
+
+  if (isProduction() && index < ROW_THRESHOLD) {
+    cell.style.display = "none";
   }
 
   parent.appendChild(cell);

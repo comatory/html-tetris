@@ -1,6 +1,7 @@
-import { ROWS } from "../utils/meta.mjs";
+import { ROWS, ROW_THRESHOLD } from "../utils/meta.mjs";
 import { debug } from "../utils/log.mjs";
 import { getVariable, setVariable } from "../utils/html.mjs";
+import { isDevelopment } from "../utils/browser.mjs";
 
 /**
  * looks at size of the parent element of the
@@ -22,7 +23,9 @@ export function setupAreaSize() {
     : 0;
 
   const { height } = center.getBoundingClientRect();
-  const cellHeight = (height - infoSmHeight - touchControlsHeight) / ROWS;
+  const visibleRowCount = isDevelopment() ? ROWS : ROWS - ROW_THRESHOLD;
+  const cellHeight =
+    (height - infoSmHeight - touchControlsHeight) / visibleRowCount;
 
   setVariable("--size", `${cellHeight}px`);
 

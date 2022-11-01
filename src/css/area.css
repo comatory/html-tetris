@@ -36,7 +36,14 @@
 .cell {
   width: var(--cell-width);
   height: var(--cell-height);
-  border: 1px solid #eee;
+}
+
+.development .cell {
+  outline: 1px solid #eee;
+}
+
+.development .cell-threshold {
+  border-top: 2px solid darkgray;
 }
 
 .sprite.removing,

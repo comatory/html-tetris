@@ -1,4 +1,4 @@
-import { isDevelopment } from "./browser.mjs";
+import { isProduction } from "./browser.mjs";
 import { COLUMNS, ROWS } from "./meta.mjs";
 import { isCellEnabled } from "./shapes.mjs";
 
@@ -16,7 +16,7 @@ const DEBUG_STYLING = `
 
 /** debug logging */
 export function debug(...parts) {
-  if (!isDevelopment) {
+  if (isProduction()) {
     return;
   }
 
@@ -28,7 +28,7 @@ export function debug(...parts) {
  * @param {Context} ref - reference to context
  */
 export function createDebuggableContext(ref) {
-  if (!isDevelopment) {
+  if (isProduction()) {
     return;
   }
 

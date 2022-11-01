@@ -22,6 +22,10 @@ function setupGlobals() {
 
   const levelValue = Number.parseInt(params.get("level"));
   window.__DEBUG_LEVEL = Number.isNaN(levelValue) ? undefined : levelValue;
+
+  if (isDevelopment) {
+    document.body.classList.add("development");
+  }
 }
 
 /** starts the game */
