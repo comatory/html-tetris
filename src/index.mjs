@@ -1,13 +1,12 @@
 import { buildInitialContext } from "./utils/context.mjs";
 import { debug, createDebuggableContext } from "./utils/log.mjs";
 import { spawn, createRandomizer } from "./draw/spawn.mjs";
-import { keyBindingsFactory } from "./controls/keyboard.mjs";
-import { touchBindingsFactory } from "./controls/touch.mjs";
 import { startGame } from "./game/game.mjs";
 import { setupAreaSize, windowResizeEventFactory } from "./area/viewport.mjs";
 import { buildArea } from "./area/area.mjs";
 import { ANIMATION_DURATION_IN_MS, ROWS, COLUMNS } from "./utils/meta.mjs";
 import { setVariable, updateLevel } from "./utils/html.mjs";
+import { openMainDialog } from "./menu/main.mjs";
 
 /** setup variables */
 function setupGlobals() {
@@ -46,14 +45,6 @@ function start() {
   const initialContext = buildInitialContext(grid);
   createDebuggableContext(initialContext);
 
-  debug("REGISTER KEY BINDINGS");
-  const { registerKeyBindings } = keyBindingsFactory(initialContext);
-  registerKeyBindings();
-
-  debug("REGISTER TOUCH BINDINGS");
-  const { registerTouchBindings } = touchBindingsFactory(initialContext);
-  registerTouchBindings();
-
   const randomizer = createRandomizer();
   const { x, y, shape } = spawn({ randomizerFn: randomizer });
 
@@ -71,8 +62,9 @@ function start() {
 
   updateLevel(initialContext.level);
 
-  debug("START GAME INITIATED");
-  startGame(initialContext, randomizer);
+  openMainDialog({
+    start: () => startGame(initialContext, randomizer),
+  });
 }
 
 document.addEventListener("DOMContentLoaded", start);

@@ -16,7 +16,7 @@
   height: var(--info-sm-panel-height);
   overflow: hidden;
   position: absolute;
-  z-index: 2;
+  z-index: var(--z-foreground);
   top: 0;
   left: 0;
   width: 100%;

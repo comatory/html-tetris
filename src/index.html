@@ -145,5 +145,49 @@
     <template id="empty-cell">
       <div class="cell"></div>
     </template>
+    <dialog id="main-menu" class="box">
+      <form class="menu">
+        <input
+          type="radio"
+          value="1"
+          name="main-selection"
+          id="menu-item-start"
+          class="menu-item-input"
+          autocomplete="off"
+        />
+        <label for="menu-item-start" class="menu-item"> Start </label>
+        <input
+          type="radio"
+          value="2"
+          name="main-selection"
+          id="menu-item-options"
+          class="menu-item-input"
+          autocomplete="off"
+        />
+        <label for="menu-item-options" class="menu-item"> Options </label>
+        <input
+          type="radio"
+          value="3"
+          name="main-selection"
+          id="menu-item-high-scores"
+          class="menu-item-input"
+          autocomplete="off"
+        />
+        <label for="menu-item-high-scores" class="menu-item"> Score </label>
+      </form>
+    </dialog>
+    <dialog id="options-menu" class="box">
+      <form class="menu">
+        <input
+          type="radio"
+          value="1"
+          name="options-selection"
+          id="options-item-start"
+          class="menu-item-input"
+          autocomplete="off"
+        />
+        <label for="options-item-start" class="menu-item"> Back </label>
+      </form>
+    </dialog>
   </body>
 </html>

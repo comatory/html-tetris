@@ -12,4 +12,9 @@
   --color-grey-200: #606060;
 
   --font-size: 2rem;
+
+  --z-base: 0;
+  --z-background: 1;
+  --z-foreground: 2;
+  --z-top: 3;
 }

@@ -1,0 +1,46 @@
+dialog {
+  width: 400px;
+  z-index: var(--z-top);
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.menu-item {
+  display: block;
+  text-align: left;
+}
+
+.menu-item:hover {
+  color: var(--color-grey-200);
+  cursor: pointer;
+}
+
+.menu-item-input {
+  width: 0px;
+  height: 0px;
+  outline: none;
+}
+
+.menu-item-input:checked + .menu-item {
+  color: var(--color-grey-200);
+}
+
+.menu-item-input + .menu-item {
+  margin-left: 30px;
+}
+
+.menu-item-input:checked + .menu-item:before {
+  position: absolute;
+  left: 0;
+  content: "> ";
+}
+
+@media screen and (max-width: 675px) {
+  dialog {
+    width: 100%;
+  }
+}

@@ -26,6 +26,8 @@ import {
   MAX_LEVEL,
   getLevel,
 } from "../utils/level.mjs";
+import { keyBindingsFactory } from "../controls/keyboard.mjs";
+import { touchBindingsFactory } from "../controls/touch.mjs";
 
 /** @typedef {import('../draw/shapes.mjs').ShapeID} ShapeID */
 /** @typedef {import('../utils/context.mjs').Context} Context } */
@@ -36,6 +38,16 @@ import {
  * @param {() => ShapeID} randomizer - randomizer function
  */
 export function startGame(context, randomizer) {
+  debug("START GAME INITIATED");
+
+  debug("REGISTER KEY BINDINGS");
+  const { registerKeyBindings } = keyBindingsFactory(context);
+  registerKeyBindings();
+
+  debug("REGISTER TOUCH BINDINGS");
+  const { registerTouchBindings } = touchBindingsFactory(context);
+  registerTouchBindings();
+
   let step = null;
 
   drawNextShapePreview(context.nextShape.shape, getPreviewWindow());
