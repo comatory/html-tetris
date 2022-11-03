@@ -1,4 +1,5 @@
 import { openOptionsDialog } from "./options.mjs";
+import { openScoresDialog } from "./scores.mjs";
 import { dialogBindingsFactory } from "./controls.mjs";
 
 /**
@@ -37,6 +38,12 @@ export function openMainDialog({ start }) {
         break;
       case 3:
         dialog.close();
+        openScoresDialog({
+          back: () =>
+            openMainDialog({
+              start,
+            }),
+        });
         break;
       default:
         break;

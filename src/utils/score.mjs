@@ -107,8 +107,16 @@ function getStorageEntry() {
   return JSON.parse(stored);
 }
 
+/**
+ * creates empty local storage entry
+ *
+ * @returns {string} empty value
+ */
 function createStorageEntry() {
-  window.localStorage.setItem("scores", JSON.stringify([]));
+  const empty = JSON.stringify([]);
+  window.localStorage.setItem("scores", empty);
+
+  return empty;
 }
 
 /**
@@ -119,6 +127,6 @@ function createStorageEntry() {
  */
 function sortScoresByPlace(entries) {
   return [...entries].sort((a, b) => {
-    return b.place - a.place;
+    return a.place - b.place;
   });
 }

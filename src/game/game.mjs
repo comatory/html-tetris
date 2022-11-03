@@ -17,7 +17,7 @@ import {
   setGameStateReset,
 } from "../utils/context.mjs";
 import { playRemoveAnimation } from "../draw/styles.mjs";
-import { getScore } from "../utils/score.mjs";
+import { getScore, addScore } from "../utils/score.mjs";
 import {
   updateScore,
   updateLines,
@@ -33,6 +33,7 @@ import { keyBindingsFactory } from "../controls/keyboard.mjs";
 import { touchBindingsFactory } from "../controls/touch.mjs";
 import { prepare } from "./prepare.mjs";
 import { openMainDialog } from "../menu/main.mjs";
+import { openScoresDialog } from "../menu/scores.mjs";
 
 /** @typedef {import('../draw/shapes.mjs').ShapeID} ShapeID */
 /** @typedef {import('../utils/context.mjs').Context} Context } */
@@ -140,8 +141,7 @@ export function startGame(context, randomizer) {
             y: currentY,
           })
         ) {
-          pauseGame(context);
-          debug("GAME LOST");
+          gameOver(context);
           return;
         }
 
@@ -208,6 +208,7 @@ export function unpauseGame(context) {
 /**
  * resets/stops the game
  * @param {Context} context
+ * @returns {void}
  */
 export function resetGame(context) {
   debug("GAME RESET");
@@ -219,5 +220,22 @@ export function resetGame(context) {
 
   openMainDialog({
     start: () => startGame(initialContext, randomizer),
+  });
+}
+
+/**
+ * trigger when game is lost
+ *
+ * @param {Context} context
+ * @returns {void}
+ */
+function gameOver(context) {
+  debug("GAME LOST");
+  setGameStatePaused(context);
+
+  addScore(context.score);
+
+  openScoresDialog({
+    back: () => resetGame(context),
   });
 }
