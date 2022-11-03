@@ -24,14 +24,21 @@ function getScoresTableBody() {
  * create row for displaying place and score
  *
  * @param {ScoreEntry} score
+ * @param {number} [achievedScore]
+ *
  * @returns {HTMLTableRowElement} element
  */
-function createScoresRow(score) {
+function createScoresRow(score, achievedScore) {
   const row = document.createElement("tr");
   const placeCell = document.createElement("td");
   const scoreCell = document.createElement("td");
   placeCell.innerText = `${score.place}.`;
   scoreCell.innerText = `\t${score.value}`;
+
+  if (Number.isFinite(achievedScore) && score.value === achievedScore) {
+    placeCell.classList.add("blink");
+    scoreCell.classList.add("blink");
+  }
 
   row.append(placeCell, scoreCell);
 
@@ -41,12 +48,13 @@ function createScoresRow(score) {
 /**
  * @typedef {Object} OpenScoresDialogOptions
  * @property {() => void} back - close pause dialog and return to previous location
+ * @property {number} [achievedScore] - optionally higlight achieved score if applicable
  *
  * opens high scores dialog
  * @param {OpenScoresDialogOptions} options
  * @returns {void}
  */
-export function openScoresDialog({ back }) {
+export function openScoresDialog({ back, achievedScore }) {
   const dialog = getScoresDialog();
 
   const scores = getScores();
@@ -54,7 +62,7 @@ export function openScoresDialog({ back }) {
   table.innerHTML = "";
 
   scores.forEach((score) => {
-    table.appendChild(createScoresRow(score));
+    table.appendChild(createScoresRow(score, achievedScore));
   });
 
   function onSubmit(value) {

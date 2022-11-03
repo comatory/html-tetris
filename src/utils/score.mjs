@@ -82,6 +82,10 @@ export function addScore(score) {
     return getStorageEntry();
   }
 
+  if (scores.find(({ value }) => value === score)) {
+    return getStorageEntry();
+  }
+
   const unsortedScoreEntries = [...scores, { place: 0, value: score }];
   const sortedScoreEntriesByScore = unsortedScoreEntries
     .sort((a, b) => {

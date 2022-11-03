@@ -233,9 +233,12 @@ function gameOver(context) {
   debug("GAME LOST");
   setGameStatePaused(context);
 
-  addScore(context.score);
+  if (context.score > 0) {
+    addScore(context.score);
+  }
 
   openScoresDialog({
     back: () => resetGame(context),
+    achievedScore: context.score > 0 ? context.score : undefined,
   });
 }

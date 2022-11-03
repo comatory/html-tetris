@@ -39,6 +39,13 @@ dialog {
   content: "> ";
 }
 
+.blink {
+  animation: blink;
+  animation-timing-function: linear;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+}
+
 @media screen and (max-width: 675px) {
   dialog {
     width: 100%;
