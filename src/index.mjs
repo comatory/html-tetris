@@ -1,12 +1,11 @@
-import { buildInitialContext } from "./utils/context.mjs";
-import { debug, createDebuggableContext } from "./utils/log.mjs";
-import { spawn, createRandomizer } from "./draw/spawn.mjs";
+import { debug } from "./utils/log.mjs";
 import { startGame } from "./game/game.mjs";
 import { setupAreaSize, windowResizeEventFactory } from "./area/viewport.mjs";
 import { buildArea } from "./area/area.mjs";
 import { ANIMATION_DURATION_IN_MS, ROWS, COLUMNS } from "./utils/meta.mjs";
-import { setVariable, updateLevel } from "./utils/html.mjs";
+import { setVariable } from "./utils/html.mjs";
 import { openMainDialog } from "./menu/main.mjs";
+import { prepare } from "./game/prepare.mjs";
 
 /** setup variables */
 function setupGlobals() {
@@ -41,26 +40,7 @@ function start() {
   debug("BUILD AREA");
   const grid = buildArea(ROWS, COLUMNS);
 
-  debug("BUILD CONTEXT");
-  const initialContext = buildInitialContext(grid);
-  createDebuggableContext(initialContext);
-
-  const randomizer = createRandomizer();
-  const { x, y, shape } = spawn({ randomizerFn: randomizer });
-
-  initialContext.current = {
-    x,
-    y,
-    shape,
-  };
-
-  initialContext.nextShape = spawn({ randomizerFn: randomizer });
-
-  if (Number.isFinite(window.__DEBUG_LEVEL)) {
-    initialContext.level = window.__DEBUG_LEVEL;
-  }
-
-  updateLevel(initialContext.level);
+  const { initialContext, randomizer } = prepare(grid);
 
   openMainDialog({
     start: () => startGame(initialContext, randomizer),

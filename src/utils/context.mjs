@@ -8,6 +8,7 @@ import { START_LEVEL } from "./level.mjs";
 
 export const GAME_STATE_RUNNING = "RUNNING";
 export const GAME_STATE_PAUSED = "PAUSED";
+export const GAME_STATE_INITIAL = "INITIAL";
 
 /**
  * @typedef {(GAME_STATE_RUNNING|GAME_STATE_PAUSED)} GameState */
@@ -45,7 +46,7 @@ export function buildInitialContext(grid) {
     grid,
     current: null,
     heap,
-    state: GAME_STATE_RUNNING,
+    state: GAME_STATE_INITIAL,
     level: START_LEVEL,
     score: 0,
     lines: 0,
@@ -68,4 +69,13 @@ export function setGameStateRunning(context) {
  */
 export function setGameStatePaused(context) {
   context.state = GAME_STATE_PAUSED;
+}
+
+/**
+ * set game to initial state
+ * @param {Context} context
+ * @returns {void}
+ */
+export function setGameStateReset(context) {
+  context.state = GAME_STATE_INITIAL;
 }

@@ -10,8 +10,11 @@ import {
 import { debug } from "../utils/log.mjs";
 import {
   GAME_STATE_PAUSED,
+  GAME_STATE_RUNNING,
+  GAME_STATE_INITIAL,
   setGameStatePaused,
   setGameStateRunning,
+  setGameStateReset,
 } from "../utils/context.mjs";
 import { playRemoveAnimation } from "../draw/styles.mjs";
 import { getScore } from "../utils/score.mjs";
@@ -28,6 +31,8 @@ import {
 } from "../utils/level.mjs";
 import { keyBindingsFactory } from "../controls/keyboard.mjs";
 import { touchBindingsFactory } from "../controls/touch.mjs";
+import { prepare } from "./prepare.mjs";
+import { openMainDialog } from "../menu/main.mjs";
 
 /** @typedef {import('../draw/shapes.mjs').ShapeID} ShapeID */
 /** @typedef {import('../utils/context.mjs').Context} Context } */
@@ -39,6 +44,7 @@ import { touchBindingsFactory } from "../controls/touch.mjs";
  */
 export function startGame(context, randomizer) {
   debug("START GAME INITIATED");
+  context.state = GAME_STATE_RUNNING;
 
   debug("REGISTER KEY BINDINGS");
   const { registerKeyBindings } = keyBindingsFactory(context);
@@ -55,6 +61,10 @@ export function startGame(context, randomizer) {
   async function loop(time) {
     if (context.state === GAME_STATE_PAUSED) {
       return window.requestAnimationFrame(loop);
+    }
+
+    if (context.state === GAME_STATE_INITIAL) {
+      return;
     }
 
     if (!step) {
@@ -177,12 +187,37 @@ export function startGame(context, randomizer) {
   window.requestAnimationFrame(loop);
 }
 
+/**
+ * pauses main game loop
+ * @param {Context} context
+ */
 export function pauseGame(context) {
   debug("GAME PAUSED");
   setGameStatePaused(context);
 }
 
+/**
+ * un-pauses main game loop
+ * @param {Context} context
+ */
 export function unpauseGame(context) {
   debug("GAME UNPAUSED");
   setGameStateRunning(context);
+}
+
+/**
+ * resets/stops the game
+ * @param {Context} context
+ */
+export function resetGame(context) {
+  debug("GAME RESET");
+  setGameStateReset(context);
+
+  const { initialContext, randomizer } = prepare(context.grid);
+  context = null;
+  redrawGrid(initialContext.heap, initialContext);
+
+  openMainDialog({
+    start: () => startGame(initialContext, randomizer),
+  });
 }

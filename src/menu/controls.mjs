@@ -82,6 +82,7 @@ function keyBindingsFactory(form, menuItems) {
  * @typedef {Object} DialogBindingsFactoryOptions
  * @property {HTMLDialogElement} dialog
  * @property {(value: number) => void} submitFn - callback function which receives integer specifying menu option
+ * @property {() => void | undefined} backFn - callback function when dialog is closed
  *
  * @typedef {Object} DialogBindingsFactoryCallbacks
  * @property {() => void} registerDialogCallbacks - sets up listeners on dialog
@@ -91,7 +92,7 @@ function keyBindingsFactory(form, menuItems) {
  * @param {DialogBindingsFactoryOptions} options
  * @returns {DialogBindingsFactoryCallbacks} - register/unregister callbacks
  */
-export function dialogBindingsFactory({ dialog, submitFn }) {
+export function dialogBindingsFactory({ dialog, submitFn, backFn }) {
   const form = dialog.querySelector("form");
   const menuItems = dialog.querySelectorAll('input[type="radio"]');
 
@@ -102,6 +103,11 @@ export function dialogBindingsFactory({ dialog, submitFn }) {
   let formBindings;
   let keyBindings;
 
+  function blockEscKey(event) {
+    if (event.keyCode === 27) {
+      event.preventDefault();
+    }
+  }
   /**
    * set up all types of listeners on dialog
    */
@@ -109,6 +115,7 @@ export function dialogBindingsFactory({ dialog, submitFn }) {
     formBindings = formBindingsFactory(form, menuItems, submitFn);
     keyBindings = keyBindingsFactory(form, menuItems);
 
+    dialog.addEventListener("keydown", blockEscKey);
     dialog.addEventListener("close", unregisterDialogCallbacks);
 
     menuItems[0].checked = true;
@@ -125,6 +132,11 @@ export function dialogBindingsFactory({ dialog, submitFn }) {
 
     formBindings();
     keyBindings();
+    dialog.removeEventListener("keydown", blockEscKey);
+
+    if (backFn) {
+      backFn();
+    }
   }
 
   return {
