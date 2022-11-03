@@ -9,7 +9,8 @@ import {
 import {} from "../utils/options.mjs";
 import { moveLeft, moveRight, moveDown } from "../draw/movement.mjs";
 import { rotateClockWise, rotateAntiClockWise } from "../draw/rotation.mjs";
-import { pauseGame } from "../game/game.mjs";
+import { pauseGame, unpauseGame, resetGame } from "../game/game.mjs";
+import { openPauseDialog } from "../menu/pause.mjs";
 
 /** @typedef {import('../utils/context.mjs').Context} Context */
 
@@ -74,6 +75,12 @@ export function touchBindingsFactory(context) {
 
   function handlePause() {
     pauseGame(context);
+    openPauseDialog({
+      quit: () => resetGame(context),
+      back: () => {
+        unpauseGame(context);
+      },
+    });
   }
 
   function registerTouchBindings() {
