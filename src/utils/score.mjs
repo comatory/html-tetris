@@ -2,6 +2,12 @@ import { deepFreeze } from "./meta.mjs";
 
 /**
  * @typedef {Record<string, string>} ClearedRowAmountId
+ *
+ * @typedef {Object} ScoreEntry
+ * @property {number} place
+ * @property {number} value
+ *
+ * @typedef {Array<ScoreEntry>} ScoreEntries
  */
 
 /**
@@ -47,4 +53,72 @@ export function getScore(numberOfRows, level) {
     default:
       return 40 * (level + 1);
   }
+}
+
+/**
+ * retrieve scores
+ *
+ * @returns {ScoreEntries} - sorted score entry objects
+ */
+export function getScores() {
+  const entries = getStorageEntry();
+  return sortScoresByPlace(entries);
+}
+
+/**
+ * updates score
+ *
+ * @param {number} score - achieved score
+ * @returns {ScoreEntries} - updated score
+ */
+export function addScore(score) {
+  const scores = getStorageEntry();
+
+  if (scores.length === 0) {
+    window.localStorage.setItem(
+      "scores",
+      JSON.stringify([{ place: 1, value: score }])
+    );
+    return getStorageEntry();
+  }
+
+  const unsortedScoreEntries = [...scores, { place: 0, value: score }];
+  const sortedScoreEntriesByScore = unsortedScoreEntries
+    .sort((a, b) => {
+      return b.value - a.value;
+    })
+    .map((entry, index) => ({ ...entry, place: index + 1 }))
+    .slice(0, 5);
+
+  window.localStorage.setItem(
+    "scores",
+    JSON.stringify(sortedScoreEntriesByScore)
+  );
+  return getStorageEntry();
+}
+
+/**
+ * retrieves stored scores
+ * @returns {ScoreEntries} stored entries
+ */
+function getStorageEntry() {
+  const stored = window.localStorage.getItem("scores") ?? createStorageEntry();
+
+  return JSON.parse(stored);
+}
+
+function createStorageEntry() {
+  window.localStorage.setItem("scores", JSON.stringify([]));
+}
+
+/**
+ * sort scores
+ *
+ * @param {ScoreEntries} entries
+ * @returns {ScoreEntries} - sorted entries
+ */
+function sortScoresByPlace(entries) {
+  return [...entries].sort((a, b) => {
+    return b.place - a.place;
+  });
 }
