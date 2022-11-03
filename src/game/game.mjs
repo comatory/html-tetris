@@ -120,8 +120,7 @@ export function startGame(context, randomizer) {
           context.level = getLevel(context.lines);
 
           if (previousLevel !== context.level && context.level > MAX_LEVEL) {
-            pauseGame(context);
-            debug("GAME WON");
+            gameWon(context);
             return;
           }
 
@@ -240,5 +239,26 @@ function gameOver(context) {
   openScoresDialog({
     back: () => resetGame(context),
     achievedScore: context.score > 0 ? context.score : undefined,
+  });
+}
+
+/**
+ * trigger when game is finished
+ *
+ * @param {Context} context
+ * @returns {void}
+ */
+function gameWon(context) {
+  debug("GAME WON");
+  setGameStatePaused(context);
+
+  if (context.score > 0) {
+    addScore(context.score);
+  }
+
+  openScoresDialog({
+    back: () => resetGame(context),
+    achievedScore: context.score > 0 ? context.score : undefined,
+    title: "You win! Congrats.",
   });
 }

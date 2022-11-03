@@ -20,6 +20,10 @@ function getScoresTableBody() {
   return document.querySelector("#scores-table tbody");
 }
 
+function getScoresTableTitle() {
+  return document.getElementById("scores-menu-title");
+}
+
 /**
  * create row for displaying place and score
  *
@@ -49,12 +53,13 @@ function createScoresRow(score, achievedScore) {
  * @typedef {Object} OpenScoresDialogOptions
  * @property {() => void} back - close pause dialog and return to previous location
  * @property {number} [achievedScore] - optionally higlight achieved score if applicable
+ * @property {string} [title] - optional dialog title
  *
  * opens high scores dialog
  * @param {OpenScoresDialogOptions} options
  * @returns {void}
  */
-export function openScoresDialog({ back, achievedScore }) {
+export function openScoresDialog({ back, achievedScore, title }) {
   const dialog = getScoresDialog();
 
   const scores = getScores();
@@ -64,6 +69,8 @@ export function openScoresDialog({ back, achievedScore }) {
   scores.forEach((score) => {
     table.appendChild(createScoresRow(score, achievedScore));
   });
+
+  getScoresTableTitle().innerText = title ?? "";
 
   function onSubmit(value) {
     switch (value) {
