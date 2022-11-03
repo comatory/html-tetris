@@ -23,10 +23,28 @@
   list-style-type: none;
   display: flex;
   align-items: center;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+.touch-controls-group-left {
+  margin-left: 10px;
+}
+
+.touch-controls-group-right {
+  margin-right: 10px;
+  justify-content: flex-end;
+}
+
+.touch-controls-group li {
+  padding: 0px;
+  margin: 0px;
+  line-height: 0px;
 }
 
 .touch-controls-group li:not(:last-child) {
-  margin-right: 15px;
+  margin-right: 25px;
 }
 
 .touch-control-button {
@@ -35,25 +53,46 @@
   height: 40px;
   color: var(--color-black);
   background: var(--color-white);
-  border: 3px double var(--color-black);
-  font-size: 20px;
-  padding: 6px 3px 3px 3px;
-  border-radius: 10px;
   text-align: center;
   cursor: pointer;
+  font-size: 20px;
+  border: calc(var(--font-size) / 8) solid var(--color-grey-200);
+  box-shadow: 0px 0px 0px calc(var(--font-size) / 12) var(--color-white);
+  position: relative;
+  padding: 0px;
+  padding-top: 4px;
 }
 
-#arrow-left {
-  padding-right: 10px;
+#arrow-left,
+#arrow-right,
+#arrow-down {
+  font-size: 30px;
 }
 
-#arrow-right {
-  padding-left: 10px;
+#arrow-left::after {
+  content: "<";
+  position: absolute;
+  top: -2px;
+  right: 2px;
+}
+
+#arrow-right::after {
+  content: ">";
+  position: absolute;
+  top: -2px;
+  left: 2px;
 }
 
 #arrow-down {
+  margin-left: 25px;
+}
+
+#arrow-down::after {
   transform: rotate(90deg);
-  padding-left: 10px;
+  content: ">";
+  position: absolute;
+  top: 0px;
+  left: -4px;
 }
 
 #pause {
@@ -69,7 +108,7 @@
   left: calc(var(--offset) / 2);
   width: calc(100% - var(--offset));
   box-shadow: 0px 9px 0px 2px var(--color-black),
-    0px 18px 0px 2px var(--color-black), 0px 27px 0px 2px var(--color-black);
+    0px 18px 0px 2px var(--color-black);
 }
 
 @media screen and (max-width: 675px) {
