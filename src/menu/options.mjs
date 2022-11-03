@@ -7,6 +7,8 @@ import {
   TOUCH_CONTROL_OFF,
   TOUCH_CONTROL_AUTO,
 } from "../utils/options.mjs";
+import { setupTouchControls } from "../controls/setup.mjs";
+import { setupAreaSize } from "../area/viewport.mjs";
 
 /**
  * get main dialog element
@@ -63,6 +65,8 @@ export function openOptionsDialog({ back }) {
         getTouchControlsLabel().innerText =
           getTouchControlLabelText(nextTouchValue);
         setTouchControls(nextTouchValue);
+        setupTouchControls();
+        setupAreaSize();
         break;
       }
       case 2:

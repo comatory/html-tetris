@@ -10,6 +10,14 @@
   border-top: 3px solid var(--color-white);
 }
 
+.touch-never #touch-controls {
+  display: none;
+}
+
+.touch-always #touch-controls {
+  display: flex;
+}
+
 .touch-controls-group {
   flex: 1;
   list-style-type: none;

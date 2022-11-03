@@ -6,6 +6,7 @@ import { ANIMATION_DURATION_IN_MS, ROWS, COLUMNS } from "./utils/meta.mjs";
 import { setVariable } from "./utils/html.mjs";
 import { openMainDialog } from "./menu/main.mjs";
 import { prepare } from "./game/prepare.mjs";
+import { setupTouchControls } from "./controls/setup.mjs";
 
 /** setup variables */
 function setupGlobals() {
@@ -33,6 +34,7 @@ function start() {
   debug("START");
 
   debug("SETUP VIEWPORT");
+  setupTouchControls();
   setupAreaSize();
   const { registerResizeListener } = windowResizeEventFactory();
   registerResizeListener();

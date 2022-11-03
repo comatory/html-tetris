@@ -54,9 +54,36 @@ export function setTouchControls(value) {
   }
 }
 
-export function isTouchControlsEnabled() {
+/**
+ * is touch controls always enabled?
+ *
+ * @returns {boolean} true if yes
+ */
+export function isTouchControlsOn() {
+  return (
+    Number.parseInt(window.localStorage.getItem("touch")) === TOUCH_CONTROL_ON
+  );
+}
+
+/**
+ * is touch controls always disabled?
+ *
+ * @returns {boolean} true if yes
+ */
+export function isTouchControlsOff() {
+  return (
+    Number.parseInt(window.localStorage.getItem("touch")) === TOUCH_CONTROL_OFF
+  );
+}
+
+/**
+ * is touch controls automatic?
+ *
+ * @returns {boolean} true if yes
+ */
+export function isTouchControlsAuto() {
   const value = Number.parseInt(window.localStorage.getItem("touch"));
-  return value === TOUCH_CONTROL_ON || value === TOUCH_CONTROL_AUTO;
+  return Number.isNaN(value) || value === TOUCH_CONTROL_AUTO;
 }
 
 /**

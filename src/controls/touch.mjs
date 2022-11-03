@@ -6,6 +6,7 @@ import {
   getCounterClockwiseButton,
   getPauseButton,
 } from "../utils/html.mjs";
+import {} from "../utils/options.mjs";
 import { moveLeft, moveRight, moveDown } from "../draw/movement.mjs";
 import { rotateClockWise, rotateAntiClockWise } from "../draw/rotation.mjs";
 import { pauseGame } from "../game/game.mjs";
