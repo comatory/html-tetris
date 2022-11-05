@@ -56,8 +56,14 @@ function keyBindingsFactory(form, menuItems) {
    * but only trigger submission when the mouse is used as
    * click is also triggered by moving arrow keys
    */
-  function handleMouseBindings(event) {
-    if (event.detail === 0) {
+  let usingKeyboard = false;
+
+  function handleKeyBindings() {
+    usingKeyboard = true;
+  }
+
+  function handleMouseBindings() {
+    if (usingKeyboard) {
       return;
     }
 
@@ -66,11 +72,14 @@ function keyBindingsFactory(form, menuItems) {
 
   /** remove all listeners */
   function removeListeners() {
+    form.addEventListener("keydown", handleKeyBindings);
+
     menuItems.forEach((item) => {
       item.removeEventListener("click", handleMouseBindings);
     });
   }
 
+  form.addEventListener("keydown", handleKeyBindings);
   menuItems.forEach((item) => {
     item.addEventListener("click", handleMouseBindings);
   });
