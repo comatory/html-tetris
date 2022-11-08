@@ -34,6 +34,11 @@ import { touchBindingsFactory } from "../controls/touch.mjs";
 import { prepare } from "./prepare.mjs";
 import { openMainDialog } from "../menu/main.mjs";
 import { openScoresDialog } from "../menu/scores.mjs";
+import {
+  playDropSound,
+  playPlacementSound,
+  playScoreSound,
+} from "../sound/sounds.mjs";
 
 /** @typedef {import('../draw/shapes.mjs').ShapeID} ShapeID */
 /** @typedef {import('../utils/context.mjs').Context} Context } */
@@ -105,6 +110,7 @@ export function startGame(context, randomizer) {
 
         if (rowIndicesToRemove.length > 0) {
           debug("CLEARED ROW");
+          playScoreSound();
           await playRemoveAnimation(rowIndicesToRemove, nextHeap, grid);
           const clearedHeap = rebuildHeapWithRemovedRows(
             nextHeap,
@@ -151,6 +157,7 @@ export function startGame(context, randomizer) {
 
         drawNextShapePreview(context.nextShape.shape, getPreviewWindow());
 
+        playPlacementSound();
         draw({
           x: context.current.x,
           y: context.current.y,
@@ -168,6 +175,8 @@ export function startGame(context, randomizer) {
         window.requestAnimationFrame(loop);
         return;
       }
+
+      playDropSound();
 
       draw({
         x: context.current.x,

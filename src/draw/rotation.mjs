@@ -14,6 +14,7 @@ import {
   T_ID,
   getPreviousRotation,
 } from "./shapes.mjs";
+import { playRotateSound } from "../sound/sounds.mjs";
 
 /** @typedef {import('./shapes.mjs').Rotation} Rotation */
 /** @typedef {import('./shapes.mjs').ShapeID} ShapeID */
@@ -158,6 +159,7 @@ function rotate(context, nextRotation, direction) {
     context,
   });
 
+  playRotateSound();
   context.current.x = nextX;
   context.current.y = nextY;
   context.current.shape = nextShape;

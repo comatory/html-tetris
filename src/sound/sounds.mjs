@@ -1,6 +1,11 @@
 import { isAudioOff } from "../utils/options.mjs";
 
 export const selectSound = createSound("/assets/sound/select.wav");
+export const dropSound = createSound("/assets/sound/drop.wav");
+export const movementSound = createSound("/assets/sound/movement.wav");
+export const rotateSound = createSound("/assets/sound/rotate.wav");
+export const placementSound = createSound("/assets/sound/place.wav");
+export const scoredSound = createSound("/assets/sound/score.wav");
 
 /**
  * @typedef {() => Promise<void>} PlayFn
@@ -13,6 +18,51 @@ export const selectSound = createSound("/assets/sound/select.wav");
  */
 export function playSelectSound() {
   return playSound(selectSound);
+}
+
+/**
+ * plays drop sound
+ *
+ * @type {PlayFn}
+ */
+export function playDropSound() {
+  return playSound(dropSound);
+}
+
+/**
+ * plays movement sound
+ *
+ * @type {PlayFn}
+ */
+export function playMovementSound() {
+  return playSound(movementSound);
+}
+
+/**
+ * plays rotate sound
+ *
+ * @type {PlayFn}
+ */
+export function playRotateSound() {
+  return playSound(rotateSound);
+}
+
+/**
+ * plays placement sound
+ *
+ * @type {PlayFn}
+ */
+export function playPlacementSound() {
+  return playSound(placementSound);
+}
+
+/**
+ * plays scored sound
+ *
+ * @type {PlayFn}
+ */
+export function playScoreSound() {
+  return playSound(scoredSound);
 }
 
 /**

@@ -1,5 +1,6 @@
 import { draw } from "./utils.mjs";
 import { check } from "./collision.mjs";
+import { playDropSound, playMovementSound } from "../sound/sounds.mjs";
 
 /** @typedef {import('../utils/context.mjs').Context} Context */
 
@@ -29,6 +30,7 @@ export function moveLeft(context) {
     context,
   });
 
+  playMovementSound();
   context.current.x = x;
 }
 
@@ -58,6 +60,7 @@ export function moveRight(context) {
     context,
   });
 
+  playMovementSound();
   context.current.x = x;
 }
 
@@ -87,5 +90,6 @@ export function moveDown(context) {
     context,
   });
 
+  playDropSound();
   context.current.y = y;
 }
