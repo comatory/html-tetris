@@ -1,4 +1,5 @@
 import { dialogBindingsFactory } from "./controls.mjs";
+import { playSelectSound } from "../sound/sounds.mjs";
 
 /**
  * get confirmation dialog element
@@ -37,6 +38,7 @@ export function openConfirmationDialog({ back }) {
   const { registerDialogCallbacks } = dialogBindingsFactory({
     dialog,
     submitFn: onSubmit,
+    soundFn: playSelectSound,
   });
 
   dialog.showModal();

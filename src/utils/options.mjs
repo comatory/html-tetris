@@ -8,8 +8,14 @@ const TOUCH_CONTROLS = [
   TOUCH_CONTROL_ON,
 ];
 
+export const AUDIO_ON = 1;
+export const AUDIO_OFF = 0;
+
+const AUDIO_CONTROLS = [AUDIO_ON, AUDIO_OFF];
+
 /**
  * @typedef {(TOUCH_CONTROL_ON|TOUCH_CONTROL_OFF|TOUCH_CONTROL_AUTO)} TouchControl
+ * @typedef {(AUDIO_ON|AUDIO_OFF)} AudioControl
  */
 
 /**
@@ -109,4 +115,71 @@ export function getNextTouchControlValue(currentValue) {
   }
 
   return TOUCH_CONTROLS[Math.min(index + 1, TOUCH_CONTROLS.length - 1)];
+}
+
+/**
+ * manually enable audio
+ */
+function enableAudio() {
+  window.localStorage.setItem("audio", AUDIO_ON);
+}
+
+/**
+ * manually disable audio
+ */
+function disableAudio() {
+  window.localStorage.setItem("audio", AUDIO_OFF);
+}
+
+/**
+ * is audio always disabled?
+ *
+ * @returns {boolean} true if yes
+ */
+export function isAudioOff() {
+  const value = Number.parseInt(window.localStorage.getItem("audio"));
+  return Number.isNaN(value) || value === AUDIO_OFF;
+}
+
+/**
+ * get state of audio
+ *
+ * @returns {AudioControl} - id
+ */
+export function getAudioValue() {
+  return Number.parseInt(window.localStorage.getItem("audio"));
+}
+
+/**
+ * get next audio option when cycling through them
+ *
+ * @param {AudioControl} currentValue - current value used
+ * @returns {AudioControl} - next value
+ */
+export function getNextAudioValue(currentValue) {
+  const index = AUDIO_CONTROLS.indexOf(currentValue);
+
+  if (index + 1 > AUDIO_CONTROLS.length - 1) {
+    return AUDIO_CONTROLS[0];
+  }
+
+  return AUDIO_CONTROLS[Math.min(index + 1, AUDIO_CONTROLS.length - 1)];
+}
+
+/**
+ * sets audio control to storage
+ *
+ * @param {AudioControl} value
+ * @returns {void}
+ */
+export function setAudioControls(value) {
+  switch (value) {
+    case AUDIO_ON:
+      enableAudio();
+      break;
+    case AUDIO_OFF:
+    default:
+      disableAudio();
+      break;
+  }
 }

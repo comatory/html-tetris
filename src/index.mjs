@@ -7,6 +7,7 @@ import { setVariable } from "./utils/html.mjs";
 import { openMainDialog } from "./menu/main.mjs";
 import { prepare } from "./game/prepare.mjs";
 import { setupTouchControls } from "./controls/setup.mjs";
+import { loadSounds } from "./sound/prepare.mjs";
 
 /** setup variables */
 function setupGlobals() {
@@ -25,6 +26,14 @@ function setupGlobals() {
   if (isDevelopment) {
     document.body.classList.add("development");
   }
+}
+
+async function boot() {
+  debug("BOOT");
+
+  debug("LOAD SOUNDS");
+  await loadSounds();
+  start();
 }
 
 /** starts the game */
@@ -49,4 +58,4 @@ function start() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", start);
+document.addEventListener("DOMContentLoaded", boot);

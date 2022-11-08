@@ -1,6 +1,7 @@
 import { openOptionsDialog } from "./options.mjs";
 import { openScoresDialog } from "./scores.mjs";
 import { dialogBindingsFactory } from "./controls.mjs";
+import { playSelectSound } from "../sound/sounds.mjs";
 
 /**
  * get main dialog element
@@ -53,6 +54,7 @@ export function openMainDialog({ start }) {
   const { registerDialogCallbacks } = dialogBindingsFactory({
     dialog,
     submitFn: onSubmit,
+    soundFn: playSelectSound,
   });
 
   dialog.showModal();

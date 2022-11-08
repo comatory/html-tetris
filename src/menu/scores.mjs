@@ -1,5 +1,6 @@
 import { dialogBindingsFactory } from "./controls.mjs";
 import { getScores } from "../utils/score.mjs";
+import { playSelectSound } from "../sound/sounds.mjs";
 
 /** @typedef {import('../utils/score.mjs').ScoreEntry} ScoreEntry */
 
@@ -86,6 +87,7 @@ export function openScoresDialog({ back, achievedScore, title }) {
   const { registerDialogCallbacks } = dialogBindingsFactory({
     dialog,
     submitFn: onSubmit,
+    soundFn: playSelectSound,
   });
 
   dialog.showModal();
