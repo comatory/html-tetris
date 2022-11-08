@@ -5,7 +5,8 @@
  * @property {HTMLFormElement} form - form in the dialog
  * @property {NodeList} menuItems - specific inputs / menu items
  * @property {(value: number) => void} submitFn - callback
- * @property {PlayFn} soundFn - audio callback
+ * @property {PlayFn} selectSoundFn - selected item audio callback
+ * @property {PlayFn} confirmSoundFn - confirmed item audio callback
  *
  * set up listeners on menu item form, the form serves as a selection
  * mechanism where click or enter key can trigger callback with
@@ -14,12 +15,19 @@
  * @param {FormBindingsFactoryOptions} options
  * @returns {() => void} unregister callback
  */
-function formBindingsFactory({ form, menuItems, submitFn, soundFn }) {
+function formBindingsFactory({
+  form,
+  menuItems,
+  submitFn,
+  selectSoundFn,
+  confirmSoundFn,
+}) {
   /**
    * handle keyboard navigatoin
    */
   function handleKeyBindings(event) {
     if (event.keyCode !== 13) {
+      selectSoundFn();
       return;
     }
 
@@ -32,7 +40,7 @@ function formBindingsFactory({ form, menuItems, submitFn, soundFn }) {
   function handleFormSubmit(event) {
     event.preventDefault();
     const checked = Array.from(menuItems).find((item) => item.checked);
-    soundFn();
+    confirmSoundFn();
     submitFn(Number.parseInt(checked.value));
   }
 
@@ -77,7 +85,6 @@ function keyBindingsFactory(form, menuItems, soundFn) {
     }
 
     form.requestSubmit();
-    soundFn();
   }
 
   /** remove all listeners */
@@ -102,7 +109,8 @@ function keyBindingsFactory(form, menuItems, soundFn) {
  * @property {HTMLDialogElement} dialog
  * @property {(value: number) => void} submitFn - callback function which receives integer specifying menu option
  * @property {() => void | undefined} backFn - callback function when dialog is closed
- * @property {PlayFn} soundFn - callback function to play select sound
+ * @property {PlayFn} selectSoundFn - callback function to play select sound
+ * @property {PlayFn} confirmSoundFn - callback function to play confirm sound
  *
  * @typedef {Object} DialogBindingsFactoryCallbacks
  * @property {() => void} registerDialogCallbacks - sets up listeners on dialog
@@ -112,7 +120,13 @@ function keyBindingsFactory(form, menuItems, soundFn) {
  * @param {DialogBindingsFactoryOptions} options
  * @returns {DialogBindingsFactoryCallbacks} - register/unregister callbacks
  */
-export function dialogBindingsFactory({ dialog, submitFn, backFn, soundFn }) {
+export function dialogBindingsFactory({
+  dialog,
+  submitFn,
+  backFn,
+  selectSoundFn,
+  confirmSoundFn,
+}) {
   const form = dialog.querySelector("form");
   const menuItems = dialog.querySelectorAll('input[type="radio"]');
 
@@ -132,8 +146,14 @@ export function dialogBindingsFactory({ dialog, submitFn, backFn, soundFn }) {
    * set up all types of listeners on dialog
    */
   function registerDialogCallbacks() {
-    formBindings = formBindingsFactory({ form, menuItems, submitFn, soundFn });
-    keyBindings = keyBindingsFactory(form, menuItems, soundFn);
+    formBindings = formBindingsFactory({
+      form,
+      menuItems,
+      submitFn,
+      selectSoundFn,
+      confirmSoundFn,
+    });
+    keyBindings = keyBindingsFactory(form, menuItems, selectSoundFn);
 
     dialog.addEventListener("keydown", blockEscKey);
     dialog.addEventListener("close", unregisterDialogCallbacks);

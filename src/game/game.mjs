@@ -38,6 +38,8 @@ import {
   playDropSound,
   playPlacementSound,
   playScoreSound,
+  playLevelUpSound,
+  playLostGameSound,
 } from "../sound/sounds.mjs";
 
 /** @typedef {import('../draw/shapes.mjs').ShapeID} ShapeID */
@@ -131,6 +133,7 @@ export function startGame(context, randomizer) {
           }
 
           if (previousLevel !== context.level) {
+            playLevelUpSound();
             updateLevel(context.level);
           }
 
@@ -238,6 +241,7 @@ export function resetGame(context) {
  * @returns {void}
  */
 function gameOver(context) {
+  playLostGameSound();
   debug("GAME LOST");
   setGameStatePaused(context);
 

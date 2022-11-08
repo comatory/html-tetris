@@ -1,11 +1,14 @@
 import { isAudioOff } from "../utils/options.mjs";
 
 export const selectSound = createSound("/assets/sound/select.wav");
+export const confirmSound = createSound("/assets/sound/confirm.wav");
 export const dropSound = createSound("/assets/sound/drop.wav");
 export const movementSound = createSound("/assets/sound/movement.wav");
 export const rotateSound = createSound("/assets/sound/rotate.wav");
 export const placementSound = createSound("/assets/sound/place.wav");
 export const scoredSound = createSound("/assets/sound/score.wav");
+export const levelUpSound = createSound("/assets/sound/levelup.wav");
+export const lostGameSound = createSound("/assets/sound/lost.wav");
 
 /**
  * @typedef {() => Promise<void>} PlayFn
@@ -18,6 +21,15 @@ export const scoredSound = createSound("/assets/sound/score.wav");
  */
 export function playSelectSound() {
   return playSound(selectSound);
+}
+
+/**
+ * plays confirmation sound
+ *
+ * @type {PlayFn}
+ */
+export function playConfirmSound() {
+  return playSound(confirmSound);
 }
 
 /**
@@ -63,6 +75,24 @@ export function playPlacementSound() {
  */
 export function playScoreSound() {
   return playSound(scoredSound);
+}
+
+/**
+ * plays level up sound
+ *
+ * @type {PlayFn}
+ */
+export function playLevelUpSound() {
+  return playSound(levelUpSound);
+}
+
+/**
+ * plays lost game sound
+ *
+ * @type {PlayFn}
+ */
+export function playLostGameSound() {
+  return playSound(lostGameSound);
 }
 
 /**

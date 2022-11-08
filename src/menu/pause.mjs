@@ -1,6 +1,6 @@
 import { dialogBindingsFactory } from "./controls.mjs";
 import { openConfirmationDialog } from "./confirmation.mjs";
-import { playSelectSound } from "../sound/sounds.mjs";
+import { playConfirmSound, playSelectSound } from "../sound/sounds.mjs";
 
 /**
  * get pause dialog element
@@ -51,7 +51,8 @@ export function openPauseDialog({ back, quit }) {
   const { registerDialogCallbacks } = dialogBindingsFactory({
     dialog,
     submitFn: onSubmit,
-    soundFn: playSelectSound,
+    selectSoundFn: playSelectSound,
+    confirmSoundFn: playConfirmSound,
   });
 
   dialog.showModal();

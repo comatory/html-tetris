@@ -14,7 +14,7 @@ import {
 } from "../utils/options.mjs";
 import { setupTouchControls } from "../controls/setup.mjs";
 import { setupAreaSize } from "../area/viewport.mjs";
-import { playSelectSound } from "../sound/sounds.mjs";
+import { playSelectSound, playConfirmSound } from "../sound/sounds.mjs";
 
 /**
  * get main dialog element
@@ -121,7 +121,8 @@ export function openOptionsDialog({ back }) {
   const { registerDialogCallbacks } = dialogBindingsFactory({
     dialog,
     submitFn: onSubmit,
-    soundFn: playSelectSound,
+    selectSoundFn: playSelectSound,
+    confirmSoundFn: playConfirmSound,
   });
 
   dialog.showModal();

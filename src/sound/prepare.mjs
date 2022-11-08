@@ -1,5 +1,8 @@
 import {
+  confirmSound,
   dropSound,
+  levelUpSound,
+  lostGameSound,
   movementSound,
   placementSound,
   rotateSound,
@@ -14,11 +17,14 @@ import {
 export async function loadSounds() {
   return await Promise.all([
     preloadSound(selectSound),
+    preloadSound(confirmSound),
     preloadSound(dropSound),
     preloadSound(movementSound),
     preloadSound(rotateSound),
     preloadSound(placementSound),
     preloadSound(scoredSound),
+    preloadSound(levelUpSound),
+    preloadSound(lostGameSound),
   ]);
 }
 
