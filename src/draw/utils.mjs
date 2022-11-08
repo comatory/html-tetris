@@ -22,6 +22,10 @@ import { getSpriteClassName } from "./styles.mjs";
  * @property {number} y - vertical coordinate from top left
  * @property {ShapeDescriptor} shape - tetromino shape descriptor
  * @property {Context} context - current game state
+ *
+ * @typedef {Object} HeapCellDescriptor
+ * @property {string} id - element id
+ * @property {string} classes - element classes
  */
 
 /**
@@ -49,6 +53,17 @@ function enableCell(cell, id, rotation, { columnIndex, rowIndex }) {
   cell.classList.add("sprite");
   const classList = Array.from(cell.classList);
   cell.className = `${classList.join(" ")} ${className}`;
+}
+
+/**
+ * @param {HTMLElement} cell
+ * @param {string} classes
+ */
+function redrawEnabledCell(cell, classes) {
+  cell.className = "";
+  cell.classList.add("sprite");
+  cell.classList.add("cell");
+  cell.classList.add(...classes.split(" "));
 }
 
 /**
@@ -169,12 +184,13 @@ function clear({ x, y, shape }, grid) {
 export function redrawGrid(heap, context) {
   const { grid } = context;
 
-  const ids = getHeapIds(heap);
+  const descriptors = getHeapCellDescriptors(heap);
   const cells = getGridCells(grid);
 
   for (const cell of cells) {
-    if (ids.includes(`#${cell.id}`)) {
-      continue;
+    const elementId = `#${cell.id}`;
+    if (Object.keys(descriptors).includes(elementId)) {
+      redrawEnabledCell(cell, descriptors[elementId].classes);
     } else {
       disableCell(cell);
     }
@@ -220,17 +236,21 @@ function getCellShapeIds({ x, y, shape, callback }) {
 }
 
 /**
- * get ids of heap for enabled cells
+ * get descriptors of heap for enabled cells
  * @param {Heap} heap
  * @param {Shape} shape
- * @returns {Array<string>} ids
+ * @returns {Record<string, HeapCellDescriptor>} descriptors
  */
-function getHeapIds(heap) {
-  const ids = [];
+function getHeapCellDescriptors(heap) {
+  const ids = {};
   for (let rowIndex = 0; rowIndex < heap.length; rowIndex++) {
     for (let valueIndex = 0; valueIndex < heap[rowIndex].length; valueIndex++) {
       if (isCellEnabled(heap[rowIndex][valueIndex])) {
-        ids.push(createCellElementId(valueIndex, rowIndex));
+        const id = createCellElementId(valueIndex, rowIndex);
+        ids[id] = {
+          id,
+          classes: heap[rowIndex][valueIndex],
+        };
       }
     }
   }
