@@ -8,6 +8,7 @@ import { openMainDialog } from "./menu/main.mjs";
 import { prepare } from "./game/prepare.mjs";
 import { setupTouchControls } from "./controls/setup.mjs";
 import { loadSounds } from "./sound/prepare.mjs";
+import { isAudioUnset, setAudioControls, AUDIO_ON } from "./utils/options.mjs";
 
 /** setup variables */
 function setupGlobals() {
@@ -33,6 +34,11 @@ async function boot() {
 
   debug("LOAD SOUNDS");
   await loadSounds();
+
+  if (isAudioUnset()) {
+    setAudioControls(AUDIO_ON);
+  }
+
   start();
 }
 

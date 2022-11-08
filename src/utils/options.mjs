@@ -142,6 +142,15 @@ export function isAudioOff() {
 }
 
 /**
+ * audio wasn't set yet?
+ *
+ * @returns {boolean} true if yes
+ */
+export function isAudioUnset() {
+  return Number.isNaN(Number.parseInt(window.localStorage.getItem("audio")));
+}
+
+/**
  * get state of audio
  *
  * @returns {AudioControl} - id
