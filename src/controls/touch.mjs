@@ -84,61 +84,58 @@ export function touchBindingsFactory(context) {
   }
 
   function registerTouchBindings() {
-    getArrowLeftButton().addEventListener("mousedown", handleMoveLeftPressed);
-    getArrowLeftButton().addEventListener("mouseup", handleMoveLeftLifted);
-    getArrowRightButton().addEventListener("mousedown", handleMoveRightPressed);
-    getArrowRightButton().addEventListener("mouseup", handleMoveRightLifted);
-    getArrowDownButton().addEventListener("mousedown", handleMoveDownPressed);
-    getArrowDownButton().addEventListener("mouseup", handleMoveDownLifted);
-    getClockwiseButton().addEventListener(
-      "mousedown",
-      handleRotateClockwisePressed
+    registerEvent(
+      getArrowLeftButton(),
+      handleMoveLeftPressed,
+      handleMoveLeftLifted
     );
-    getClockwiseButton().addEventListener(
-      "mouseup",
+    registerEvent(
+      getArrowRightButton(),
+      handleMoveRightPressed,
+      handleMoveRightLifted
+    );
+    registerEvent(
+      getArrowDownButton(),
+      handleMoveDownPressed,
+      handleMoveDownLifted
+    );
+    registerEvent(
+      getClockwiseButton(),
+      handleRotateClockwisePressed,
       handleRotateClockwiseLifted
     );
-    getCounterClockwiseButton().addEventListener(
-      "mousedown",
-      handleRotateCounterClockwisePressed
-    );
-    getCounterClockwiseButton().addEventListener(
-      "mouseup",
+    registerEvent(
+      getCounterClockwiseButton(),
+      handleRotateCounterClockwisePressed,
       handleRotateCounterClockwiseLifted
     );
     getPauseButton().addEventListener("click", handlePause);
   }
 
   function unregisterTouchBindings() {
-    getArrowLeftButton().removeEventListener(
-      "mousedown",
-      handleMoveLeftPressed
+    unregisterEvent(
+      getArrowLeftButton(),
+      handleMoveLeftPressed,
+      handleMoveLeftLifted
     );
-    getArrowLeftButton().removeEventListener("mouseup", handleMoveLeftLifted);
-    getArrowRightButton().removeEventListener(
-      "mousedown",
-      handleMoveRightPressed
+    unregisterEvent(
+      getArrowRightButton(),
+      handleMoveRightPressed,
+      handleMoveRightLifted
     );
-    getArrowRightButton().removeEventListener("mouseup", handleMoveRightLifted);
-    getArrowDownButton().removeEventListener(
-      "mousedown",
-      handleMoveDownPressed
+    unregisterEvent(
+      getArrowDownButton(),
+      handleMoveDownPressed,
+      handleMoveDownLifted
     );
-    getArrowDownButton().removeEventListener("mouseup", handleMoveDownLifted);
-    getClockwiseButton().removeEventListener(
-      "mousedown",
-      handleRotateClockwisePressed
-    );
-    getClockwiseButton().removeEventListener(
-      "mouseup",
+    unregisterEvent(
+      getClockwiseButton(),
+      handleRotateClockwisePressed,
       handleRotateClockwiseLifted
     );
-    getCounterClockwiseButton().removeEventListener(
-      "mousedown",
-      handleRotateCounterClockwisePressed
-    );
-    getCounterClockwiseButton().removeEventListener(
-      "mouseup",
+    unregisterEvent(
+      getCounterClockwiseButton(),
+      handleRotateCounterClockwisePressed,
       handleRotateCounterClockwiseLifted
     );
     getPauseButton().removeEventListener("click", handlePause);
@@ -164,4 +161,46 @@ function createPressCallback(cb) {
 
 function destroyPressCallback(id) {
   return clearInterval(id);
+}
+
+/**
+ * block context menu on touch / mouse event
+ *
+ * @param {(event: MouseEvent|TouchEvent) => void} event
+ * @returns {void}
+ */
+function blockContextMenu(event) {
+  event.preventDefault();
+}
+
+/**
+ * sets up mouse & touch event for movement buttons
+ *
+ * @param {HTMLElement} element
+ * @param {(event: MouseEvent|TouchEvent) => void} activateCb
+ * @param {(event: MouseEvent|TouchEvent) => void} deactivateCb
+ * @returns {void}
+ */
+function registerEvent(element, activateCb, deactivateCb) {
+  element.addEventListener("mousedown", activateCb);
+  element.addEventListener("touchstart", activateCb);
+  element.addEventListener("mouseup", deactivateCb);
+  element.addEventListener("touchend", deactivateCb);
+  element.addEventListener("contextmenu", blockContextMenu);
+}
+
+/**
+ * removes mouse & touch event for movement buttons
+ *
+ * @param {HTMLElement} element
+ * @param {(event: MouseEvent|TouchEvent) => void} activateCb
+ * @param {(event: MouseEvent|TouchEvent) => void} deactivateCb
+ * @returns {void}
+ */
+function unregisterEvent(element, activateCb, deactivateCb) {
+  element.removeEventListener("mousedown", activateCb);
+  element.removeEventListener("touchstart", activateCb);
+  element.removeEventListener("mouseup", deactivateCb);
+  element.removeEventListener("touchend", deactivateCb);
+  element.removeEventListener("contextmenu", blockContextMenu);
 }
