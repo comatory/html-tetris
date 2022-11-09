@@ -40,3 +40,8 @@ state.
 
 `npm run test` runs a test suite. I only covered some parts of the code because
 I intended to have fun.
+
+## Deployment
+
+Since the source code is using native ES modules, the deployment is as simple
+as placing the contents of `src/` directory onto a web server.
