@@ -74,8 +74,12 @@ function keyBindingsFactory(form, menuItems, soundFn) {
    */
   let usingKeyboard = false;
 
-  function handleKeyBindings() {
+  function handleKeyDown() {
     usingKeyboard = true;
+  }
+
+  function handleKeyUp() {
+    usingKeyboard = false;
   }
 
   function handleMouseBindings() {
@@ -89,14 +93,16 @@ function keyBindingsFactory(form, menuItems, soundFn) {
 
   /** remove all listeners */
   function removeListeners() {
-    form.addEventListener("keydown", handleKeyBindings);
+    form.removeEventListener("keydown", handleKeyDown);
+    form.removeEventListener("keyup", handleKeyUp);
 
     menuItems.forEach((item) => {
       item.removeEventListener("click", handleMouseBindings);
     });
   }
 
-  form.addEventListener("keydown", handleKeyBindings);
+  form.addEventListener("keydown", handleKeyDown);
+  form.addEventListener("keyup", handleKeyUp);
   menuItems.forEach((item) => {
     item.addEventListener("click", handleMouseBindings);
   });
