@@ -41,7 +41,7 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: space-evenly;
-  height: 100vh;
+  height: 100dh;
   height: 100vh;
   /* iPhone XR */
   min-width: 414px;
