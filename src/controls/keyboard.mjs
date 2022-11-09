@@ -51,7 +51,10 @@ export function keyBindingsFactory(context) {
       case P_KEY:
         pauseGame(context);
         openPauseDialog({
-          quit: () => resetGame(context),
+          quit: () => {
+            unregisterKeyBindings();
+            resetGame(context);
+          },
           back: () => {
             registerKeyBindings();
             unpauseGame(context);

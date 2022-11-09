@@ -76,7 +76,10 @@ export function touchBindingsFactory(context) {
   function handlePause() {
     pauseGame(context);
     openPauseDialog({
-      quit: () => resetGame(context),
+      quit: () => {
+        unregisterTouchBindings();
+        resetGame(context);
+      },
       back: () => {
         unpauseGame(context);
       },
@@ -113,6 +116,8 @@ export function touchBindingsFactory(context) {
   }
 
   function unregisterTouchBindings() {
+    destroyPressCallbacks();
+
     unregisterEvent(
       getArrowLeftButton(),
       handleMoveLeftPressed,
@@ -139,7 +144,9 @@ export function touchBindingsFactory(context) {
       handleRotateCounterClockwiseLifted
     );
     getPauseButton().removeEventListener("click", handlePause);
+  }
 
+  function destroyPressCallbacks() {
     Object.values(ids).forEach((id) => {
       if (!id) {
         return;
