@@ -19,6 +19,7 @@ html {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  overflow: hidden;
 }
 
 html,
@@ -40,8 +41,9 @@ body {
   align-items: flex-start;
   justify-content: space-evenly;
   height: 100vh;
-  max-height: 100vh;
-  min-width: 420px;
+  height: 100vh;
+  /* iPhone XR */
+  min-width: 414px;
   width: 100%;
   overflow: hidden;
   background-color: var(--color-black);
