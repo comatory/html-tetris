@@ -18,6 +18,14 @@ By default you should use keyboard as an input device. `left`/`right`/`down` arr
 keys move the moving piece, `z`/`x`/`up` rotate it.
 `F1`/`p` will pause the game.
 
+## Browser support
+
+The project wasn't made for older browsers and it actually requires modern
+browser APIs to work properly, especially on iOS.
+
+The game was developed on Firefox v105 and tested on Chrome v107 and
+Safari 16.
+
 ## Development
 
 The code doesn't have any build toolchain. You can use NodeJS for easier
