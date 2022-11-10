@@ -9,7 +9,6 @@ import { isDevelopment } from "../utils/browser.mjs";
  * @returns {void}
  */
 export function setupAreaSize() {
-  const center = document.getElementById("center");
   const infoSm = document.getElementById("info-sm");
   const infoSmIsVisible = getComputedStyle(infoSm).display !== "none";
   const touchControls = document.getElementById("touch-controls");
@@ -22,7 +21,7 @@ export function setupAreaSize() {
     ? Number.parseFloat(getVariable("--touch-controls-panel-height"))
     : 0;
 
-  const { height } = center.getBoundingClientRect();
+  const height = window.innerHeight;
   const visibleRowCount = isDevelopment() ? ROWS : ROWS - ROW_THRESHOLD;
   const cellHeight =
     (height - infoSmHeight - touchControlsHeight) / visibleRowCount;
