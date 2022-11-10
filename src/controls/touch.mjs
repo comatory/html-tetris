@@ -33,12 +33,20 @@ export function touchBindingsFactory(context) {
     rotateCcw: null,
   };
 
+  function handleMoveLeftClicked() {
+    moveLeft(context);
+  }
+
   function handleMoveLeftPressed() {
     ids.left = createPressCallback(() => moveLeft(context));
   }
 
   function handleMoveLeftLifted() {
     destroyPressCallback(ids.left);
+  }
+
+  function handleMoveRightClicked() {
+    moveRight(context);
   }
 
   function handleMoveRightPressed() {
@@ -57,6 +65,10 @@ export function touchBindingsFactory(context) {
     destroyPressCallback(ids.down);
   }
 
+  function handleMoveDownClicked() {
+    moveDown(context);
+  }
+
   function handleRotateClockwisePressed() {
     ids.rotateCw = createPressCallback(() => rotateClockWise(context));
   }
@@ -65,12 +77,20 @@ export function touchBindingsFactory(context) {
     destroyPressCallback(ids.rotateCw);
   }
 
+  function handleRotateClockwiseClicked() {
+    rotateClockWise(context);
+  }
+
   function handleRotateCounterClockwisePressed() {
     ids.rotateCcw = createPressCallback(() => rotateAntiClockWise(context));
   }
 
   function handleRotateCounterClockwiseLifted() {
     destroyPressCallback(ids.rotateCcw);
+  }
+
+  function handleRotateCounterClockwiseClicked() {
+    rotateAntiClockWise(context);
   }
 
   function handlePause() {
@@ -87,62 +107,72 @@ export function touchBindingsFactory(context) {
   }
 
   function registerTouchBindings() {
-    registerEvent(
-      getArrowLeftButton(),
-      handleMoveLeftPressed,
-      handleMoveLeftLifted
-    );
-    registerEvent(
-      getArrowRightButton(),
-      handleMoveRightPressed,
-      handleMoveRightLifted
-    );
-    registerEvent(
-      getArrowDownButton(),
-      handleMoveDownPressed,
-      handleMoveDownLifted
-    );
-    registerEvent(
-      getClockwiseButton(),
-      handleRotateClockwisePressed,
-      handleRotateClockwiseLifted
-    );
-    registerEvent(
-      getCounterClockwiseButton(),
-      handleRotateCounterClockwisePressed,
-      handleRotateCounterClockwiseLifted
-    );
+    registerEvent({
+      element: getArrowLeftButton(),
+      onKeydown: handleMoveLeftPressed,
+      onKeyup: handleMoveLeftLifted,
+      onClick: handleMoveLeftClicked,
+    });
+    registerEvent({
+      element: getArrowRightButton(),
+      onKeydown: handleMoveRightPressed,
+      onKeyup: handleMoveRightLifted,
+      onClick: handleMoveRightClicked,
+    });
+    registerEvent({
+      element: getArrowDownButton(),
+      onKeydown: handleMoveDownPressed,
+      onKeyup: handleMoveDownLifted,
+      onClick: handleMoveDownClicked,
+    });
+    registerEvent({
+      element: getClockwiseButton(),
+      onKeydown: handleRotateClockwisePressed,
+      onKeyup: handleRotateClockwiseLifted,
+      onClick: handleRotateClockwiseClicked,
+    });
+    registerEvent({
+      element: getCounterClockwiseButton(),
+      onKeydown: handleRotateCounterClockwisePressed,
+      onKeyup: handleRotateCounterClockwiseLifted,
+      onClick: handleRotateCounterClockwiseClicked,
+    });
     getPauseButton().addEventListener("click", handlePause);
   }
 
   function unregisterTouchBindings() {
     destroyPressCallbacks();
 
-    unregisterEvent(
-      getArrowLeftButton(),
-      handleMoveLeftPressed,
-      handleMoveLeftLifted
-    );
-    unregisterEvent(
-      getArrowRightButton(),
-      handleMoveRightPressed,
-      handleMoveRightLifted
-    );
-    unregisterEvent(
-      getArrowDownButton(),
-      handleMoveDownPressed,
-      handleMoveDownLifted
-    );
-    unregisterEvent(
-      getClockwiseButton(),
-      handleRotateClockwisePressed,
-      handleRotateClockwiseLifted
-    );
-    unregisterEvent(
-      getCounterClockwiseButton(),
-      handleRotateCounterClockwisePressed,
-      handleRotateCounterClockwiseLifted
-    );
+    unregisterEvent({
+      element: getArrowLeftButton(),
+      onKeydown: handleMoveLeftPressed,
+      onKeyup: handleMoveLeftLifted,
+      onClick: handleMoveLeftClicked,
+    });
+    unregisterEvent({
+      element: getArrowRightButton(),
+      onKeydown: handleMoveRightPressed,
+      onKeyup: handleMoveRightLifted,
+      onClick: handleMoveRightClicked,
+    });
+    unregisterEvent({
+      element: getArrowDownButton(),
+      onKeydown: handleMoveDownPressed,
+      onKeyup: handleMoveDownLifted,
+      onClick: handleMoveDownClicked,
+    });
+    unregisterEvent({
+      element: getClockwiseButton(),
+      onKeydown: handleRotateClockwisePressed,
+      onKeyup: handleRotateClockwiseLifted,
+      onClick: handleRotateClockwiseClicked,
+    });
+    unregisterEvent({
+      element: getCounterClockwiseButton(),
+      onKeydown: handleRotateCounterClockwisePressed,
+      onKeyup: handleRotateCounterClockwiseLifted,
+      onClick: handleRotateCounterClockwiseClicked,
+    });
     getPauseButton().removeEventListener("click", handlePause);
   }
 
@@ -163,7 +193,7 @@ export function touchBindingsFactory(context) {
 }
 
 function createPressCallback(cb) {
-  return setInterval(cb, 100);
+  return setInterval(cb, 200);
 }
 
 function destroyPressCallback(id) {
@@ -181,33 +211,39 @@ function blockContextMenu(event) {
 }
 
 /**
+ * @typedef {Object} RegisteredEventOptions
+ * @property {HTMLElement} element
+ * @property {(event: MouseEvent|TouchEvent) => void} onKeydown
+ * @property {(event: MouseEvent|TouchEvent) => void} onKeyup
+ * @property {(event: MouseEvent|TouchEvent) => void} onClick
+ */
+
+/**
  * sets up mouse & touch event for movement buttons
  *
- * @param {HTMLElement} element
- * @param {(event: MouseEvent|TouchEvent) => void} activateCb
- * @param {(event: MouseEvent|TouchEvent) => void} deactivateCb
+ * @param {RegisteredEventOptions} options
  * @returns {void}
  */
-function registerEvent(element, activateCb, deactivateCb) {
-  element.addEventListener("mousedown", activateCb);
-  element.addEventListener("touchstart", activateCb);
-  element.addEventListener("mouseup", deactivateCb);
-  element.addEventListener("touchend", deactivateCb);
+function registerEvent({ element, onKeydown, onKeyup, onClick }) {
+  element.addEventListener("click", onClick);
+  element.addEventListener("mousedown", onKeydown);
+  element.addEventListener("touchstart", onKeydown);
+  element.addEventListener("mouseup", onKeyup);
+  element.addEventListener("touchend", onKeyup);
   element.addEventListener("contextmenu", blockContextMenu);
 }
 
 /**
  * removes mouse & touch event for movement buttons
  *
- * @param {HTMLElement} element
- * @param {(event: MouseEvent|TouchEvent) => void} activateCb
- * @param {(event: MouseEvent|TouchEvent) => void} deactivateCb
+ * @param {RegisteredEventOptions} options
  * @returns {void}
  */
-function unregisterEvent(element, activateCb, deactivateCb) {
-  element.removeEventListener("mousedown", activateCb);
-  element.removeEventListener("touchstart", activateCb);
-  element.removeEventListener("mouseup", deactivateCb);
-  element.removeEventListener("touchend", deactivateCb);
+function unregisterEvent({ element, onKeydown, onKeyup, onClick }) {
+  element.removeEventListener("click", onClick);
+  element.removeEventListener("mousedown", onKeydown);
+  element.removeEventListener("touchstart", onKeydown);
+  element.removeEventListener("mouseup", onKeyup);
+  element.removeEventListener("touchend", onKeyup);
   element.removeEventListener("contextmenu", blockContextMenu);
 }
