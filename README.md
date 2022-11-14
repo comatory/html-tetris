@@ -44,6 +44,18 @@ detection.
 You can also press `.` (dot) to print out context object which holds game
 state.
 
+### Service worker
+
+The application is designed to run offline by leveraging service worker.
+The setup is very naive as I'm trying to avoid any heavy build
+toolchain. Whenever you add or remove any source or asset files, you should re-run `cache.sh` script from the project directory:
+
+```
+./scripts/cache.sh
+```
+
+This generates `cache.mjs` module which contains paths to all the source and asset files so they can be effectively cached.
+
 ## Test
 
 `npm run test` runs a test suite. I only covered some parts of the code because

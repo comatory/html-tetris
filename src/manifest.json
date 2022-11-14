@@ -1,0 +1,26 @@
+{
+  "short_name": "Tetris",
+  "name": "HTML Tetris",
+  "icons": [
+    {
+      "src": "assets/icons/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "288x288"
+    },
+    {
+      "src": "assets/icons/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "https://tetris.synacek.org",
+  "background_color": "#000000",
+  "display": "standalone",
+  "theme_color": "#fff",
+  "description": "Tetris game"
+}
