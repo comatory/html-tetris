@@ -10,6 +10,21 @@ import { setupTouchControls } from "./controls/setup.mjs";
 import { loadSounds } from "./sound/prepare.mjs";
 import { isAudioUnset, setAudioControls, AUDIO_ON } from "./utils/options.mjs";
 
+const registerServiceWorker = async () => {
+  try {
+    const registration = await navigator.serviceWorker.register("/src/sw.js");
+    if (registration.installing) {
+      console.log("Service worker installing");
+    } else if (registration.waiting) {
+      console.log("Service worker installed");
+    } else if (registration.active) {
+      console.log("Service worker active");
+    }
+  } catch (error) {
+    console.error(`Registration failed with ${error}`);
+  }
+};
+
 /** setup variables */
 function setupGlobals() {
   setVariable("--remove-animation-duration", `${ANIMATION_DURATION_IN_MS}ms`);
@@ -31,6 +46,9 @@ function setupGlobals() {
 
 async function boot() {
   debug("BOOT");
+
+  debug("CHECK SERVICE WORKER");
+  await registerServiceWorker();
 
   debug("LOAD SOUNDS");
   await loadSounds();
