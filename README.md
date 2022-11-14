@@ -12,6 +12,9 @@ You should only run this game on modern browsers. Runtime requires
 some browser APIs which might not be supported. There's no compilation
 involved, just ESM modules.
 
+The game can be installed if your operating system support PWA
+(Progressive Web Application). It has the ability to run offline via Service worker support.
+
 ## Controls
 
 By default you should use keyboard as an input device. `left`/`right`/`down` arrow
