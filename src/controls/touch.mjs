@@ -93,6 +93,12 @@ export function touchBindingsFactory(context) {
     rotateAntiClockWise(context);
   }
 
+  function handleDocumentVisibilityChange() {
+    if (document.visibilityState === "hidden") {
+      destroyPressCallbacks();
+    }
+  }
+
   function handlePause() {
     pauseGame(context);
     openPauseDialog({
@@ -138,6 +144,10 @@ export function touchBindingsFactory(context) {
       onClick: handleRotateCounterClockwiseClicked,
     });
     getPauseButton().addEventListener("click", handlePause);
+    document.addEventListener(
+      "visibilitychange",
+      handleDocumentVisibilityChange
+    );
   }
 
   function unregisterTouchBindings() {
@@ -174,6 +184,10 @@ export function touchBindingsFactory(context) {
       onClick: handleRotateCounterClockwiseClicked,
     });
     getPauseButton().removeEventListener("click", handlePause);
+    document.removeEventListener(
+      "visibilitychange",
+      handleDocumentVisibilityChange
+    );
   }
 
   function destroyPressCallbacks() {
@@ -192,10 +206,20 @@ export function touchBindingsFactory(context) {
   };
 }
 
+/**
+ * creates interval that will repeat callback
+ *
+ * @param {() => void} cb
+ * @returns {number} - id
+ */
 function createPressCallback(cb) {
   return setInterval(cb, 200);
 }
 
+/**
+ * cancels interval
+ * @param {number} id
+ */
 function destroyPressCallback(id) {
   return clearInterval(id);
 }
