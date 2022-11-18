@@ -1,5 +1,6 @@
 import { openOptionsDialog } from "./options.mjs";
 import { openScoresDialog } from "./scores.mjs";
+import { openHelpDialog } from "./help.mjs";
 import { dialogBindingsFactory } from "./controls.mjs";
 import { playConfirmSound, playSelectSound } from "../sound/sounds.mjs";
 
@@ -40,6 +41,15 @@ export function openMainDialog({ start }) {
       case 3:
         dialog.close();
         openScoresDialog({
+          back: () =>
+            openMainDialog({
+              start,
+            }),
+        });
+        break;
+      case 4:
+        dialog.close();
+        openHelpDialog({
           back: () =>
             openMainDialog({
               start,

@@ -46,6 +46,18 @@ dialog {
   animation-iteration-count: infinite;
 }
 
+dialog#help-menu {
+  width: 440px;
+}
+
+#help-table {
+  font-size: 0.7rem;
+}
+
+#help-table tr td:last-child {
+  padding-left: 15px;
+}
+
 @media screen and (max-width: 675px) {
   dialog {
     width: 100%;

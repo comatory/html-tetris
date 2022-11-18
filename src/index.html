@@ -178,6 +178,15 @@
           autocomplete="off"
         />
         <label for="menu-item-high-scores" class="menu-item"> Score </label>
+        <input
+          type="radio"
+          value="4"
+          name="main-selection"
+          id="menu-item-help"
+          class="menu-item-input"
+          autocomplete="off"
+        />
+        <label for="menu-item-help" class="menu-item"> Help </label>
       </form>
     </dialog>
     <dialog id="options-menu" class="box">
@@ -248,6 +257,51 @@
           autocomplete="off"
         />
         <label for="scores-item-back" class="menu-item">Back</label>
+      </form>
+    </dialog>
+    <dialog id="help-menu" class="box">
+      <table id="help-table">
+        <tbody>
+          <tr>
+            <td>left</td>
+            <td>move left</td>
+          </tr>
+          <tr>
+            <td>right</td>
+            <td>move right</td>
+          </tr>
+          <tr>
+            <td>down</td>
+            <td>move down</td>
+          </tr>
+          <tr>
+            <td>up</td>
+            <td>rotate clockwise</td>
+          </tr>
+          <tr>
+            <td>z</td>
+            <td>rotate c.clockwise</td>
+          </tr>
+          <tr>
+            <td>x</td>
+            <td>rotate clockwise</td>
+          </tr>
+          <tr>
+            <td>p, f1</td>
+            <td>pause</td>
+          </tr>
+        </tbody>
+      </table>
+      <form class="menu">
+        <input
+          type="radio"
+          value="1"
+          name="help-selection"
+          id="help-item-back"
+          class="menu-item-input"
+          autocomplete="off"
+        />
+        <label for="help-item-back" class="menu-item">Back</label>
       </form>
     </dialog>
     <dialog id="confirmation-menu" class="box">
