@@ -76,6 +76,8 @@ self.appFileCache = {
 
     "./manifest.json",
 
+    "./menu/help.mjs",
+
     "./menu/pause.mjs",
 
     "./menu/options.mjs",
