@@ -17,4 +17,5 @@
   --z-background: 1;
   --z-foreground: 2;
   --z-top: 3;
+  --z-overlay: 10;
 }

@@ -10,6 +10,29 @@ import { setupTouchControls } from "./controls/setup.mjs";
 import { loadSounds } from "./sound/prepare.mjs";
 import { isAudioUnset, setAudioControls, AUDIO_ON } from "./utils/options.mjs";
 
+/**
+ * get loading overlay element
+ *
+ * @returns {HTMLDivElement} - element
+ */
+function getLoadingOverlay() {
+  return document.getElementById("loading");
+}
+
+/**
+ * show loading overlay
+ */
+function displayLoadingOverlay() {
+  getLoadingOverlay().style.display = "flex";
+}
+
+/**
+ * hide loading overlay
+ */
+function hideLoadingOverlay() {
+  getLoadingOverlay().style.display = "none";
+}
+
 const registerServiceWorker = async () => {
   try {
     const registration = await navigator.serviceWorker.register("/src/sw.js");
@@ -47,6 +70,8 @@ function setupGlobals() {
 async function boot() {
   debug("BOOT");
 
+  displayLoadingOverlay();
+
   debug("CHECK SERVICE WORKER");
   await registerServiceWorker();
 
@@ -76,6 +101,8 @@ function start() {
   const grid = buildArea(ROWS, COLUMNS);
 
   const { initialContext, randomizer } = prepare(grid);
+
+  hideLoadingOverlay();
 
   openMainDialog({
     start: () => startGame(initialContext, randomizer),

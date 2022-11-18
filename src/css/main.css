@@ -83,6 +83,21 @@ input[type="number"] {
   display: flex;
 }
 
+#loading {
+  background-color: var(--color-white);
+  height: 100dh;
+  height: 100vh;
+  width: 100dw;
+  width: 100vw;
+  z-index: var(--z-overlay);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media screen and (max-width: 900px) {
   #left {
     display: none;
