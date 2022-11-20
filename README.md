@@ -1,5 +1,7 @@
 # HTML Tetris
 
+![Footage of game](game.webp)
+
 This is not a serious implementation of tetris game, just a fun project
 I wanted to do.
 
